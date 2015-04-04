@@ -1,21 +1,19 @@
 # encoding: utf-8
 
-class CloudFileUploader < CarrierWave::Uploader::Base
+class AssetUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
-  include CarrierWave::MimeTypes
 
-  storage :aws
-
-
-  def md5
-    chunk = model.send(mounted_as)
-    @md5 ||= Digest::MD5.hexdigest(chunk.read.to_s).upcase
-  end
-
+  storage :fog
 
   def store_dir
-    '/' + self.md5.scan(/.{2}|.+/).join("/")
+    model.md5.upcase.scan(/.{2}|.+/).join("/")
+    # "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
+
+
+  def set_content_type
+    model.content_type = file.content_type
+  end 
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url
