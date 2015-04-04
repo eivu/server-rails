@@ -14,7 +14,7 @@ class CloudFileUploader < CarrierWave::Uploader::Base
 
 
   def store_dir
-    '/' + self.md5.scan(/.{2}|.+/).join("/")
+    self.md5.scan(/.{2}|.+/).join("/")
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:

@@ -7,7 +7,7 @@ gem 'sass-rails', '~> 4.0.3' # Use SCSS for stylesheets
 gem 'uglifier', '>= 1.3.0' # Use Uglifier as compressor for JavaScript assets
 gem 'coffee-rails', '~> 4.0.0' # Use CoffeeScript for .js.coffee assets and views
 gem 'carrierwave'
-gem 'fog', '~> 1.19.0'
+gem 'carrierwave-aws'
 gem 'mime-types', '~> 2.4.3'
 gem 'mini_magick', '3.5' #there's an issues with v3.7 https://github.com/carrierwaveuploader/carrierwave/issues/1282
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
