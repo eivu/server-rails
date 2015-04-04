@@ -16,8 +16,10 @@ ActiveRecord::Schema.define(version: 20150404014923) do
   create_table "cloud_files", force: true do |t|
     t.string   "name"
     t.string   "filename"
+    t.string   "asset"
     t.string   "md5"
     t.string   "content_type"
+    t.integer  "filesize",                default: 0
     t.text     "description"
     t.float    "rating",       limit: 24
     t.boolean  "nsfw",                    default: false
