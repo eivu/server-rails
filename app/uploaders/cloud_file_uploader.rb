@@ -1,10 +1,15 @@
 # encoding: utf-8
+require 'carrierwave/processing/mime_types'
 
 class CloudFileUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
   include CarrierWave::MimeTypes
+  # include CarrierWave::MagicMimeTypes
 
   storage :aws
+
+  process :set_content_type, :fix_mime, :set_model_properties
+  
 
 
   def md5
@@ -52,5 +57,25 @@ class CloudFileUploader < CarrierWave::Uploader::Base
   # def filename
   #   "something.jpg" if original_filename
   # end
+
+  ################################################################################
+  protected
+  ################################################################################
+
+  def set_model_properties
+    model.content_type = self.file.content_type
+    model.md5 = self.md5
+    model.filesize = self.file.size
+  end
+
+  def fix_mime
+    self.file.content_type =
+      case self.file.content_type
+      when "application/mp4"
+        "video/mp4"
+      else
+        self.file.content_type
+      end
+  end
 
 end
