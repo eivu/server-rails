@@ -3,17 +3,17 @@ source 'https://rubygems.org'
 gem 'rails', '4.1.6'
 gem "random_data", "~> 1.6.0" #allows to easily create random date, like Random.email or Random.last
 gem 'mysql2'
-gem 'aws-sdk', '~> 2.0.34'
-
 gem 'sass-rails', '~> 4.0.3' # Use SCSS for stylesheets
 gem 'uglifier', '>= 1.3.0' # Use Uglifier as compressor for JavaScript assets
 gem 'coffee-rails', '~> 4.0.0' # Use CoffeeScript for .js.coffee assets and views
-gem 'carrierwave'
+# gem 'carrierwave'
+# gem 'aws-sdk', '~> 2.0.34'
 gem 'mime-types', '~> 2.4.3'
 gem 'mini_magick', '3.5' #there's an issues with v3.7 https://github.com/carrierwaveuploader/carrierwave/issues/1282
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
-
+gem 'aws-s3', '0.6.3', :require => 'aws/s3'
+gem 'carrierwave', '0.9.0' # 0.5.8 or up causes this error https://github.com/rspec/rspec-core/issues/313
 
 gem 'jquery-rails' # Use jquery as the JavaScript library
 gem 'turbolinks' # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
