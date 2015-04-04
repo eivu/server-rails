@@ -2,7 +2,6 @@ class CreateCloudFiles < ActiveRecord::Migration
   def change
     create_table :cloud_files do |t|
       t.string :name
-      t.string :filename
       t.string :asset, :nil => false
       t.string :md5, :nil => false
       t.string :content_type, :nil => false
