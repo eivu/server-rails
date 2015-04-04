@@ -16,4 +16,5 @@
 /log/*.log
 /tmp
 config/fog.yml
+config/aws.yml
 /public/uploads/tmp
