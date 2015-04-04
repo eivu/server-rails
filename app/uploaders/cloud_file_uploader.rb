@@ -8,8 +8,12 @@ class CloudFileUploader < CarrierWave::Uploader::Base
 
 
   def md5
-    chunk = model.send(mounted_as)
-    @md5 ||= Digest::MD5.hexdigest(chunk.read.to_s).upcase
+    if model.md5.present?
+      model.md5
+    else
+      chunk = model.send(mounted_as)
+      @md5 ||= Digest::MD5.hexdigest(chunk.read.to_s).upcase
+    end
   end
 
 
