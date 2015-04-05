@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150404014923) do
+ActiveRecord::Schema.define(version: 20150405045049) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,24 @@ ActiveRecord::Schema.define(version: 20150404014923) do
     t.float    "rating"
     t.boolean  "nsfw",         default: false
     t.boolean  "adult",        default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "folder_id"
+  end
+
+  add_index "cloud_files", ["folder_id"], name: "index_cloud_files_on_folder_id", using: :btree
+
+  create_table "folders", force: true do |t|
+    t.string   "name"
+    t.integer  "parent_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "folders", ["parent_id"], name: "index_folders_on_parent_id", using: :btree
+
+  create_table "tags", force: true do |t|
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
