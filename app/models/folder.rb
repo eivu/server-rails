@@ -16,13 +16,18 @@ class Folder < ActiveRecord::Base
 
 
   def self.upload(path_to_dir)
-    @@ignore = path_to_dir + "/"
+    @@ignore = path_to_dir
+    @@ignore += "/" unless @@ignore.ends_with?("/")
     #grab all folders in the dir
     Dir.glob("#{path_to_dir}/**/*").each do |path_to_item|
       # dir_name = '/Users/jinx/Desktop/pronz/ds_bdsm/'
       next if File.directory?(path_to_item)
-      puts path_to_item.gsub(@@ignore,"")
-      CloudFile.upload!(path_to_item)
+      begin
+        puts "=== UPLOADING #{path_to_item.gsub(@@ignore,"")}"
+        CloudFile.upload!(path_to_item)
+      rescue Exception => error
+        puts "  skipping (#{error})"
+      end
     end
     nil
   end
