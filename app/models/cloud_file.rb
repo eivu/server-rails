@@ -5,6 +5,9 @@ class CloudFile < ActiveRecord::Base
 
   validates_uniqueness_of :md5
 
+  def visit
+    system "open #{self.asset.url}"
+  end
 
   def self.upload!(path_to_file)
     # md5 = Digest::MD5.hexdigest(File.read('path_to_file'))
