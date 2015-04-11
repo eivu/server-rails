@@ -7,6 +7,11 @@ class Folder < ActiveRecord::Base
 
   @@ignore = nil
 
+
+# 2.0.0-p481 :030 > a = Pathname.new "/Users/jinx/Downloads/foo/eds\:9"
+#  => #<Pathname:/Users/jinx/Downloads/foo/eds:9> 
+# 2.0.0-p481 :031 > a.each_filename{|f| p f}
+
   def self.create_from_path(path_to_file)
     @folder = @parent = nil
     path_name = Pathname.new(path_to_file.gsub(@@ignore,""))
@@ -49,8 +54,26 @@ class Folder < ActiveRecord::Base
         CloudFile.find_by_md5(Digest::MD5.file(path_to_item).hexdigest.upcase).update_attributes! :folder_id => folder.id
       rescue Exception => error
         puts "  skipping (#{error})"
+        #FileUtils.rm 'NotExistFile', :force => true 
       end
     end
     nil
-  end  
+  end
+
+
+  def self.traverse(path_to_dir)
+    @@ignore = path_to_dir.strip
+    @@ignore += "/" unless @@ignore.ends_with?("/")
+    #grab all folders in the dir
+    Dir.glob("#{path_to_dir}/**/*").each do |path_to_item|
+      next if path_to_item.starts_with?(".") || File.directory?(path_to_item)
+      begin
+        yield path_to_item
+      rescue Exception => error
+        puts "  skipping (#{error})"
+        #FileUtils.rm 'NotExistFile', :force => true 
+      end
+    end
+    nil
+  end
 end
