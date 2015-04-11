@@ -67,6 +67,7 @@ class CloudFileUploader < CarrierWave::Uploader::Base
     model.md5 = self.md5
     #mark the file has havinb 5 stars if it begins with a '_' was rob's personal convention (would make it appear at top of folder)
     model.rating = 5 if Pathname.new(self.file.file).basename.to_s.starts_with?("_")
+    model.rating = 4.5 if Pathname.new(self.file.file).basename.to_s.starts_with?("`")
     model.filesize = self.file.size
   end
 

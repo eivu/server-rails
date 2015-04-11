@@ -9,14 +9,21 @@ class CloudFile < ActiveRecord::Base
     system "open #{self.asset.url}"
   end
 
-  def self.upload!(path_to_file)
-    # md5 = Digest::MD5.hexdigest(File.read('path_to_file'))
-    ActiveRecord::Base.transaction do
-      cloud_file = CloudFile.new :folder => Folder.create_from_path(path_to_file)
-      File.open(path_to_file) do |file|
-        cloud_file.asset = file
+  class << self
+    def upload!(path_to_file)
+      ActiveRecord::Base.transaction do
+        cloud_file = CloudFile.new :folder => Folder.create_from_path(path_to_file)
+        File.open(path_to_file) do |file|
+          cloud_file.asset = file
+        end
+        cloud_file.save!
       end
-      cloud_file.save!
+    end
+
+    def verify_and_delete!(path_to_file)
+      puts "    verifying & cleaning....."
+      md5 = Digest::MD5.file(path_to_file).hexdigest
+      FileUtils.rm(path_to_item) if CloudFile.where(:md5 => md5).present?
     end
   end
 end
