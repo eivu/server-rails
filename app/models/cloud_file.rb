@@ -21,9 +21,12 @@ class CloudFile < ActiveRecord::Base
     end
 
     def verify_and_delete!(path_to_file)
-      puts "    verifying & cleaning....."
+      puts "    verifying & cleaning..... #{path_to_file}"
       md5 = Digest::MD5.file(path_to_file).hexdigest
-      FileUtils.rm(path_to_item) if CloudFile.where(:md5 => md5).present?
+      #this didn't work when the the if statement was a single line ie FileUtil.rm(path) if test
+      if CloudFile.where(:md5 => md5.upcase).present?
+        FileUtils.rm(path_to_file)
+      end
     end
   end
 end
