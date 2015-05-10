@@ -1,6 +1,6 @@
 class Folder < ActiveRecord::Base
-  acts_as_tree order: "name"
-  # has_ancestry
+  # acts_as_tree order: "name"
+  has_ancestry
 
   has_many :cloud_files
 

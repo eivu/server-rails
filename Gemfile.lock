@@ -29,6 +29,8 @@ GEM
       tzinfo (~> 1.1)
     acts_as_tree (2.1.0)
       activerecord (>= 3.0.0)
+    ancestry (2.1.0)
+      activerecord (>= 3.0.0)
     arel (5.0.1.20140414130214)
     aws-sdk (1.64.0)
       aws-sdk-v1 (= 1.64.0)
@@ -161,6 +163,7 @@ PLATFORMS
 
 DEPENDENCIES
   acts_as_tree (~> 2.1.0)
+  ancestry
   better_errors
   binding_of_caller
   carrierwave

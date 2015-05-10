@@ -1,0 +1,17 @@
+<%= form_for @cloud_file do |form| %>
+["id", "name", "asset", "md5", "content_type", "filesize", "description", "rating", "nsfw", "adult", "created_at", "updated_at", "folder_id", "info_url"] 
+
+  <dl>
+    <dt>folder</dt>
+    <dd><%= @cloud_file.filename %></dd>
+    <dt>filename</dt>
+    <dd><%= @cloud_file.filename %></dd>
+    <dt>name</dt>
+    <dd><%= form.text_field :name %></dd>
+    <dt>md5</dt>
+    <dd><%= @cloud_file.md5 %></dd>
+    <dt>info url</dt>
+    <dd><%= form.text_field :info_url %></dd>
+  </dl>
+
+<% end %>

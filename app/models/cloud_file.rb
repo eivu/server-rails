@@ -29,4 +29,13 @@ class CloudFile < ActiveRecord::Base
       end
     end
   end
+
+
+  def smart_name
+    self.name || self.filename
+  end
+
+  def filename
+    @filename ||= self.attributes["asset"]
+  end
 end

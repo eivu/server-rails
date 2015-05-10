@@ -1,0 +1,13 @@
+<% @folder_roots.order(:name).each do |folder_root| %>
+  <% folder_root.subtree.each do |folder| %>
+    <div><%= "-" * folder.depth %> <%= folder.name %></div>
+    <% folder.cloud_files.each do |cloud_file| %>
+      <div>
+        &nbsp;&nbsp;<%= raw("&nbsp;" * folder.depth)  %>
+        <%= cloud_file.smart_name %>
+        (<%= link_to("visit", cloud_file.asset.url, :target => "_blank") %>)
+        (<%= link_to("edit", edit_cloud_file_path(cloud_file)) %>)
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
