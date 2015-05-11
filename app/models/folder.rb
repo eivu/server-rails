@@ -4,7 +4,7 @@ class Folder < ActiveRecord::Base
 
   has_many :cloud_files
 
-  validates_uniqueness_of :name, :scope => :parent_id
+  validates_uniqueness_of :name, :scope => :ancestry
 
   @@ignore = nil
   #making it a set so duplicates won't be stored
@@ -19,7 +19,7 @@ class Folder < ActiveRecord::Base
       @folder = @parent = nil
       path_name = Pathname.new(path_to_file.gsub(@@ignore,""))
       path_name.dirname.to_s.split("/").each do |folder_name|
-        @folder   = Folder.where(:name => folder_name.to_s, :parent_id => @parent.try(:id)).first_or_create!
+        @folder   = Folder.where(:name => folder_name.to_s, :ancestry => @parent.try(:path_ids).try(:join, "/")).first_or_create!
         @parent   = @folder
       end
       @folder
@@ -56,6 +56,7 @@ class Folder < ActiveRecord::Base
     end
 
 
+    #traverse the tree and upload every file
     def traverse(path_to_dir, purge=false)
       @@ignore = path_to_dir.strip
       @@ignore += "/" unless @@ignore.ends_with?("/")
