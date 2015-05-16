@@ -32,11 +32,14 @@ GEM
     ancestry (2.1.0)
       activerecord (>= 3.0.0)
     arel (5.0.1.20140414130214)
-    aws-sdk (1.64.0)
-      aws-sdk-v1 (= 1.64.0)
-    aws-sdk-v1 (1.64.0)
-      json (~> 1.4)
-      nokogiri (>= 1.4.4)
+    aws-sdk (2.0.42)
+      aws-sdk-resources (= 2.0.42)
+    aws-sdk-core (2.0.42)
+      builder (~> 3.0)
+      jmespath (~> 1.0)
+      multi_json (~> 1.0)
+    aws-sdk-resources (2.0.42)
+      aws-sdk-core (= 2.0.42)
     better_errors (2.1.1)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
@@ -44,13 +47,6 @@ GEM
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     builder (3.2.2)
-    carrierwave (0.9.0)
-      activemodel (>= 3.2.0)
-      activesupport (>= 3.2.0)
-      json (>= 1.7)
-    carrierwave-aws (0.5.0)
-      aws-sdk (~> 1.58)
-      carrierwave (~> 0.7)
     coderay (1.1.0)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
@@ -68,14 +64,20 @@ GEM
       debugger-ruby_core_source (~> 1.3.5)
     debugger-linecache (1.2.0)
     debugger-ruby_core_source (1.3.8)
+    domain_name (0.5.24)
+      unf (>= 0.0.5, < 1.0.0)
     erubis (2.7.0)
     eventmachine (1.0.7)
     execjs (2.4.0)
     hike (1.2.3)
+    http-cookie (1.0.2)
+      domain_name (~> 0.5)
     i18n (0.7.0)
     jbuilder (2.2.12)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
+    jmespath (1.0.2)
+      multi_json (~> 1.0)
     jquery-rails (3.1.2)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
@@ -84,14 +86,13 @@ GEM
       mime-types (>= 1.16, < 3)
     method_source (0.8.2)
     mime-types (2.4.3)
+    mimemagic (0.3.0)
     mini_magick (3.5.0)
       subexec (~> 0.2.1)
-    mini_portile (0.6.2)
     minitest (5.5.1)
     multi_json (1.11.0)
     mysql2 (0.3.18)
-    nokogiri (1.6.6.2)
-      mini_portile (~> 0.6.0)
+    netrc (0.10.3)
     pg (0.17.1)
     pry (0.10.1)
       coderay (~> 1.1.0)
@@ -122,6 +123,10 @@ GEM
     random_data (1.6.0)
     rdoc (4.2.0)
       json (~> 1.4)
+    rest-client (1.8.0)
+      http-cookie (>= 1.0.2, < 2.0)
+      mime-types (>= 1.16, < 3.0)
+      netrc (~> 0.7)
     sass (3.2.19)
     sass-rails (4.0.5)
       railties (>= 4.0.0, < 5.0)
@@ -157,6 +162,9 @@ GEM
     uglifier (2.7.1)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.7.1)
 
 PLATFORMS
   ruby
@@ -164,14 +172,14 @@ PLATFORMS
 DEPENDENCIES
   acts_as_tree (~> 2.1.0)
   ancestry
+  aws-sdk (~> 2.0.41)
   better_errors
   binding_of_caller
-  carrierwave
-  carrierwave-aws
   coffee-rails (~> 4.0.0)
   jbuilder (~> 2.0)
   jquery-rails
   mime-types (~> 2.4.3)
+  mimemagic (~> 0.3.0)
   mini_magick (= 3.5)
   mysql2
   pg
@@ -179,6 +187,7 @@ DEPENDENCIES
   pry-debugger
   rails (= 4.1.6)
   random_data (~> 1.6.0)
+  rest-client (~> 1.8.0)
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
   spring

@@ -5,7 +5,7 @@
       <div>
         &nbsp;&nbsp;<%= raw("&nbsp;" * folder.depth)  %>
         <%= cloud_file.smart_name %>
-        (<%= link_to("visit", cloud_file.asset.url, :target => "_blank") %>)
+        (<%= link_to("visit", cloud_file.url, :target => "_blank") %>)
         (<%= link_to("edit", edit_cloud_file_path(cloud_file)) %>)
       </div>
     <% end %>
