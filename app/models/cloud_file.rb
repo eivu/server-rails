@@ -1,5 +1,4 @@
 class CloudFile < ActiveRecord::Base
-  # mount_uploader :asset, CloudFileUploader
 
   belongs_to :folder
   belongs_to :bucket
@@ -66,14 +65,6 @@ class CloudFile < ActiveRecord::Base
       end
     end
 
-    def verify_and_delete!(path_to_file)
-      puts "    verifying & cleaning..... #{path_to_file}"
-      md5 = Digest::MD5.file(path_to_file).hexdigest
-      #this didn't work when the the if statement was a single line ie FileUtil.rm(path) if test
-      if CloudFile.where(:md5 => md5.upcase).present?
-        FileUtils.rm(path_to_file)
-      end
-    end
 
     def determine_rating(path_to_file)
       if Pathname.new(path_to_file).basename.to_s.starts_with?("_")
@@ -111,13 +102,16 @@ class CloudFile < ActiveRecord::Base
   end
 
   def delete_remote
-    # AWS::S3::S3Object.delete(self.path, )
- Aws::S3::Client.new.delete_object(
-    bucket: self.bucket.name,
-    key: self.path
+    s3 = Aws::S3::Client.new(
+      region: 'us-east-1',
+      credentials: Aws::Credentials.new(AWS_CONFIG[:access_key_id], AWS_CONFIG[:secret_access_key])
+    )  
+  s3.delete_object(
+    # required
+    :bucket => self.bucket.name,
+    # required
+    :key => self.path
   )
-
-
   end
 
 
