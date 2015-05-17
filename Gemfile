@@ -11,6 +11,7 @@ gem 'uglifier', '>= 1.3.0' # Use Uglifier as compressor for JavaScript assets
 gem 'coffee-rails', '~> 4.0.0' # Use CoffeeScript for .js.coffee assets and views
 gem 'aws-sdk', '~> 2.0.41'
 gem 'mime-types', '~> 2.4.3'
+gem 'devise', '~> 3.4.1' #user authentication
 gem 'mimemagic', '~> 0.3.0' #determine mime type by magic
 gem 'mini_magick', '3.5' #there's an issues with v3.7 https://github.com/carrierwaveuploader/carrierwave/issues/1282
 gem 'rest-client', '~> 1.8.0' #A simple HTTP and REST client for Ruby, inspired by the Sinatra microframework style of specifying actions
