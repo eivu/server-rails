@@ -9,12 +9,12 @@
     <%= csrf_meta_tags %>
     <meta name="generator" content="Bootply" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+<!--     <link href="css/bootstrap.min.css" rel="stylesheet"> -->
     <!--[if lt IE 9]>
       <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <%= stylesheet_link_tag "styles.css" %>
-    <%= stylesheet_link_tag "bootstrap.min.css" %>
+    <%#= stylesheet_link_tag "bootstrap.min.css" %>
 
     <%= javascript_include_tag "bootstrap.min.js" %>
   </head>
@@ -71,6 +71,14 @@
         </div>
         <div id="main-wrapper" class="col-md-11 pull-right">
           <div id="main">
+            <% %w(notice success error alert).each do |key| %>
+              <% if flash[key.to_sym].present? %>
+                <div id="flash">
+                  <%= "#{key}: #{flash[key.to_sym]}" %>
+                </div>
+              <% end %>
+            <% end %>
+
             <% if content_for?(:page_tilte) %>
               <div class="page-header">
                 <h3><%= yield :page_tilte %></h3>
@@ -80,8 +88,5 @@
           </div>
         </div>
     </div>
-    <!-- script references -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
   </body>
 </html>

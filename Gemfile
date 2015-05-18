@@ -5,7 +5,6 @@ gem 'rails', '4.1.6'
 gem "random_data", "~> 1.6.0" #allows to easily create random date, like Random.email or Random.last
 gem 'pg' #postgres
 gem 'ancestry' #used to nest project_products by providing a parent_id and many convenience methods
-gem 'uglifier', '>= 1.3.0' # Use Uglifier as compressor for JavaScript assets
 gem 'aws-sdk', '~> 2.0.41'
 gem 'mime-types', '~> 2.4.3'
 gem 'devise', '~> 3.4.1' #user authentication
@@ -47,7 +46,7 @@ group :assets do
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
   # Use Uglifier as compressor for JavaScript assets
-  gem 'uglifier', '>= 1.3.0'
+  gem 'uglifier', '>= 1.3.0' # Use Uglifier as compressor for JavaScript assets
 
 end
 
