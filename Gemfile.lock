@@ -27,8 +27,6 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
-    acts_as_tree (2.1.0)
-      activerecord (>= 3.0.0)
     ancestry (2.1.0)
       activerecord (>= 3.0.0)
     arel (5.0.1.20140414130214)
@@ -47,6 +45,8 @@ GEM
       rack (>= 0.9.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
+    bootstrap-sass (3.3.0.1)
+      sass (~> 3.2)
     builder (3.2.2)
     coderay (1.1.0)
     coffee-rails (4.0.1)
@@ -99,7 +99,6 @@ GEM
       subexec (~> 0.2.1)
     minitest (5.5.1)
     multi_json (1.11.0)
-    mysql2 (0.3.18)
     netrc (0.10.3)
     orm_adapter (0.5.0)
     pg (0.17.1)
@@ -183,19 +182,18 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  acts_as_tree (~> 2.1.0)
   ancestry
   aws-sdk (~> 2.0.41)
   better_errors
   binding_of_caller
-  coffee-rails (~> 4.0.0)
+  bootstrap-sass (~> 3.3.0)
+  coffee-rails
   devise (~> 3.4.1)
   jbuilder (~> 2.0)
   jquery-rails
   mime-types (~> 2.4.3)
   mimemagic (~> 0.3.0)
   mini_magick (= 3.5)
-  mysql2
   pg
   pry
   pry-debugger

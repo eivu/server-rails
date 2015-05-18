@@ -1,14 +1,11 @@
 source 'https://rubygems.org'
 
+# i/o
 gem 'rails', '4.1.6'
 gem "random_data", "~> 1.6.0" #allows to easily create random date, like Random.email or Random.last
-gem 'mysql2'
 gem 'pg' #postgres
-gem 'acts_as_tree', '~> 2.1.0' #adds tree support
 gem 'ancestry' #used to nest project_products by providing a parent_id and many convenience methods
-gem 'sass-rails', '~> 4.0.3' # Use SCSS for stylesheets
 gem 'uglifier', '>= 1.3.0' # Use Uglifier as compressor for JavaScript assets
-gem 'coffee-rails', '~> 4.0.0' # Use CoffeeScript for .js.coffee assets and views
 gem 'aws-sdk', '~> 2.0.41'
 gem 'mime-types', '~> 2.4.3'
 gem 'devise', '~> 3.4.1' #user authentication
@@ -18,9 +15,12 @@ gem 'rest-client', '~> 1.8.0' #A simple HTTP and REST client for Ruby, inspired 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
 
+
+# presentation
 gem 'jquery-rails' # Use jquery as the JavaScript library
 gem 'turbolinks' # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-
+gem 'sass-rails', '~> 4.0.3' # Use SCSS for stylesheets and useful for Sass-powered version of Bootstrap
+gem 'bootstrap-sass', '~> 3.3.0' #twitter bootstrap stylings
 
 gem 'jbuilder', '~> 2.0' # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # bundle exec rake doc:rails generates the API under doc/api.
@@ -36,6 +36,19 @@ group :development, :test, :cucumber do
   gem 'binding_of_caller' #irb on better-errors error pages
   gem 'pry'
   gem 'pry-debugger'
+end
+
+# Gems used only for assets and not required
+# in production environments by default.
+group :assets do
+# Use SCSS for stylesheets
+  gem 'coffee-rails'
+
+  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
+  # gem 'therubyracer', :platforms => :ruby
+  # Use Uglifier as compressor for JavaScript assets
+  gem 'uglifier', '>= 1.3.0'
+
 end
 
 # Use ActiveModel has_secure_password
