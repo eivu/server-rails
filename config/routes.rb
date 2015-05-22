@@ -3,6 +3,12 @@ Rails.application.routes.draw do
   resources :cloud_files
   resource :overview
 
+  resources :external do
+    collection do
+      :homepage
+    end
+  end
+
   # Example resource route with concerns:
   #   concern :toggleable do
   #     post 'toggle'
@@ -19,7 +25,6 @@ Rails.application.routes.draw do
 
   # trick pulled from http://stackoverflow.com/questions/3791096/devise-logged-in-root-route-rails-3
   # there might be a better way of doing this...
-  root'overview#show'#, :constraints => lambda {|r| r.env["warden"].authenticate? }
-  # root'homes#show'
+  root'externals#homepage'#, :constraints => lambda {|r| r.env["warden"].authenticate? }
 
 end

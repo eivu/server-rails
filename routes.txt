@@ -1,0 +1,43 @@
+                  Prefix Verb   URI Pattern                       Controller#Action
+        new_user_session GET    /users/sign_in(.:format)          devise/sessions#new
+            user_session POST   /users/sign_in(.:format)          devise/sessions#create
+    destroy_user_session DELETE /users/sign_out(.:format)         devise/sessions#destroy
+           user_password POST   /users/password(.:format)         devise/passwords#create
+       new_user_password GET    /users/password/new(.:format)     devise/passwords#new
+      edit_user_password GET    /users/password/edit(.:format)    devise/passwords#edit
+                         PATCH  /users/password(.:format)         devise/passwords#update
+                         PUT    /users/password(.:format)         devise/passwords#update
+cancel_user_registration GET    /users/cancel(.:format)           devise/registrations#cancel
+       user_registration POST   /users(.:format)                  devise/registrations#create
+   new_user_registration GET    /users/sign_up(.:format)          devise/registrations#new
+  edit_user_registration GET    /users/edit(.:format)             devise/registrations#edit
+                         PATCH  /users(.:format)                  devise/registrations#update
+                         PUT    /users(.:format)                  devise/registrations#update
+                         DELETE /users(.:format)                  devise/registrations#destroy
+       user_confirmation POST   /users/confirmation(.:format)     devise/confirmations#create
+   new_user_confirmation GET    /users/confirmation/new(.:format) devise/confirmations#new
+                         GET    /users/confirmation(.:format)     devise/confirmations#show
+             cloud_files GET    /cloud_files(.:format)            cloud_files#index
+                         POST   /cloud_files(.:format)            cloud_files#create
+          new_cloud_file GET    /cloud_files/new(.:format)        cloud_files#new
+         edit_cloud_file GET    /cloud_files/:id/edit(.:format)   cloud_files#edit
+              cloud_file GET    /cloud_files/:id(.:format)        cloud_files#show
+                         PATCH  /cloud_files/:id(.:format)        cloud_files#update
+                         PUT    /cloud_files/:id(.:format)        cloud_files#update
+                         DELETE /cloud_files/:id(.:format)        cloud_files#destroy
+                overview POST   /overview(.:format)               overviews#create
+            new_overview GET    /overview/new(.:format)           overviews#new
+           edit_overview GET    /overview/edit(.:format)          overviews#edit
+                         GET    /overview(.:format)               overviews#show
+                         PATCH  /overview(.:format)               overviews#update
+                         PUT    /overview(.:format)               overviews#update
+                         DELETE /overview(.:format)               overviews#destroy
+          external_index GET    /external(.:format)               external#index
+                         POST   /external(.:format)               external#create
+            new_external GET    /external/new(.:format)           external#new
+           edit_external GET    /external/:id/edit(.:format)      external#edit
+                external GET    /external/:id(.:format)           external#show
+                         PATCH  /external/:id(.:format)           external#update
+                         PUT    /external/:id(.:format)           external#update
+                         DELETE /external/:id(.:format)           external#destroy
+                    root GET    /                                 externals#homepage
