@@ -1,4 +1,4 @@
-class OverviewController < ApplicationController
+class OverviewsController < ApplicationController
   before_filter :authenticate_user!
 
   def show
