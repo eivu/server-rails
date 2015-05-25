@@ -2,16 +2,13 @@ class CloudFile < ActiveRecord::Base
 
   belongs_to :folder
   belongs_to :bucket
+  has_one :user, :through => :bucket
 
   validates_uniqueness_of :md5, :scope => :bucket_id
   validates_presence_of :bucket_id
 
   after_destroy :delete_remote
 
-  @@s3_object =  Aws::S3::Resource.new(
-    credentials: Aws::Credentials.new(AWS_CONFIG[:access_key_id], AWS_CONFIG[:secret_access_key]),
-    region: AWS_CONFIG[:region]
-  )
 
   def visit
     system "open #{self.url}"
@@ -46,8 +43,8 @@ class CloudFile < ActiveRecord::Base
         old_id = CloudFile.where(:md5 => md5, :bucket_id => bucket.id).first.try(:id)
         raise "File already exists (id: #{old_id})" if old_id.present?
 
-        #upload file and crrate cloud file object
-        obj  = @@s3_object.bucket(bucket.name).object("#{store_dir}/#{sanitized_filename}")
+        #upload file and create cloud file object
+        obj = bucket.create_object("#{store_dir}/#{sanitized_filename}")
         obj.upload_file(path_to_file, :acl => 'public-read', :content_type => mime.type, :metadata => {})
         cloud_file = CloudFile.create! :bucket_id => bucket.id, :folder => Folder.create_from_path(path_to_file), :md5 => md5, :rating => CloudFile.determine_rating(path_to_file), :filesize => file.size, :name => filename, :content_type => mime.type, :asset => sanitized_filename
         
@@ -102,16 +99,12 @@ class CloudFile < ActiveRecord::Base
   end
 
   def delete_remote
-    s3 = Aws::S3::Client.new(
-      region: 'us-east-1',
-      credentials: Aws::Credentials.new(AWS_CONFIG[:access_key_id], AWS_CONFIG[:secret_access_key])
-    )  
-  s3.delete_object(
-    # required
-    :bucket => self.bucket.name,
-    # required
-    :key => self.path
-  )
+    self.user.s3_client.delete_object(
+      # required
+      :bucket => self.bucket.name,
+      # required
+      :key => self.path
+    )
   end
 
 

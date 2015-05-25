@@ -16,4 +16,24 @@ class Bucket < ActiveRecord::Base
       raise "Bucket not found with id (#{id})"
     end
   end
+
+
+  def create_object(path)
+    resource.bucket(self.name).object(path)
+  end
+
+
+  ############################################################################
+  private
+  ############################################################################
+
+  def resource
+    @s3_resource ||= Aws::S3::Resource.new(
+                      :credentials => self.user.s3_credentials,
+                      :region => 'us-east-1'
+                    )
+  end
+
+
+
 end
