@@ -34,15 +34,7 @@
       <div id="sidebar-wrapper" class="col-md-1">
           <div id="sidebar">
             <ul class="nav list-group">
-              <li>
-                <a class="list-group-item" href="#"><i class="icon-home icon-1x"></i>Sidebar Item 1</a>
-              </li>
-              <li>
-                <a class="list-group-item" href="#"><i class="icon-home icon-1x"></i>Sidebar Item 2</a>
-              </li>
-              <li>
-                <a class="list-group-item" href="#"><i class="icon-home icon-1x"></i>Sidebar Item 3</a>
-              </li>
+              <%= render :partial => "/#{(@left_nav_dir || "layouts")}/left_nav" %>
             </ul>
           </div>
         </div>

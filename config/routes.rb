@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get 'settings' => redirect("settings/account#show")
   namespace :settings do
     resource :account
+    resources :buckets
   end
 
   resources :external do

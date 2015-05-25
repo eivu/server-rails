@@ -1,4 +1,4 @@
-class Settings::AccountsController < ApplicationController
+class Settings::AccountsController < SettingsController
 
   def update
     begin
