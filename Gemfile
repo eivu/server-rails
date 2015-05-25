@@ -11,6 +11,7 @@ gem 'devise', '~> 3.4.1' #user authentication
 gem 'mimemagic', '~> 0.3.0' #determine mime type by magic
 gem 'mini_magick', '3.5' #there's an issues with v3.7 https://github.com/carrierwaveuploader/carrierwave/issues/1282
 gem 'rest-client', '~> 1.8.0' #A simple HTTP and REST client for Ruby, inspired by the Sinatra microframework style of specifying actions
+gem 'attr_encrypted', '~> 1.3.3' #Generates attr_accessors that encrypt and decrypt attributes transparently
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
 
