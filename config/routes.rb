@@ -3,6 +3,11 @@ Rails.application.routes.draw do
   resources :cloud_files
   resource :overview
 
+  get 'settings' => redirect("settings/account#show")
+  namespace :settings do
+    resource :account
+  end
+
   resources :external do
     collection do
       :homepage

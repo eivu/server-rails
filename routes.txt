@@ -32,6 +32,13 @@ cancel_user_registration GET    /users/cancel(.:format)           devise/registr
                          PATCH  /overview(.:format)               overviews#update
                          PUT    /overview(.:format)               overviews#update
                          DELETE /overview(.:format)               overviews#destroy
+        settings_account POST   /settings/account(.:format)       settings/accounts#create
+    new_settings_account GET    /settings/account/new(.:format)   settings/accounts#new
+   edit_settings_account GET    /settings/account/edit(.:format)  settings/accounts#edit
+                         GET    /settings/account(.:format)       settings/accounts#show
+                         PATCH  /settings/account(.:format)       settings/accounts#update
+                         PUT    /settings/account(.:format)       settings/accounts#update
+                         DELETE /settings/account(.:format)       settings/accounts#destroy
           external_index GET    /external(.:format)               external#index
                          POST   /external(.:format)               external#create
             new_external GET    /external/new(.:format)           external#new
