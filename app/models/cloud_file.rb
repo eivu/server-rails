@@ -9,6 +9,7 @@ class CloudFile < ActiveRecord::Base
 
   after_destroy :delete_remote
 
+  default_scope { includes(:bucket => :region) }
 
   def visit
     system "open #{self.url}"
@@ -87,7 +88,7 @@ class CloudFile < ActiveRecord::Base
   end
 
   def url
-    @url ||= "http://#{self.bucket.name}.s3.amazonaws.com/#{md5.scan(/.{2}|.+/).join("/")}/#{self.asset}"
+    @url ||= "http://#{self.bucket.name}.#{self.bucket.region.endpoint}/#{md5.scan(/.{2}|.+/).join("/")}/#{self.asset}"
   end
 
   def filename
