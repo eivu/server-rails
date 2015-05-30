@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
-  resources :cloud_files
+  resources :cloud_files, :regions
   resource :overview
 
   get 'settings' => redirect("settings/account#show")
