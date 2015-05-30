@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150522063047) do
+ActiveRecord::Schema.define(version: 20150530210203) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,6 +57,15 @@ ActiveRecord::Schema.define(version: 20150522063047) do
 
   add_index "folders", ["ancestry"], name: "index_folders_on_ancestry", using: :btree
   add_index "folders", ["bucket_id"], name: "index_folders_on_bucket_id", using: :btree
+
+  create_table "regions", force: true do |t|
+    t.string   "descr",      null: false
+    t.string   "name",       null: false
+    t.string   "endpoint",   null: false
+    t.string   "location"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "tags", force: true do |t|
     t.string   "name"
