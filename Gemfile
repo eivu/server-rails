@@ -45,16 +45,16 @@ end
 
 # Gems used only for assets and not required
 # in production environments by default.
-group :assets do
-# Use SCSS for stylesheets
-  gem 'coffee-rails'
+# group :assets do
+# # Use SCSS for stylesheets
+#   gem 'coffee-rails'
 
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer', :platforms => :ruby
-  # Use Uglifier as compressor for JavaScript assets
-  # gem 'uglifier', '>= 1.3.0' # Use Uglifier as compressor for JavaScript assets
+#   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
+#   # gem 'therubyracer', :platforms => :ruby
+#   # Use Uglifier as compressor for JavaScript assets
+#   # gem 'uglifier', '>= 1.3.0' # Use Uglifier as compressor for JavaScript assets
 
-end
+# end
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
