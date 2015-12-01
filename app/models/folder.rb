@@ -1,3 +1,4 @@
+#Folders are only metadata to preserve the same tree layout as found on the user's drive
 class Folder < ActiveRecord::Base
   # acts_as_tree order: "name"
   has_ancestry
@@ -7,7 +8,9 @@ class Folder < ActiveRecord::Base
 
   validates_uniqueness_of :name, :scope => :ancestry
 
+  #for current version of app, everything is being saved to same bucket, as development proceeds this must be altered
   @@bucket = nil
+  #The root folder containing all content will be same ie ~/Music. we want to remove ~/Music from all directory paths, as we try to replicate the path on s3
   @@ignore = nil
   #making it a set so duplicates won't be stored
   @@errors = Set.new
