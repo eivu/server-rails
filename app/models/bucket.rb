@@ -1,7 +1,7 @@
 class Bucket < ActiveRecord::Base
   belongs_to :user
   belongs_to :region
-  has_many :cloud_files, :through => :folders
+  has_many :cloud_files
 
 
   def self.determine(obj)
