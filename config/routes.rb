@@ -9,6 +9,16 @@ Rails.application.routes.draw do
     resources :buckets
   end
 
+  namespace :api, :defaults => { :format => 'json' }  do
+    namespace :v1 do
+      resources :cloud_files do 
+        member do
+          post :authorize
+        end
+      end
+    end
+  end
+
   resources :external do
     collection do
       :homepage

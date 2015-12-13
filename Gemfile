@@ -40,8 +40,8 @@ group :development, :test, :cucumber do
   gem 'thin'
   gem "better_errors" 
   gem 'binding_of_caller' #irb on better-errors error pages
-  # gem 'pry'
-  # gem 'pry-byebug' #replaces pry-debugger becasuse pry-debugger doesnt work with ruby 2
+  gem 'pry'
+  gem 'pry-byebug' #replaces pry-debugger becasuse pry-debugger doesnt work with ruby 2
 end
 
 # Gems used only for assets and not required
