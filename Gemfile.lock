@@ -73,6 +73,8 @@ GEM
     erubis (2.7.0)
     eventmachine (1.0.7)
     execjs (2.4.0)
+    has_secure_token (1.0.0)
+      activerecord (>= 3.0)
     hike (1.2.3)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
@@ -178,6 +180,7 @@ DEPENDENCIES
   binding_of_caller
   bootstrap-sass (~> 3.3.0)
   devise (~> 3.4.1)
+  has_secure_token
   jbuilder (~> 2.0)
   jquery-rails
   mime-types (~> 2.4.3)
