@@ -88,6 +88,7 @@ class CloudFile < ActiveRecord::Base
   end
 
   def url
+    raise "Region Not Defined for bucket: #{self.bucket.name}" if self.bucket.region_id.blank?
     @url ||= "http://#{self.bucket.name}.#{self.bucket.region.endpoint}/#{md5.scan(/.{2}|.+/).join("/")}/#{self.asset}"
   end
 
