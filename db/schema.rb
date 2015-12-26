@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151213194735) do
+ActiveRecord::Schema.define(version: 20151223032410) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,9 +42,11 @@ ActiveRecord::Schema.define(version: 20151213194735) do
     t.integer  "folder_id"
     t.string   "info_url"
     t.integer  "bucket_id"
+    t.integer  "duration",               default: 0
   end
 
   add_index "cloud_files", ["bucket_id"], name: "index_cloud_files_on_bucket_id", using: :btree
+  add_index "cloud_files", ["duration"], name: "index_cloud_files_on_duration", using: :btree
   add_index "cloud_files", ["folder_id"], name: "index_cloud_files_on_folder_id", using: :btree
 
   create_table "folders", force: true do |t|
