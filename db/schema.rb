@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151223032410) do
+ActiveRecord::Schema.define(version: 20160129041337) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,16 @@ ActiveRecord::Schema.define(version: 20151223032410) do
 
   add_index "buckets", ["region_id"], name: "index_buckets_on_region_id", using: :btree
   add_index "buckets", ["user_id"], name: "index_buckets_on_user_id", using: :btree
+
+  create_table "cloud_file_taggings", force: true do |t|
+    t.integer  "cloud_file_id"
+    t.integer  "tag_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "cloud_file_taggings", ["cloud_file_id"], name: "index_cloud_file_taggings_on_cloud_file_id", using: :btree
+  add_index "cloud_file_taggings", ["tag_id"], name: "index_cloud_file_taggings_on_tag_id", using: :btree
 
   create_table "cloud_files", force: true do |t|
     t.string   "name"
@@ -60,6 +70,24 @@ ActiveRecord::Schema.define(version: 20151223032410) do
   add_index "folders", ["ancestry"], name: "index_folders_on_ancestry", using: :btree
   add_index "folders", ["bucket_id"], name: "index_folders_on_bucket_id", using: :btree
 
+  create_table "metadata", force: true do |t|
+    t.string   "value",            null: false
+    t.integer  "user_id",          null: false
+    t.integer  "metadata_type_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "metadata", ["metadata_type_id"], name: "index_metadata_on_metadata_type_id", using: :btree
+  add_index "metadata", ["user_id"], name: "index_metadata_on_user_id", using: :btree
+  add_index "metadata", ["value"], name: "index_metadata_on_value", using: :btree
+
+  create_table "metadata_types", force: true do |t|
+    t.string   "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "regions", force: true do |t|
     t.string   "descr",      null: false
     t.string   "name",       null: false
@@ -68,6 +96,16 @@ ActiveRecord::Schema.define(version: 20151223032410) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "tags", force: true do |t|
+    t.string   "value"
+    t.integer  "user_id"
+    t.boolean  "private"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tags", ["user_id"], name: "index_tags_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "username"

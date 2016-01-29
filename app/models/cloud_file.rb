@@ -3,6 +3,10 @@ class CloudFile < ActiveRecord::Base
   belongs_to :folder
   belongs_to :bucket
   has_one :user, :through => :bucket
+  has_many :metataggings, :dependent => :destroy
+  has_many :metadata, :through => :metataggings, :dependent => :destroy
+
+  accepts_nested_attributes_for :metataggings
 
   validates_uniqueness_of :md5, :scope => :bucket_id
   validates_presence_of :bucket_id
