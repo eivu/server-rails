@@ -1,10 +1,13 @@
 class CloudFile < ActiveRecord::Base
 
   belongs_to :folder
-  belongs_to :bucket
+  belongs_to :bucket, :inverse_of => :cloud_file
   has_one :user, :through => :bucket
   has_many :metataggings, :dependent => :destroy
   has_many :metadata, :through => :metataggings, :dependent => :destroy
+  has_many :taggings, :source => :cloud_file_tagging, :dependent => :destroy
+  has_many :cloud_file_taggings, :dependent => :destroy
+  has_many :tags, :through => :cloud_file_taggings
 
   accepts_nested_attributes_for :metataggings
 
@@ -111,6 +114,19 @@ class CloudFile < ActiveRecord::Base
       # required
       :key => self.path
     )
+  end
+
+  def tag_list=(tag_array)
+    tag_array.each do |value|
+      tag = Tag.find_or_create_by! :value => value, :user_id => self.user.id
+      self.cloud_file_taggings.find_or_initialize_by! :tag_id => tag.id
+    end
+
+    binding.pry
+  end
+
+  def metadata_list=(info)
+    binding.pry    
   end
 
 

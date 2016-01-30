@@ -1,5 +1,5 @@
 class Bucket < ActiveRecord::Base
-  belongs_to :user
+  belongs_to :user, :inverse_of => :bucket
   belongs_to :region
   has_many :cloud_files
 
