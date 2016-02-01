@@ -1,6 +1,6 @@
 class Metatagging < ActiveRecord::Base
-  belongs_to :cloud_file
-  belongs_to :metadatum
+  belongs_to :cloud_file, :inverse_of => :metagggings
+  belongs_to :metadatum, :inverse_of => :metagggings
 
   def value=(string)
     user = self.cloud_file.user

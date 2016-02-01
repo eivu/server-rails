@@ -3,7 +3,7 @@ class CreateTags < ActiveRecord::Migration
     create_table :tags do |t|
       t.string :value
       t.references :user, index: true
-      t.boolean :private
+      t.boolean :private, :default => false
 
       t.timestamps
     end
