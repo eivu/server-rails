@@ -11,7 +11,11 @@ class CloudFile < ActiveRecord::Base
   validates_uniqueness_of :md5, :scope => :bucket_id
   validates_presence_of :bucket_id
 
+  attr_accessor :relative_path
+
+  before_save :parse_relative_path
   after_destroy :delete_remote
+
 
   default_scope { includes(:bucket => :region) }
 
@@ -172,5 +176,26 @@ class CloudFile < ActiveRecord::Base
   private
   ############################################################################
 
-
+  #relative path is used to construct the folder tree
+  def parse_relative_path
+    if self.relative_path.blank?
+      self.folder_id = nil
+    else
+      @manual_ancestry= []
+      #convert the file path into an array
+      folder_array = self.relative_path.split("/").reject { |x| x.empty? }
+      #remove the last element because it will always be the last element
+      folder_array.pop
+      folder_array.each do |sub_dir|
+        if @manual_ancestry.present?
+          ancestry_str = @manual_ancestry.join("/")
+        else
+          ancestry_str = nil
+        end
+        folder = Folder.find_or_create_by! :ancestry => ancestry_str, :bucket_id => self.bucket.id, :name => sub_dir
+        @manual_ancestry << folder.id
+      end
+      self.folder_id = @manual_ancestry.last
+    end
+  end
 end
