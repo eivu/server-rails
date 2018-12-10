@@ -4,7 +4,7 @@ ruby '2.2.3'
 # i/o
 gem 'rails', '5.0.3'
 gem "random_data", "~> 1.6.0" #allows to easily create random date, like Random.email or Random.last
-gem 'pg' #postgres
+gem 'pg', '~> 0.18' #postgres
 gem 'ancestry' #used to nest project_products by providing a parent_id and many convenience methods
 gem 'aws-sdk', '~> 2.0.41'
 gem 'mime-types', '~> 3.2.2'

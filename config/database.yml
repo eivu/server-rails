@@ -2,10 +2,10 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: eivu_development
+  database: eivu_dev
   pool: 5
-  username: jinx
-  password:
+  username: bobert
+  password: penguin
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
@@ -30,5 +30,5 @@ test:
   encoding: unicode
   database: eivu_test
   pool: 5
-  username: jinx
-  password:
+  username: bobert
+  password: penguin
