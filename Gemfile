@@ -24,7 +24,7 @@ gem 'jquery-rails' # Use jquery as the JavaScript library
 # gem 'turbolinks' # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'sass-rails', '~> 5.0.7' # Use SCSS for stylesheets and useful for Sass-powered version of Bootstrap
 gem 'bootstrap-sass', '~> 3.3.7' #twitter bootstrap stylings
-gem 'coffee-rails', '~> 4.1.0'
+# gem 'coffee-rails', '~> 4.1.0'
 gem 'jbuilder'#, '~> 2.8' # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # bundle exec rake doc:rails generates the API under doc/api.
 
@@ -47,16 +47,16 @@ end
 
 # Gems used only for assets and not required
 # in production environments by default.
-# group :assets do
+group :assets do
 # # Use SCSS for stylesheets
-#   gem 'coffee-rails'
+  gem 'coffee-rails'
 
 #   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 #   # gem 'therubyracer', :platforms => :ruby
 #   # Use Uglifier as compressor for JavaScript assets
-#   # gem 'uglifier', '>= 1.3.0' # Use Uglifier as compressor for JavaScript assets
+   gem 'uglifier', '>= 1.3.0' # Use Uglifier as compressor for JavaScript assets
 
-# end
+end
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
