@@ -24,7 +24,7 @@ gem 'jquery-rails' # Use jquery as the JavaScript library
 # gem 'turbolinks' # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'sass-rails', '~> 5.0.7' # Use SCSS for stylesheets and useful for Sass-powered version of Bootstrap
 gem 'bootstrap-sass', '~> 3.3.7' #twitter bootstrap stylings
-
+gem 'coffee-rails', '~> 4.1.0'
 gem 'jbuilder'#, '~> 2.8' # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # bundle exec rake doc:rails generates the API under doc/api.
 
@@ -37,7 +37,7 @@ group :production do
 end
 
 group :development, :test, :cucumber do
-  gem 'spring' # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  # gem 'spring' # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'thin'
   gem "better_errors" 
   gem 'binding_of_caller' #irb on better-errors error pages
