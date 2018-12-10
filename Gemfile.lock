@@ -206,9 +206,6 @@ GEM
     thor (0.20.3)
     thread_safe (0.3.6)
     tilt (2.0.9)
-    turbolinks (5.2.0)
-      turbolinks-source (~> 5.2)
-    turbolinks-source (5.2.0)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
     unf (0.1.4)
@@ -229,12 +226,12 @@ DEPENDENCIES
   aws-sdk (~> 2.0.41)
   better_errors
   binding_of_caller
-  bootstrap-sass
-  devise
+  bootstrap-sass (~> 3.3.7)
+  devise (~> 4.5)
   has_secure_token
   jbuilder
   jquery-rails
-  mime-types
+  mime-types (~> 3.2.2)
   mimemagic (~> 0.3.0)
   mini_magick (= 3.5)
   pg
@@ -245,11 +242,10 @@ DEPENDENCIES
   random_data (~> 1.6.0)
   rest-client
   rjson
-  sass-rails
+  sass-rails (~> 5.0.7)
   sdoc (~> 0.4.0)
   spring
   thin
-  turbolinks
 
 RUBY VERSION
    ruby 2.2.3p173
