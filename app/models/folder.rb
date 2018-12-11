@@ -2,8 +2,9 @@
 class Folder < ActiveRecord::Base
   # acts_as_tree order: "name"
   has_ancestry
-  belongs_to :bucket, :inverse_of => :folders
-  has_many :cloud_files, :inverse_of => :folder
+
+  belongs_to :bucket
+  has_many :cloud_files
 
   validates_uniqueness_of :name, :scope => :ancestry
 

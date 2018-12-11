@@ -1,8 +1,7 @@
 class Bucket < ActiveRecord::Base
-  belongs_to :user, :inverse_of => :buckets
-  belongs_to :region, :inverse_of => :buckets
-  has_many :cloud_files, :inverse_of => :bucket
-  has_many :folders, :inverse_of => :bucket
+  belongs_to :user, :inverse_of => :bucket
+  belongs_to :region
+  has_many :cloud_files
 
 
   def self.determine(obj)

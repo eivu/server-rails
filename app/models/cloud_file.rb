@@ -1,12 +1,15 @@
 class CloudFile < ActiveRecord::Base
 
-  belongs_to :folder, :inverse_of => :cloud_files
-  belongs_to :bucket, :inverse_of => :cloud_files
+  belongs_to :folder
+  belongs_to :bucket, :inverse_of => :cloud_file
   has_one :user, :through => :bucket
-  has_many :metadata_instances, :dependent => :destroy, :inverse_of => :cloud_file, :autosave => true
-  has_many :metadata, :through => :metadata_instances, :dependent => :destroy
-  has_many :taggings, :class_name => "CloudFileTagging", :dependent => :destroy, :inverse_of => :cloud_file, :autosave => true
-  has_many :tags, :through => :taggings
+  has_many :metataggings, :dependent => :destroy
+  has_many :metadata, :through => :metataggings, :dependent => :destroy
+  has_many :taggings, :source => :cloud_file_tagging, :dependent => :destroy
+  has_many :cloud_file_taggings, :dependent => :destroy
+  has_many :tags, :through => :cloud_file_taggings
+
+  accepts_nested_attributes_for :metataggings
 
   validates_uniqueness_of :md5, :scope => :bucket_id
   validates_presence_of :bucket_id
@@ -113,27 +116,17 @@ class CloudFile < ActiveRecord::Base
     )
   end
 
-
   def tag_list=(tag_array)
     tag_array.each do |value|
-      tag = Tag.find_or_create_by! :value => value, :user_id => self.user.id, :private => value.starts_with?("*")
-      self.taggings.find_or_initialize_by :tag_id => tag.id
+      tag = Tag.find_or_create_by! :value => value, :user_id => self.user.id
+      self.cloud_file_taggings.find_or_initialize_by! :tag_id => tag.id
     end
+
+    binding.pry
   end
 
-
   def metadata_list=(info)
-    info.each do |type, value|
-      #create the metaday type if doesn't already exist
-      metadata_type = MetadataType.find_or_create_by! :value => type
-      #if value is NOT an array, put it in an array so it can be looped over
-      value = [value] unless value.is_a? Array
-
-      value.each do |scalar_value|
-        metadatum = metadata_type.metadata.find_or_create_by! :value => scalar_value, :user_id => self.user.id
-        self.metadata_instances.find_or_initialize_by :metadatum_id => metadatum.id
-      end
-    end 
+    binding.pry    
   end
 
 
