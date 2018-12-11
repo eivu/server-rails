@@ -1,0 +1,2 @@
+class Fp < Fingerprinter
+end
