@@ -23,7 +23,9 @@ class Fingerprinter
   end
 
   def submit
-    @response = RestClient.get "https://api.acoustid.org/v2/lookup?client=o4Wf01oR4K&duration=#{@duration}&fingerprint=#{@fingerprint}"
+    @raw_response = RestClient.get "https://api.acoustid.org/v2/lookup?client=o4Wf01oR4K&duration=#{@duration}&fingerprint=#{@fingerprint}&meta=recordings+releasegroups+compress"
+    binding.pry
+    1
   end
 end
 
