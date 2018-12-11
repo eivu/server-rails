@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190116171344) do
-
+ActiveRecord::Schema.define(version: 20181211020058) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -111,25 +110,20 @@ ActiveRecord::Schema.define(version: 20190116171344) do
     t.index ["year"], name: "index_cloud_files_on_year", using: :btree
   end
 
-<<<<<<< HEAD
-=======
   add_index "cloud_files", ["bucket_id"], name: "index_cloud_files_on_bucket_id", using: :btree
   add_index "cloud_files", ["duration"], name: "index_cloud_files_on_duration", using: :btree
   add_index "cloud_files", ["folder_id"], name: "index_cloud_files_on_folder_id", using: :btree
 
 
->>>>>>> app boots. removing turbolinks
+
   create_table "folders", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "ancestry"
     t.integer  "bucket_id"
-<<<<<<< HEAD
-    t.boolean  "peepy",      default: false, null: false
+    t.boolean  "adult",      default: false, null: false
     t.boolean  "nsfw",       default: false, null: false
-=======
->>>>>>> app boots. removing turbolinks
     t.index ["ancestry"], name: "index_folders_on_ancestry", using: :btree
     t.index ["bucket_id"], name: "index_folders_on_bucket_id", using: :btree
   end
@@ -168,6 +162,7 @@ ActiveRecord::Schema.define(version: 20190116171344) do
     t.datetime "updated_at"
   end
 
+
   create_table "release_types", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
@@ -181,7 +176,7 @@ ActiveRecord::Schema.define(version: 20190116171344) do
     t.integer  "cloud_files_count", default: 0,     null: false
     t.integer  "release_type_id"
     t.integer  "bundle_pos",        default: 1
-    t.boolean  "peepy",             default: false
+    t.boolean  "adult",             default: false
     t.boolean  "nsfw",              default: false
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
@@ -230,12 +225,8 @@ ActiveRecord::Schema.define(version: 20190116171344) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
-<<<<<<< HEAD
   add_foreign_key "artist_cloud_files", "artists"
   add_foreign_key "artist_cloud_files", "cloud_files"
   add_foreign_key "artist_releases", "artists"
   add_foreign_key "artist_releases", "releases"
 end
-=======
-end
->>>>>>> app boots. removing turbolinks
