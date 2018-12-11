@@ -16,7 +16,8 @@ class CloudFile < ActiveRecord::Base
 
   after_destroy :delete_remote
 
-  default_scope { includes(:bucket => :region) }
+  # default_scope { includes(:bucket => :region) }
+  default_scope { includes(:bucket => :region).where(:adult => false) }
 
   def visit
     system "open #{self.url}"

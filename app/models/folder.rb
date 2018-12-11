@@ -8,6 +8,8 @@ class Folder < ActiveRecord::Base
 
   validates_uniqueness_of :name, :scope => :ancestry
 
+  default_scope { where(:adult => false) }
+
   #for current version of app, everything is being saved to same bucket, as development proceeds this must be altered
   @@bucket = nil
   #The root folder containing all content will be same ie ~/Music. we want to remove ~/Music from all directory paths, as we try to replicate the path on s3
