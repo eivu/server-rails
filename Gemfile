@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby '2.5.1'
 
 # i/o
-gem 'rails', '5.0.3'
+gem 'rails', '5.0.7.1'
 gem "random_data", "~> 1.6.0" #allows to easily create random date, like Random.email or Random.last
 gem 'pg', '~> 0.18' #postgres
 gem 'ancestry' #used to nest project_products by providing a parent_id and many convenience methods
@@ -10,7 +10,7 @@ gem 'aws-sdk', '~> 2.0.41'
 gem 'mime-types', '~> 3.2.2'
 gem 'devise', '~> 4.5' #user authentication
 gem 'mimemagic', '~> 0.3.0' #determine mime type by magic
-gem 'mini_magick', '3.5' #there's an issues with v3.7 https://github.com/carrierwaveuploader/carrierwave/issues/1282
+gem 'mini_magick', '3.6.0' #there's an issues with v3.7 https://github.com/carrierwaveuploader/carrierwave/issues/1282
 gem 'rest-client'#, '~> 1.8.0' #A simple HTTP and REST client for Ruby, inspired by the Sinatra microframework style of specifying actions
 gem 'attr_encrypted', '~> 1.3.3' #Generates attr_accessors that encrypt and decrypt attributes transparently
 gem 'has_secure_token' #generate the 24-character unique token
