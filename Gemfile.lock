@@ -136,6 +136,7 @@ GEM
     pry-byebug (3.6.0)
       byebug (~> 10.0)
       pry (~> 0.10)
+    puma (3.12.0)
     rack (2.0.6)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -245,6 +246,7 @@ DEPENDENCIES
   pg (~> 0.18)
   pry
   pry-byebug
+  puma (= 3.12)
   rails (= 5.0.7.1)
   rails_12factor
   random_data (~> 1.6.0)
