@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,94 +10,51 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160130215429) do
+ActiveRecord::Schema.define(version: 20151213194735) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "buckets", force: true do |t|
+  create_table "buckets", force: :cascade do |t|
     t.string   "name"
     t.integer  "user_id"
     t.integer  "region_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["region_id"], name: "index_buckets_on_region_id", using: :btree
+    t.index ["user_id"], name: "index_buckets_on_user_id", using: :btree
   end
 
-  add_index "buckets", ["region_id"], name: "index_buckets_on_region_id", using: :btree
-  add_index "buckets", ["user_id"], name: "index_buckets_on_user_id", using: :btree
-
-  create_table "cloud_file_taggings", force: true do |t|
-    t.integer  "cloud_file_id"
-    t.integer  "tag_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "cloud_file_taggings", ["cloud_file_id"], name: "index_cloud_file_taggings_on_cloud_file_id", using: :btree
-  add_index "cloud_file_taggings", ["tag_id"], name: "index_cloud_file_taggings_on_tag_id", using: :btree
-
-  create_table "cloud_files", force: true do |t|
+  create_table "cloud_files", force: :cascade do |t|
     t.string   "name"
     t.string   "asset"
     t.string   "md5"
     t.string   "content_type"
-    t.integer  "filesize",     limit: 8, default: 0
+    t.bigint   "filesize",     default: 0
     t.text     "description"
     t.float    "rating"
-    t.boolean  "nsfw",                   default: false
-    t.boolean  "adult",                  default: false
+    t.boolean  "nsfw",         default: false
+    t.boolean  "adult",        default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "folder_id"
     t.string   "info_url"
     t.integer  "bucket_id"
-    t.integer  "duration",               default: 0
+    t.index ["bucket_id"], name: "index_cloud_files_on_bucket_id", using: :btree
+    t.index ["folder_id"], name: "index_cloud_files_on_folder_id", using: :btree
   end
 
-  add_index "cloud_files", ["bucket_id"], name: "index_cloud_files_on_bucket_id", using: :btree
-  add_index "cloud_files", ["duration"], name: "index_cloud_files_on_duration", using: :btree
-  add_index "cloud_files", ["folder_id"], name: "index_cloud_files_on_folder_id", using: :btree
-
-  create_table "folders", force: true do |t|
+  create_table "folders", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "ancestry"
     t.integer  "bucket_id"
+    t.index ["ancestry"], name: "index_folders_on_ancestry", using: :btree
+    t.index ["bucket_id"], name: "index_folders_on_bucket_id", using: :btree
   end
 
-  add_index "folders", ["ancestry"], name: "index_folders_on_ancestry", using: :btree
-  add_index "folders", ["bucket_id"], name: "index_folders_on_bucket_id", using: :btree
-
-  create_table "metadata", force: true do |t|
-    t.string   "value",            null: false
-    t.integer  "user_id",          null: false
-    t.integer  "metadata_type_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "metadata", ["metadata_type_id"], name: "index_metadata_on_metadata_type_id", using: :btree
-  add_index "metadata", ["user_id"], name: "index_metadata_on_user_id", using: :btree
-  add_index "metadata", ["value"], name: "index_metadata_on_value", using: :btree
-
-  create_table "metadata_instances", force: true do |t|
-    t.integer  "cloud_file_id"
-    t.integer  "metadatum_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "metadata_instances", ["cloud_file_id"], name: "index_metadata_instances_on_cloud_file_id", using: :btree
-  add_index "metadata_instances", ["metadatum_id"], name: "index_metadata_instances_on_metadatum_id", using: :btree
-
-  create_table "metadata_types", force: true do |t|
-    t.string   "value"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "regions", force: true do |t|
+  create_table "regions", force: :cascade do |t|
     t.string   "descr",      null: false
     t.string   "name",       null: false
     t.string   "endpoint",   null: false
@@ -107,17 +63,7 @@ ActiveRecord::Schema.define(version: 20160130215429) do
     t.datetime "updated_at"
   end
 
-  create_table "tags", force: true do |t|
-    t.string   "value"
-    t.integer  "user_id"
-    t.boolean  "private",    default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "tags", ["user_id"], name: "index_tags_on_user_id", using: :btree
-
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "username"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -142,9 +88,8 @@ ActiveRecord::Schema.define(version: 20160130215429) do
     t.string   "encrypted_secret_access_key_salt"
     t.string   "encrypted_secret_access_key_iv"
     t.string   "token"
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
-
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end

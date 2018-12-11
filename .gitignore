@@ -12,7 +12,7 @@
 /db/*.sqlite3-journal
 /config/database.yml
 .DS_Store
-
+database.yml
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
