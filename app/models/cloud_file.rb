@@ -1,7 +1,7 @@
 class CloudFile < ActiveRecord::Base
 
   belongs_to :folder
-  belongs_to :bucket, :inverse_of => :cloud_file
+  belongs_to :bucket#, :inverse_of => :cloud_file
   has_one :user, :through => :bucket
   has_many :metataggings, :dependent => :destroy
   has_many :metadata, :through => :metataggings, :dependent => :destroy
@@ -41,10 +41,19 @@ class CloudFile < ActiveRecord::Base
         bucket    = Bucket.determine(bucket)
 
         #get metadata
-        md5       = Digest::MD5.file(path_to_file).hexdigest.upcase
         file      = File.open(path_to_file)
-        mime      = MimeMagic.by_magic(File.open(path_to_file))
-        store_dir = md5.scan(/.{2}|.+/).join("/")
+        mime      = MimeMagic.by_magic(file)
+        md5       = Digest::MD5.file(path_to_file).hexdigest.upcase
+
+        # case mime.mediatype
+        # when "audio"
+        #   fingerprint = Fingerprinter.new(path_to_file)
+        #   identifier  = fingerprint.cleansed_fingerprint
+        # when "video"
+        #   identifier  = md5
+        # end
+        
+        store_dir = "#{mime.mediatype}/#{md5.scan(/.{2}|.+/).join("/")}"
         filename  = File.basename(path_to_file)
         sanitized_filename = CloudFile.sanitize(filename)
 

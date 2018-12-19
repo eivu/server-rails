@@ -4,7 +4,7 @@
 
 class Fingerprinter
 
-  attr_reader :path_to_file, :output, :fp_url, :response, :raw_response
+  attr_reader :path_to_file, :output, :fp_url, :response, :raw_response, :cleansed_fingerprint
 
   def initialize(path_to_file=nil)
     path_to_file ||= "/home/bobert/files/Kendrick_Lamar_&_The_Weeknd_&_SZA/Black_Panther_The_Album_Music_From_And_Inspired_By_[Explicit]/B078SGLXJR_(disc_1)_03_-_X_[Explicit].mp3"
@@ -22,6 +22,7 @@ class Fingerprinter
       key, value = line.strip.split("=")
       instance_variable_set("@#{key.downcase}", value)
     end
+    @cleansed_fingerprint = @fingerprint.gsub(/[^0-9a-z ]/i, '')
   end
 
   def submit
