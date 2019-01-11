@@ -3,10 +3,10 @@ class CloudFile < ActiveRecord::Base
   belongs_to :folder
   belongs_to :bucket#, :inverse_of => :cloud_file
   has_one :user, :through => :bucket
-  has_many :metataggings, :dependent => :destroy
-  has_many :metadata, :through => :metataggings, :dependent => :destroy
-  has_many :taggings, :source => :cloud_file_tagging, :dependent => :destroy
-  has_many :cloud_file_taggings, :dependent => :destroy
+  has_many :metataggings#, :dependent => :destroy
+  has_many :metadata, :through => :metataggings#, :dependent => :destroy
+  has_many :taggings, :source => :cloud_file_tagging#, :dependent => :destroy
+  has_many :cloud_file_taggings#, :dependent => :destroy
   has_many :tags, :through => :cloud_file_taggings
 
   accepts_nested_attributes_for :metataggings
@@ -29,6 +29,18 @@ class CloudFile < ActiveRecord::Base
       url = URI.parse(uri)
       req = Net::HTTP.new(url.host, url.port)
       req.request_head(url.path).code == "200"
+    end
+
+
+    def ingest(path_to_file, bucket, options={})
+      cloud_file = CloudFile.upload path_to_file, bucket, options
+      binding.pry
+      cloud_file
+    end
+
+
+    def ingest!(path_to_file, bucket, options={})
+      CloudFile.ingest path_to_file, bucket, options.merge(:prune => true)
     end
 
     def upload!(path_to_file, bucket, options={})

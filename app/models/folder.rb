@@ -36,7 +36,7 @@ class Folder < ActiveRecord::Base
       bucket = @@bucket || Bucket.determine(bucket)
       Folder.traverse(path_to_dir) do |path_to_item|
         puts "=== UPLOADING #{path_to_item.gsub(@@ignore,"")}"
-        CloudFile.upload(path_to_item, bucket, options)
+        CloudFile.ingest(path_to_item, bucket, options)
       end
     end
 
