@@ -14,14 +14,16 @@ module Tagger
       file      = File.open(cloud_file.path_to_file)
       mime      = MimeMagic.by_magic(file)
       klass     = Kernel.const_get("Tagger::#{mime.mediatype.titlecase}")
-      klass.new(mime, cloud_file)
+      klass.new(cloud_file, mime, file)
     end
   end
 
   class Base
-    def initialize(mime, cloud_file)
+    def initialize(cloud_file, mime, file)
       @mime       = mime
+      @file       = file
       @cloud_file = cloud_file
+      @attributes = {}
     end
 
     def set_flags_via_path
@@ -29,11 +31,30 @@ module Tagger
     end
   end
 
+
   class Audio < Base
     def inspect!
+      ################
+      #
+      # Get Info via ID3
+      id3_info        = ID3Tag.read(@file)
+      @attributes[:primary_artist] = id3_info.artist
+      @attributes[:title]          = id3_info.title
+      @attributes[:release]        = id3_info.album
+      @attributes[:year]           = id3_info.year
+      @attributes[:track_num]      = id3_info.track_nr
+      @attributes[:genre]          = id3_info.genre
+      @attributes[:comments]       = id3_info.comments
+      @attributes[:artwork]        = id3_info.get_frame(:APIC).try(:content)
+
+
+      ################
+      #
+      # Get Info via AcouticFingerprint Service
+      fingerprint     = Fingerprinter.new(@cloud_file.path_to_file)
+      fingerprint.submit if fingerprint.cleansed_fingerprint.present?
+        
       binding.pry
-      fingerprint = Fingerprinter.new(path_to_file)
-      identifier  = fingerprint.cleansed_fingerprint
     end
   end
 
