@@ -9,10 +9,10 @@ class Fingerprinter
   def initialize(path_to_file=nil)
     path_to_file ||= "/home/bobert/files/Kendrick_Lamar_&_The_Weeknd_&_SZA/Black_Panther_The_Album_Music_From_And_Inspired_By_[Explicit]/B078SGLXJR_(disc_1)_03_-_X_[Explicit].mp3"
     @path_to_file = path_to_file
-    perform
+    generate
   end
 
-  def perform
+  def generate
     # call fingerprint calculator
     @output = `fpcalc "#{@path_to_file}"`
     # output is in the format of:
@@ -22,7 +22,7 @@ class Fingerprinter
       key, value = line.strip.split("=")
       instance_variable_set("@#{key.downcase}", value)
     end
-    @cleansed_fingerprint = @fingerprint.gsub(/[^0-9a-z ]/i, '')
+    @cleansed_fingerprint = @fingerprint.try(:gsub, /[^0-9a-z ]/i, '')
   end
 
   def submit
