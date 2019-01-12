@@ -93,6 +93,8 @@ class Folder < ActiveRecord::Base
         rescue Exception => error
           unless error.message == "Validation failed: Md5 has already been taken"
             puts "  skipping (#{error})"
+            puts "  from"
+            puts error.backtrace.join("\n")
             @@errors << { error.message => path_to_item }
           end
         end
