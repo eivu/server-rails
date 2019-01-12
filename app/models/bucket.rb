@@ -24,8 +24,8 @@ class Bucket < ActiveRecord::Base
     end
 
     def redo
-      Bucket.test_file.destroy
-      Folder.upload "/Users/jinx/Dropbox/eivu/sample", 2
+      Bucket.last.cloud_files.where("created_at >  '2016-01-01'").destroy_all
+      Folder.test_load
     end
   end
 

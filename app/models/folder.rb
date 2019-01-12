@@ -19,6 +19,15 @@ class Folder < ActiveRecord::Base
 
 
   class << self
+
+    #############
+    # test fn below
+    def test_load
+      Folder.upload "/Users/jinx/Dropbox/eivu/sample", 2
+    end
+    # test fn above
+    #############
+
     def create_from_path(path_to_file)
       #save file in "root" of folder if ignore is blank
       return nil if @@ignore.blank?
@@ -80,6 +89,7 @@ class Folder < ActiveRecord::Base
         next if path_to_item.starts_with?(".") || File.directory?(path_to_item)
         begin
           yield path_to_item
+        # should rescue RuntimeError => e
         rescue Exception => error
           unless error.message == "Validation failed: Md5 has already been taken"
             puts "  skipping (#{error})"
