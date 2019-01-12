@@ -25,7 +25,7 @@ class Folder < ActiveRecord::Base
       @folder = @parent = nil
       path_name = Pathname.new(path_to_file.gsub(@@ignore,""))
       path_name.dirname.to_s.split("/").each do |folder_name|
-        @folder   = Folder.where(:name => folder_name.to_s, :ancestry => @parent.try(:path_ids).try(:join, "/")).first_or_create!
+        @folder   = Folder.find_or_create_by!(:name => folder_name.to_s, :ancestry => @parent.try(:path_ids).try(:join, "/"))
         @parent   = @folder
       end
       @folder

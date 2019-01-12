@@ -4,16 +4,28 @@ class Bucket < ActiveRecord::Base
   has_many :cloud_files
 
 
-  def self.determine(obj)
-    if obj.kind_of?(Bucket)
-      obj
-    #is obj a number in quotes
-    elsif obj.to_i.to_s == obj.to_s
-      Bucket.find(obj)  
-    elsif Bucket.kind_of?(String)
-      Bucket.find_by_name(obj)
-    else
-      raise "Bucket not found with id (#{id})"
+  class << self
+    def determine(obj)
+      if obj.kind_of?(Bucket)
+        obj
+      #is obj a number in quotes
+      elsif obj.to_i.to_s == obj.to_s
+        Bucket.find(obj)  
+      elsif Bucket.kind_of?(String)
+        Bucket.find_by_name(obj)
+      else
+        raise "Bucket not found with id (#{id})"
+      end
+    end
+
+    # test function
+    def test_file
+      Bucket.last.cloud_files.last
+    end
+
+    def redo
+      Bucket.test_file.destroy
+      Folder.upload "/Users/jinx/Dropbox/eivu/sample", 2
     end
   end
 

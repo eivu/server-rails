@@ -14,6 +14,12 @@ class CloudFile < ActiveRecord::Base
   validates_uniqueness_of :md5, :scope => :bucket_id
   validates_presence_of :bucket_id
 
+<<<<<<< HEAD
+=======
+  attr_accessor :relative_path, :path_to_file
+
+  before_save :parse_relative_path
+>>>>>>> Refactored code to use Resque uploader for cloudfile and a Tagger
   after_destroy :delete_remote
 
   # default_scope { includes(:bucket => :region) }
@@ -34,7 +40,8 @@ class CloudFile < ActiveRecord::Base
 
     def ingest(path_to_file, bucket, options={})
       cloud_file = CloudFile.upload path_to_file, bucket, options
-      binding.pry
+      tagger = Tagger::Factory.generate(cloud_file)
+      tagger.inspect!
       cloud_file
     end
 
@@ -48,56 +55,10 @@ class CloudFile < ActiveRecord::Base
     end
 
     def upload(path_to_file, bucket, options={})
-      ActiveRecord::Base.transaction do
-        #fetch bucket
-        bucket    = Bucket.determine(bucket)
-
-        #get metadata
-        file      = File.open(path_to_file)
-        mime      = MimeMagic.by_magic(file)
-        md5       = Digest::MD5.file(path_to_file).hexdigest.upcase
-
-        # case mime.mediatype
-        # when "audio"
-        #   fingerprint = Fingerprinter.new(path_to_file)
-        #   identifier  = fingerprint.cleansed_fingerprint
-        # when "video"
-        #   identifier  = md5
-        # end
-        
-        store_dir = "#{mime.mediatype}/#{md5.scan(/.{2}|.+/).join("/")}"
-        filename  = File.basename(path_to_file)
-        sanitized_filename = CloudFile.sanitize(filename)
-
-        #test if file already exists
-        old_id = CloudFile.where(:md5 => md5, :bucket_id => bucket.id).first.try(:id)
-        raise "File already exists (id: #{old_id})" if old_id.present?
-
-        #upload file and create cloud file object
-        obj = bucket.create_object("#{store_dir}/#{sanitized_filename}")
-        obj.upload_file(path_to_file, :acl => 'public-read', :content_type => mime.type, :metadata => {})
-        cloud_file = CloudFile.create! :bucket_id => bucket.id, :folder => Folder.create_from_path(path_to_file), :md5 => md5, :rating => CloudFile.determine_rating(path_to_file), :filesize => file.size, :name => filename, :content_type => mime.type, :asset => sanitized_filename
-        
-        #remove file if prune is true
-        if options[:prune] == true
-          if CloudFile.online?(cloud_file.url)
-            FileUtils.rm(path_to_file) 
-          else
-            raise "file not online"
-          end
-        end
-
-        #clear cached files immediately
-        cloud_file
-      end
-    end
-
-
-    def determine_rating(path_to_file)
-      if Pathname.new(path_to_file).basename.to_s.starts_with?("_")
-        5
-      elsif Pathname.new(path_to_file).basename.to_s.starts_with?("`")
-        4.5
+      if options[:async].present?
+        Resque.enqueue(CloudFileUploader, path_to_file, bucket, options)
+      else
+        CloudFileUploader.perform(path_to_file, bucket, options)
       end
     end
 

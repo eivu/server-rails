@@ -10,8 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
 ActiveRecord::Schema.define(version: 20190110051719) do
+
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -101,15 +101,14 @@ ActiveRecord::Schema.define(version: 20190110051719) do
     t.integer  "year"
     t.integer  "release_pos"
     t.integer  "user_id"
+    t.integer  "duration",     default: 0
+    t.integer  "settings",     default: 0,     null: false
     t.index ["bucket_id"], name: "index_cloud_files_on_bucket_id", using: :btree
     t.index ["data_source_id"], name: "index_cloud_files_on_data_source_id", using: :btree
     t.index ["duration"], name: "index_cloud_files_on_duration", using: :btree
     t.index ["ext_id", "data_source_id"], name: "index_cloud_files_on_ext_id_and_data_source_id", using: :btree
     t.index ["ext_id"], name: "index_cloud_files_on_ext_id", using: :btree
     t.index ["folder_id"], name: "index_cloud_files_on_folder_id", using: :btree
-    t.index ["release_id"], name: "index_cloud_files_on_release_id", using: :btree
-    t.index ["user_id"], name: "index_cloud_files_on_user_id", using: :btree
-    t.index ["year"], name: "index_cloud_files_on_year", using: :btree
   end
 
   add_index "cloud_files", ["bucket_id"], name: "index_cloud_files_on_bucket_id", using: :btree
