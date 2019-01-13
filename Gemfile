@@ -20,6 +20,7 @@ gem 'id3tag', '~> 0.11.0' #mp3 id3 tagger
 gem 'resque', '~> 1.25', '>= 1.25.2'
 gem "oj" #faster json parsing
 gem 'carrierwave', '~> 1.0' #file uploads
+gem 'hashie', '~> 3.6' # collection of classes and mixins that make hashes more powerful.
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
 

@@ -98,6 +98,7 @@ GEM
       activesupport (>= 4.2.0)
     has_secure_token (1.0.0)
       activerecord (>= 3.0)
+    hashie (3.6.0)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     i18n (1.5.1)
@@ -261,6 +262,7 @@ DEPENDENCIES
   coffee-rails
   devise (~> 4.5)
   has_secure_token
+  hashie (~> 3.6)
   id3tag (~> 0.11.0)
   jbuilder
   jquery-rails
