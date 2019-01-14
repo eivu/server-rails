@@ -33,6 +33,10 @@ class Fingerprinter
       key, value = line.strip.split("=")
       instance_variable_set("@#{key.downcase}", value)
     end
+    # make duration an integer
+    if @duration.present?
+      @duration = @duration.to_i
+    end
     @cleansed_fingerprint = @fingerprint.try(:gsub, /[^0-9a-z ]/i, '')
   end
 
@@ -47,13 +51,16 @@ class Fingerprinter
   def parse_results
     # make sure both results and the recordings block exist
     @acoustid   = @response[:results].try(:first).try(:[], :id)
-    if @response[:results].present? && @response[:results][0][:recordings].present?
-      result    = @response[:results][0][:recordings][0].dup
+    if @response[:results].present? && @response[:results][0][:recordings].present? && @duration == duration_from_api
+      recordings = @response[:results][0][:recordings]
+      # @response.try(:[], :results).try(:first)
+      result    = recordings[0].dup
       album    = result.delete(:releasegroups).try(:first)
       @track    = Hashie::Mash.new(result.slice(:id, :title, :duration))
       @track.artists = parse_artists(result[:artists])
       @release  = Hashie::Mash.new(album.slice(:id, :title, :type))
-      @release.artists=parse_artists(album[:artists])
+      # if album artists are blank use the result artists
+      @release.artists=parse_artists(album[:artists] || result[:artists])
     else
       @track  = {}
       @release = {}
@@ -62,20 +69,25 @@ class Fingerprinter
   end
 
 
+  ##################
+  private
+  ##################
 
+
+  def duration_from_api
+    @response.try(:[], :results).try(:first).try(:[], :recordings).try(:first).try(:[], :duration)
+  end
 
   def parse_artists(array)
-    attributes = { :primary => [], :secondary => [] }
     # & means primary, anything else means supporting
     join_chars = ["&"] + array.collect {|x| x[:joinphrase]}.compact.collect(&:strip)
-    array.each_with_index do |hash, index|
+    array.collect.with_index do |hash, index|
       if join_chars[index] == "&"
-        attributes[:primary] << hash.slice(:id, :name)
+        hash.slice(:id, :name).merge(:primary => true)
       else
-        attributes[:secondary] << hash.slice(:id, :name)
+        hash.slice(:id, :name).merge(:primary => true)
       end
     end
-    attributes
   end
 
 end
