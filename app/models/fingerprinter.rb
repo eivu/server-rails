@@ -51,7 +51,7 @@ class Fingerprinter
   def parse_results
     # make sure both results and the recordings block exist
     @acoustid   = @response[:results].try(:first).try(:[], :id)
-    if @response[:results].present? && @response[:results][0][:recordings].present? && @duration == duration_from_api
+    if @response[:results].present? && @response[:results][0][:recordings].present? && duration_ok?
       recordings = @response[:results][0][:recordings]
       # @response.try(:[], :results).try(:first)
       result    = recordings[0].dup
@@ -73,6 +73,9 @@ class Fingerprinter
   private
   ##################
 
+  def duration_ok?
+    (@duration - duration_from_api).abs <= 5
+  end
 
   def duration_from_api
     @response.try(:[], :results).try(:first).try(:[], :recordings).try(:first).try(:[], :duration)
