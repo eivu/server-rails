@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190110051719) do
-
+ActiveRecord::Schema.define(version: 20190114050633) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,7 +44,10 @@ ActiveRecord::Schema.define(version: 20190110051719) do
     t.integer  "video_files_count", default: 0, null: false
     t.integer  "audio_files_count", default: 0, null: false
     t.integer  "peep_files_count",  default: 0, null: false
+<<<<<<< HEAD
     t.integer  "misc_files_count",  default: 0, null: false
+=======
+>>>>>>> Created the following models artist, artist_cloud_file, artist_release, release, release_type
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
     t.index ["audio_files_count"], name: "index_artists_on_audio_files_count", using: :btree
@@ -53,7 +55,10 @@ ActiveRecord::Schema.define(version: 20190110051719) do
     t.index ["data_source_id"], name: "index_artists_on_data_source_id", using: :btree
     t.index ["ext_id", "data_source_id"], name: "index_artists_on_ext_id_and_data_source_id", using: :btree
     t.index ["ext_id"], name: "index_artists_on_ext_id", using: :btree
+<<<<<<< HEAD
     t.index ["misc_files_count"], name: "index_artists_on_misc_files_count", using: :btree
+=======
+>>>>>>> Created the following models artist, artist_cloud_file, artist_release, release, release_type
     t.index ["peep_files_count"], name: "index_artists_on_peep_files_count", using: :btree
     t.index ["releases_count"], name: "index_artists_on_releases_count", using: :btree
     t.index ["video_files_count"], name: "index_artists_on_video_files_count", using: :btree
@@ -83,11 +88,11 @@ ActiveRecord::Schema.define(version: 20190110051719) do
     t.string   "asset"
     t.string   "md5"
     t.string   "content_type"
-    t.bigint   "filesize",     default: 0
+    t.bigint   "filesize",       default: 0
     t.text     "description"
     t.float    "rating"
-    t.boolean  "nsfw",         default: false
-    t.boolean  "adult",        default: false
+    t.boolean  "nsfw",           default: false
+    t.boolean  "adult",          default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "folder_id"
@@ -101,14 +106,16 @@ ActiveRecord::Schema.define(version: 20190110051719) do
     t.integer  "year"
     t.integer  "release_pos"
     t.integer  "user_id"
-    t.integer  "duration",     default: 0
-    t.integer  "settings",     default: 0,     null: false
+
     t.index ["bucket_id"], name: "index_cloud_files_on_bucket_id", using: :btree
     t.index ["data_source_id"], name: "index_cloud_files_on_data_source_id", using: :btree
     t.index ["duration"], name: "index_cloud_files_on_duration", using: :btree
     t.index ["ext_id", "data_source_id"], name: "index_cloud_files_on_ext_id_and_data_source_id", using: :btree
     t.index ["ext_id"], name: "index_cloud_files_on_ext_id", using: :btree
     t.index ["folder_id"], name: "index_cloud_files_on_folder_id", using: :btree
+    t.index ["release_id"], name: "index_cloud_files_on_release_id", using: :btree
+    t.index ["user_id"], name: "index_cloud_files_on_user_id", using: :btree
+    t.index ["year"], name: "index_cloud_files_on_year", using: :btree
   end
 
   add_index "cloud_files", ["bucket_id"], name: "index_cloud_files_on_bucket_id", using: :btree
@@ -162,7 +169,6 @@ ActiveRecord::Schema.define(version: 20190110051719) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
 
   create_table "release_types", force: :cascade do |t|
     t.string   "name"

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  ext_id: 1
+  ext_id_source_id: 1
+
+two:
+  name: MyString
+  ext_id: 1
+  ext_id_source_id: 1
