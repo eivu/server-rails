@@ -9,6 +9,11 @@ class Hash
   end
 
 
+  def rename_key(old_name, new_name)
+    self[new_name] = self.delete(old_name)
+    self
+  end
+
   def clean_foreign_keys
     self.inject({}) do |hash, (key, value)|
       if key.to_s.ends_with?("_id")
