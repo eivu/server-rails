@@ -70,17 +70,9 @@ class Fingerprinter
   private
   ##################
 
-  def duration_ok?
-    (@duration - duration_from_api).abs <= 5
-  end
-
-  def duration_from_api
-    @response.try(:results).try(:first).try(:recordings).try(:first).try(:duration)
-    # @response.try(:[], :results).try(:first).try(:[], :recordings).try(:first).try(:[], :duration)
-  end
-
   def best_recording
-    @best_recording ||= @response.try(:results).try(:first).try(:recordings).detect{|x| (x.try(:duration) - @duration).abs <= 5 } || Hashie::Mash.new
+    return {} if @response.try(:results).try(:first).try(:recordings).blank?
+    @best_recording ||= @response.try(:results).try(:first).try(:recordings).detect{|x| (x.try(:duration).to_i - @duration).abs <= 5 } || Hashie::Mash.new
   end
 
   def parse_artists(array)
