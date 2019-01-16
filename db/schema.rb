@@ -44,10 +44,6 @@ ActiveRecord::Schema.define(version: 20190114050633) do
     t.integer  "video_files_count", default: 0, null: false
     t.integer  "audio_files_count", default: 0, null: false
     t.integer  "peep_files_count",  default: 0, null: false
-<<<<<<< HEAD
-    t.integer  "misc_files_count",  default: 0, null: false
-=======
->>>>>>> Created the following models artist, artist_cloud_file, artist_release, release, release_type
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
     t.index ["audio_files_count"], name: "index_artists_on_audio_files_count", using: :btree
@@ -55,10 +51,6 @@ ActiveRecord::Schema.define(version: 20190114050633) do
     t.index ["data_source_id"], name: "index_artists_on_data_source_id", using: :btree
     t.index ["ext_id", "data_source_id"], name: "index_artists_on_ext_id_and_data_source_id", using: :btree
     t.index ["ext_id"], name: "index_artists_on_ext_id", using: :btree
-<<<<<<< HEAD
-    t.index ["misc_files_count"], name: "index_artists_on_misc_files_count", using: :btree
-=======
->>>>>>> Created the following models artist, artist_cloud_file, artist_release, release, release_type
     t.index ["peep_files_count"], name: "index_artists_on_peep_files_count", using: :btree
     t.index ["releases_count"], name: "index_artists_on_releases_count", using: :btree
     t.index ["video_files_count"], name: "index_artists_on_video_files_count", using: :btree

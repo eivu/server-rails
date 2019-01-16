@@ -9,6 +9,7 @@ class CreateArtists < ActiveRecord::Migration[5.0]
       t.integer :video_files_count, default: 0, null: false
       t.integer :audio_files_count, default: 0, null: false
       t.integer :peep_files_count, default: 0, null: false
+      t.integer :misc_files_count, default: 0, null: false
 
       t.timestamps
     end
@@ -16,6 +17,7 @@ class CreateArtists < ActiveRecord::Migration[5.0]
     add_index :artists, :cloud_files_count
     add_index :artists, :video_files_count
     add_index :artists, :audio_files_count
+    add_index :artists, :misc_files_count
     add_index :artists, :peep_files_count
     add_index :artists, :releases_count
     add_index :artists, [:ext_id, :data_source_id]
