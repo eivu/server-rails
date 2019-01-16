@@ -43,19 +43,16 @@ class Fingerprinter
   def submit
     @fp_url = "https://api.acoustid.org/v2/lookup?client=o4Wf01oR4K&duration=#{@duration}&fingerprint=#{@fingerprint}&meta=recordings+releasegroups+compress"
     @raw_response = RestClient.get @fp_url
-    @response = Oj.load @raw_response
-    @response.recursive_symbolize_keys!
+    @response = Hashie::Mash.new(Oj.load(@raw_response))
     parse_results
   end
 
   def parse_results
     # make sure both results and the recordings block exist
-    @acoustid   = @response[:results].try(:first).try(:[], :id)
-    if @response[:results].present? && @response[:results][0][:recordings].present? && duration_ok?
-      recordings = @response[:results][0][:recordings]
-      # @response.try(:[], :results).try(:first)
-      result    = recordings[0].dup
-      album    = result.delete(:releasegroups).try(:first)
+    @acoustid   = best_recording.try(:id)
+    if @response[:results].present? && best_recording.present?
+      result    = best_recording.dup
+      album     = result.delete(:releasegroups).try(:first)
       @track    = Hashie::Mash.new(result.slice(:id, :title, :duration).rename_key(:id, :ext_id))
       @track.artists = parse_artists(result[:artists])
       @release  = Hashie::Mash.new(album.slice(:id, :title, :type).rename_key(:id, :ext_id))
@@ -78,7 +75,12 @@ class Fingerprinter
   end
 
   def duration_from_api
-    @response.try(:[], :results).try(:first).try(:[], :recordings).try(:first).try(:[], :duration)
+    @response.try(:results).try(:first).try(:recordings).try(:first).try(:duration)
+    # @response.try(:[], :results).try(:first).try(:[], :recordings).try(:first).try(:[], :duration)
+  end
+
+  def best_recording
+    @best_recording ||= @response.try(:results).try(:first).try(:recordings).detect{|x| (x.try(:duration) - @duration).abs <= 5 } || Hashie::Mash.new
   end
 
   def parse_artists(array)

@@ -42,11 +42,18 @@ module Tagger
       def set_flags_via_path(path_to_file)
         if path_to_file.present? && (path_to_file.include?("/pronz") || path_to_file.include?("/peepshow"))
           {
-            :adult => true,
+            :peepy => true,
             :nsfw => true
           }
         else
           {}
+        end
+      end
+
+      def parse_artist_string(value)
+        return [] if value.blank?
+        value.split("&").collect do |name|
+          {:name => name.strip, :primary => true }
         end
       end
     
@@ -77,18 +84,21 @@ module Tagger
 
     def save_data!
       return if @cloud_file.blank?
-      @release = Release.find_or_create_by!(@release_attrs)
-      @release_artists.each do |raw_artist|
-        artist = Artist.configure_and_save! :name => raw_artist.name, :ext_id => raw_artist.ext_id, :data_source_id => @release.data_source_id
-        ArtistRelease.find_or_create_by! :artist_id => artist.id, :release_id => @release.id, :relationship_id => Tagger::Base.convert_primary_to_value(raw_artist.primary)
-      end
 
-      @track_artists.each do |raw_artist|
-        artist = Artist.configure_and_save! :name => raw_artist.name, :ext_id => raw_artist.ext_id, :data_source_id => @release.data_source_id
-        ArtistCloudFile.find_or_create_by! :artist_id => artist.id, :cloud_file_id => @cloud_file.id, :relationship_id => Tagger::Base.convert_primary_to_value(raw_artist.primary)
-      end
+      if @release_attrs.compact.present?
+        @release = Release.configure_and_save!(@release_attrs)
+        @release_artists.each do |raw_artist|
+          artist = Artist.configure_and_save! :name => raw_artist.name, :ext_id => raw_artist.ext_id, :data_source_id => @release.data_source_id
+          ArtistRelease.find_or_create_by! :artist_id => artist.id, :release_id => @release.id, :relationship_id => Tagger::Base.convert_primary_to_value(raw_artist.primary)
+        end
 
-      @cloud_file.update_attributes(@cloud_file_attrs.merge(:release_id => @release.id))
+        @track_artists.each do |raw_artist|
+          artist = Artist.configure_and_save! :name => raw_artist.name, :ext_id => raw_artist.ext_id, :data_source_id => @release.data_source_id
+          ArtistCloudFile.find_or_create_by! :artist_id => artist.id, :cloud_file_id => @cloud_file.id, :relationship_id => Tagger::Base.convert_primary_to_value(raw_artist.primary)
+        end
+
+        @cloud_file.update_attributes(@cloud_file_attrs.merge(:release_id => @release.id))
+      end
       
       @metadata.each do |key, value|
         label   = key.to_s.gsub("_", " ").titlecase
@@ -106,6 +116,7 @@ module Tagger
       save_data!
     end
 
+
     def identify
       @id3_attr       = Hashie::Mash.new
       @fp_attr = {}
@@ -114,8 +125,14 @@ module Tagger
       # Get Info via ID3
       id3_info        = ID3Tag.read(@file)
       
+      if id3_info.artist.present?
+        id3_artist = [{:name => id3_info.artist, :primary => true}]
+      else
+        id3_artist = []
+      end
+
       @id3_attr[:_source]   = id3_info.get_frame(:PRIV).try(:owner_identifier) #"www.amazon.com"
-      @id3_attr[:artists]   = [{:name => id3_info.artist, :primary => true}]
+      @id3_attr[:artists]   = Tagger::Audio.parse_artist_string(id3_info.artist) #id3_artist
       @id3_attr[:title]     = id3_info.title
       @id3_attr[:release]   = id3_info.album
       @id3_attr[:year]      = id3_info.year
@@ -142,7 +159,6 @@ module Tagger
         release_name = fingerprint.release.try(:title) || @id3_attr.release
       end
 
-
       track_id     = fingerprint.track.try(:ext_id)
       release_id   = fingerprint.release.try(:ext_id) 
       @release_artists = fingerprint.try(:release).try(:artists) || @id3_attr[:artists]
@@ -150,11 +166,16 @@ module Tagger
 
       # creates hash to release metadata, nil values will be rmeoved.
       # is used by save_data fn
-      @release_attrs = {
-        :name => release_name,
-        :ext_id => release_id,
-        :data_source_id => 1
-      }.merge(@flags_via_path).compact
+      # only created if we have valid release information
+      if release_name || release_id
+        @release_attrs = {
+          :name => release_name,
+          :ext_id => release_id,
+          :data_source_id => 1
+        }.merge(@flags_via_path).compact
+      else
+        @release_attrs = {}
+      end
 
       # creates hash to store cloud file data, nil values will be rmeoved.
       # is used by save_data fn

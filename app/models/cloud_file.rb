@@ -28,7 +28,7 @@ class CloudFile < ActiveRecord::Base
 
 
   # default_scope { includes(:bucket => :region) }
-  default_scope { includes(:bucket => :region).where(:adult => false) }
+  default_scope { includes(:bucket => :region).where(:peepy => false) }
 
   def visit
     system "open #{self.url}"

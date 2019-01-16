@@ -8,7 +8,7 @@ class Folder < ActiveRecord::Base
 
   validates_uniqueness_of :name, :scope => :ancestry
 
-  default_scope { where(:adult => false) }
+  default_scope { where(:peepy => false) }
 
   #for current version of app, everything is being saved to same bucket, as development proceeds this must be altered
   @@bucket = nil
@@ -25,6 +25,7 @@ class Folder < ActiveRecord::Base
     def test_load
       # Folder.upload "/Users/jinx/Dropbox/eivu/sample", 2
       Folder.upload "/Users/jinx/Music/Amazon\ MP3", 2
+      # Folder.upload "/Users/jinx/Desktop/task", 2
       # Folder.upload "/Users/jinx/Desktop/sample", 2
     end
     # test fn above
@@ -94,7 +95,7 @@ class Folder < ActiveRecord::Base
           yield path_to_item
         # should rescue RuntimeError => e
         rescue Exception => error
-          unless error.message == "Validation failed: Md5 has already been taken"
+          unless error.message == "Validation failed: Md5 has already been taken" || error.message.starts_with?("File already exists")
             puts "  skipping (#{error})"
             puts "  from"
             puts error.backtrace.join("\n")

@@ -26,7 +26,7 @@ class ArtistCloudFile < ApplicationRecord
   end
 
   def resource_count
-    if self.cloud_file.adult?
+    if self.cloud_file.peepy?
       "peep_files_count"
     elsif self.cloud_file.content_type.starts_with?("audio")
       "audio_files_count"
