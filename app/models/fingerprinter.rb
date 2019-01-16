@@ -88,8 +88,9 @@ class Fingerprinter
       if join_chars[index] == "&"
         hash.slice(:id, :name).merge(:primary => true)
       else
-        hash.slice(:id, :name).merge(:primary => true)
+        hash.slice(:id, :name).merge(:primary => false)
       end
+      hash.rename_key(:id, :ext_id)
     end
   end
 
