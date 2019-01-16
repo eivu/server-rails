@@ -7,8 +7,8 @@ class CreateReleases < ActiveRecord::Migration[5.0]
       t.integer :cloud_files_count, default: 0, null: false
       t.integer :release_type_id
       t.integer :bundle_pos, default: 1
-      t.boolean :adult
-      t.boolean :nsfw
+      t.boolean :adult, :nil => false, :default => false
+      t.boolean :nsfw, :nil => false, :default => false
 
       t.timestamps
     end
