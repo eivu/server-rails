@@ -2,25 +2,30 @@ class CloudFile < ActiveRecord::Base
 
   belongs_to :folder
   belongs_to :bucket#, :inverse_of => :cloud_file
+  belongs_to :release, :counter_cache => true
   has_one :user, :through => :bucket
-  has_many :metataggings#, :dependent => :destroy
+  has_many :artist_cloud_files, :dependent => :destroy
+  has_many :artists, :through => :artist_cloud_files
+
+  has_many :metataggings, :dependent => :destroy
   has_many :metadata, :through => :metataggings#, :dependent => :destroy
+
+  # deprecated? below
   has_many :taggings, :source => :cloud_file_tagging#, :dependent => :destroy
   has_many :cloud_file_taggings#, :dependent => :destroy
   has_many :tags, :through => :cloud_file_taggings
+  # deprecated? above
 
   accepts_nested_attributes_for :metataggings
 
-  validates_uniqueness_of :md5, :scope => :bucket_id
+  # validates_uniqueness_of :md5, :scope => :bucket_id
   validates_presence_of :bucket_id
 
-<<<<<<< HEAD
-=======
-  attr_accessor :relative_path, :path_to_file
+  # used for file uploads?
+  # before_save :parse_relative_path
+  # after_create  :increment_counts
+  after_destroy :delete_remote, :prune_release#, :decrement_counts
 
-  before_save :parse_relative_path
->>>>>>> Refactored code to use Resque uploader for cloudfile and a Tagger
-  after_destroy :delete_remote
 
   # default_scope { includes(:bucket => :region) }
   default_scope { includes(:bucket => :region).where(:adult => false) }
@@ -41,7 +46,7 @@ class CloudFile < ActiveRecord::Base
     def ingest(path_to_file, bucket, options={})
       cloud_file = CloudFile.upload path_to_file, bucket, options
       tagger = Tagger::Factory.generate(cloud_file)
-      tagger.inspect!
+      tagger.identify_and_update!
       cloud_file
     end
 
@@ -148,5 +153,31 @@ class CloudFile < ActiveRecord::Base
   private
   ############################################################################
 
+  #relative path is used to construct the folder tree
+  def parse_relative_path
+    if self.relative_path.blank?
+      self.folder_id = nil
+    else
+      @manual_ancestry= []
+      #convert the file path into an array
+      folder_array = self.relative_path.split("/").reject { |x| x.empty? }
+      #remove the last element because it will always be the last element
+      folder_array.pop
+      folder_array.each do |sub_dir|
+        if @manual_ancestry.present?
+          ancestry_str = @manual_ancestry.join("/")
+        else
+          ancestry_str = nil
+        end
+        folder = Folder.find_or_create_by! :ancestry => ancestry_str, :bucket_id => self.bucket.id, :name => sub_dir
+        @manual_ancestry << folder.id
+      end
+      self.folder_id = @manual_ancestry.last
+    end
+  end
+
+  def prune_release
+    # release.destroy if self.release.cloud_files.blank?
+  end
 
 end
