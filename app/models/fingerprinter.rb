@@ -56,9 +56,9 @@ class Fingerprinter
       # @response.try(:[], :results).try(:first)
       result    = recordings[0].dup
       album    = result.delete(:releasegroups).try(:first)
-      @track    = Hashie::Mash.new(result.slice(:id, :title, :duration))
+      @track    = Hashie::Mash.new(result.slice(:id, :title, :duration).rename_key(:id, :ext_id))
       @track.artists = parse_artists(result[:artists])
-      @release  = Hashie::Mash.new(album.slice(:id, :title, :type))
+      @release  = Hashie::Mash.new(album.slice(:id, :title, :type).rename_key(:id, :ext_id))
       # if album artists are blank use the result artists
       @release.artists=parse_artists(album[:artists] || result[:artists])
     else

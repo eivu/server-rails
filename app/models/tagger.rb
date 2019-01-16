@@ -23,11 +23,11 @@ module Tagger
       end
 
       extension = File.extname(path_to_file)
-      file      = File.open(input)
+      file      = File.open(path_to_file)
       if extension.present?
-        mime      = MimeMagic.by_extension(".m4a")
+        mime    = MimeMagic.by_extension(".m4a")
       else
-        mime      = MimeMagic.by_magic(file)
+        mime    = MimeMagic.by_magic(file)
       end
 
       klass     = Kernel.const_get("Tagger::#{mime.mediatype.titlecase}")
@@ -35,7 +35,32 @@ module Tagger
     end
   end
 
+
   class Base
+
+    class << self
+      def set_flags_via_path(path_to_file)
+        if path_to_file.present? && (path_to_file.include?("/pronz") || path_to_file.include?("/peepshow"))
+          {
+            :adult => true,
+            :nsfw => true
+          }
+        else
+          {}
+        end
+      end
+    
+      def convert_primary_to_value(input)
+        if input
+          1
+        else
+          2
+        end
+      end
+    end
+
+
+
     def initialize(input, mime, file)
       if input.is_a? String
         @path_to_file = input
@@ -49,28 +74,39 @@ module Tagger
       @attributes = {}
     end
 
-    def self.set_flags_via_path(path_to_file)
-      if path_to_file.present? && (path_to_file.include?("/pronz") || path_to_file.include?("/peepshow"))
-        {
-          :adult => true,
-          :nsfw => true
-        }
-      end
-    end
 
-
-    def save_data
+    def save_data!
+      return if @cloud_file.blank?
       @release = Release.find_or_create_by!(@release_attrs)
       @release_artists.each do |raw_artist|
-        artist = Artist.find_or_create_by! :name => raw_artist.name, :ext_id => raw_artist.id, :data_source_id => @release.data_source_id
-        ArtistRelease.find_or_create_by! :artist_id => artist.id, :release_id => release.id, :relationship_id => ( raw_artist.primary ? 1 : 2)
+        artist = Artist.configure_and_save! :name => raw_artist.name, :ext_id => raw_artist.ext_id, :data_source_id => @release.data_source_id
+        ArtistRelease.find_or_create_by! :artist_id => artist.id, :release_id => @release.id, :relationship_id => Tagger::Base.convert_primary_to_value(raw_artist.primary)
+      end
+
+      @track_artists.each do |raw_artist|
+        artist = Artist.configure_and_save! :name => raw_artist.name, :ext_id => raw_artist.ext_id, :data_source_id => @release.data_source_id
+        ArtistCloudFile.find_or_create_by! :artist_id => artist.id, :cloud_file_id => @cloud_file.id, :relationship_id => Tagger::Base.convert_primary_to_value(raw_artist.primary)
+      end
+
+      @cloud_file.update_attributes(@cloud_file_attrs.merge(:release_id => @release.id))
+      
+      @metadata.each do |key, value|
+        label   = key.to_s.gsub("_", " ").titlecase
+        type    = MetadataType.find_or_create_by!(:value => label)
+        datum   = Metadatum.find_or_create_by!(:value => value, :user_id => @cloud_file.user_id, :metadata_type_id => type.id)
+        Metatagging.find_or_create_by!(:metadatum_id => datum.id, :cloud_file_id => @cloud_file.id)
       end
     end
   end
 
 
   class Audio < Base
-    def identify!
+    def identify_and_update!
+      identify
+      save_data!
+    end
+
+    def identify
       @id3_attr       = Hashie::Mash.new
       @fp_attr = {}
       ################
@@ -97,44 +133,50 @@ module Tagger
 
       @flags_via_path = Tagger::Audio.set_flags_via_path(@path_to_file)
 
+
       if @id3_attr[:_source].present?
-        track_id     = nil
         track_name   = @id3_attr[:title]
-        release_id   = nil
         release_name = @id3_attr[:release]
       else
-        track_id     = fingerprint.track.try(:id)
         track_name   = fingerprint.track.try(:title) || @id3_attr.title
-        release_id   = fingerprint.release.try(:id)
         release_name = fingerprint.release.try(:title) || @id3_attr.release
       end
 
 
+      track_id     = fingerprint.track.try(:ext_id)
+      release_id   = fingerprint.release.try(:ext_id) 
       @release_artists = fingerprint.try(:release).try(:artists) || @id3_attr[:artists]
       @track_artists   = fingerprint.try(:track).try(:artists) || @id3_attr[:artists]
 
+      # creates hash to release metadata, nil values will be rmeoved.
+      # is used by save_data fn
       @release_attrs = {
         :name => release_name,
         :ext_id => release_id,
         :data_source_id => 1
-      }.merge(flags_via_path).compact
+      }.merge(@flags_via_path).compact
 
+      # creates hash to store cloud file data, nil values will be rmeoved.
+      # is used by save_data fn
       @cloud_file_attrs = {
-        :ext_id => 
-        :data_source_id => 1,
-        :position => @id3_attr[:track_num],
-        :year => @id3_attr[:year]
-      }.merge(flags_via_path).compact
+        :name => track_name,
+        :ext_id => track_id,
+        :data_source_id => (track_id.present? ? 1 : nil),
+        :release_pos => @id3_attr[:track_num],
+        :year => @id3_attr[:year],
+        :duration => fingerprint.try(:duration)
+      }.merge(@flags_via_path).compact
 
+      # creates hash to store metadata, nil values will be rmeoved.
+      # is used by save_data fn
       @metadata = Hashie::Mash.new({
         :genre => @id3_attr[:genre],
         :comments => @id3_attr[:comments],
         :acoustid_fingerprint => fingerprint.try(:cleansed_fingerprint)
       }).compact
-
-
     end
   end
+
 
   class Video < Base
     def determine_rating(path_to_file)
@@ -144,8 +186,6 @@ module Tagger
         4.5
       end
     end
-
-
   end
 
 
