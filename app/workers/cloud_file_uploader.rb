@@ -23,10 +23,9 @@ class CloudFileUploader
       #upload file and create cloud file object
       obj = bucket.create_object("#{store_dir}/#{sanitized_filename}")
       obj.upload_file(path_to_file, :acl => 'public-read', :content_type => mime.type, :metadata => {})
-      cloud_file = CloudFile.create! :bucket_id => bucket.id, :folder => Folder.create_from_path(path_to_file),
+      cloud_file = CloudFile.create! :bucket_id => bucket.id, :folder => Folder.create_from_path(path_to_file, bucket),
                                       :md5 => md5, :filesize => file.size, :name => filename, :content_type => mime.type,
                                       :asset => sanitized_filename, :path_to_file => path_to_file, :user_id => bucket.user_id#, :rating => CloudFile.determine_rating(path_to_file),
-      
       #remove file if prune is true
       if options[:prune] == true
         if CloudFile.online?(cloud_file.url)

@@ -23,18 +23,21 @@ class Folder < ActiveRecord::Base
     #############
     # test fn below
     def test_load
-      Folder.upload "/Users/jinx/Dropbox/eivu/sample", 2
+      # Folder.upload "/Users/jinx/Dropbox/eivu/sample", 2
+      Folder.upload "/Users/jinx/Music/Amazon\ MP3", 2
+      # Folder.upload "/Users/jinx/Desktop/sample", 2
     end
     # test fn above
     #############
 
-    def create_from_path(path_to_file)
+    def create_from_path(path_to_file, bucket)
       #save file in "root" of folder if ignore is blank
       return nil if @@ignore.blank?
       @folder = @parent = nil
+      bucket = @@bucket || Bucket.determine(bucket)
       path_name = Pathname.new(path_to_file.gsub(@@ignore,""))
       path_name.dirname.to_s.split("/").each do |folder_name|
-        @folder   = Folder.find_or_create_by!(:name => folder_name.to_s, :ancestry => @parent.try(:path_ids).try(:join, "/"))
+        @folder   = Folder.find_or_create_by!(:name => folder_name.to_s, :ancestry => @parent.try(:path_ids).try(:join, "/"), :bucket => bucket)
         @parent   = @folder
       end
       @folder
@@ -70,14 +73,14 @@ class Folder < ActiveRecord::Base
     end
 
 
-    #updates the folders that videos are in
-    def update_tree(path_to_dir)
-      Folder.traverse(path_to_dir) do |path_to_item|
-        puts "=== UPDATING #{path_to_item.gsub(@@ignore,"")}"
-        folder = Folder.create_from_path(path_to_item)
-        CloudFile.find_by_md5(Digest::MD5.file(path_to_item).hexdigest.upcase).update_attributes! :folder_id => folder.id
-      end
-    end
+    # #updates the folders that videos are in
+    # def update_tree(path_to_dir)
+    #   Folder.traverse(path_to_dir) do |path_to_item|
+    #     puts "=== UPDATING #{path_to_item.gsub(@@ignore,"")}"
+    #     folder = Folder.create_from_path(path_to_item)
+    #     CloudFile.find_by_md5(Digest::MD5.file(path_to_item).hexdigest.upcase).update_attributes! :folder_id => folder.id
+    #   end
+    # end
 
 
     #traverse the tree and upload every file
@@ -95,6 +98,7 @@ class Folder < ActiveRecord::Base
             puts "  skipping (#{error})"
             puts "  from"
             puts error.backtrace.join("\n")
+            binding.pry
             @@errors << { error.message => path_to_item }
           end
         end
