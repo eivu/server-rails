@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 20190116171344) do
     t.integer  "video_files_count", default: 0, null: false
     t.integer  "audio_files_count", default: 0, null: false
     t.integer  "peep_files_count",  default: 0, null: false
+    t.integer  "misc_files_count",  default: 0, null: false
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
     t.index ["audio_files_count"], name: "index_artists_on_audio_files_count", using: :btree
@@ -51,6 +52,7 @@ ActiveRecord::Schema.define(version: 20190116171344) do
     t.index ["data_source_id"], name: "index_artists_on_data_source_id", using: :btree
     t.index ["ext_id", "data_source_id"], name: "index_artists_on_ext_id_and_data_source_id", using: :btree
     t.index ["ext_id"], name: "index_artists_on_ext_id", using: :btree
+    t.index ["misc_files_count"], name: "index_artists_on_misc_files_count", using: :btree
     t.index ["peep_files_count"], name: "index_artists_on_peep_files_count", using: :btree
     t.index ["releases_count"], name: "index_artists_on_releases_count", using: :btree
     t.index ["video_files_count"], name: "index_artists_on_video_files_count", using: :btree
@@ -98,7 +100,6 @@ ActiveRecord::Schema.define(version: 20190116171344) do
     t.integer  "year"
     t.integer  "release_pos"
     t.integer  "user_id"
-
     t.index ["bucket_id"], name: "index_cloud_files_on_bucket_id", using: :btree
     t.index ["data_source_id"], name: "index_cloud_files_on_data_source_id", using: :btree
     t.index ["duration"], name: "index_cloud_files_on_duration", using: :btree
@@ -109,12 +110,6 @@ ActiveRecord::Schema.define(version: 20190116171344) do
     t.index ["user_id"], name: "index_cloud_files_on_user_id", using: :btree
     t.index ["year"], name: "index_cloud_files_on_year", using: :btree
   end
-
-  add_index "cloud_files", ["bucket_id"], name: "index_cloud_files_on_bucket_id", using: :btree
-  add_index "cloud_files", ["duration"], name: "index_cloud_files_on_duration", using: :btree
-  add_index "cloud_files", ["folder_id"], name: "index_cloud_files_on_folder_id", using: :btree
-
-
 
   create_table "folders", force: :cascade do |t|
     t.string   "name"

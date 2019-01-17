@@ -21,10 +21,14 @@ class CloudFile < ActiveRecord::Base
   # validates_uniqueness_of :md5, :scope => :bucket_id
   validates_presence_of :bucket_id
 
+  attr_accessor :relative_path, :path_to_file
+
   # used for file uploads?
   # before_save :parse_relative_path
   # after_create  :increment_counts
   after_destroy :delete_remote, :prune_release#, :decrement_counts
+
+
 
 
   # default_scope { includes(:bucket => :region) }
