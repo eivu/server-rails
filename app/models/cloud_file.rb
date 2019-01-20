@@ -88,7 +88,7 @@ class CloudFile < ActiveRecord::Base
 
   def url
     raise "Region Not Defined for bucket: #{self.bucket.name}" if self.bucket.region_id.blank?
-    @url ||= "http://#{self.bucket.name}.#{self.bucket.region.endpoint}/#{content_flavor}/#{md5.scan(/.{2}|.+/).join("/")}/#{self.asset}"
+    @url ||= "http://#{self.bucket.name}.#{self.bucket.region.endpoint}/#{media_type}/#{md5.scan(/.{2}|.+/).join("/")}/#{self.asset}"
   end
 
   def filename
@@ -108,7 +108,7 @@ class CloudFile < ActiveRecord::Base
     )
   end
 
-  def content_flavor
+  def media_type
     if self.peepy?
       "peepshow"
     else
