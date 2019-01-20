@@ -8,8 +8,10 @@ module Tagger
       # Tagger::Factory.generate(cloud_file).identify!
 # path = "/Users/jinx/Music/iTunes/iTunes\ Media/Music/Compilations/Essential\ Mix/11.08.2008\ \(256kbit\).m4a"
  # path = "/Users/jinx/Music/iTunes/iTunes\ Media/Music/White\ Label/Alicia/01\ Alicia.mp3"
-
-      Tagger::Factory.generate("/Users/jinx/Dropbox/eivu/sample/Mala/Alicia/01\ Alicia.mp3").identify!
+      cf = CloudFile.find(1978)
+      cf.path_to_file = "/Users/jinx/Desktop/sample/Justin\ Timberlake/Suit\ \&\ Tie\ \(Feat\ JAY\ Z\)\ -\ Single/01\ Suit\ \&\ Tie.mp3"
+      # Tagger::Factory.generate("/Users/jinx/Dropbox/eivu/sample/Mala/Alicia/01\ Alicia.mp3").identify!
+      Tagger::Factory.generate(cf).identify_and_update!
     end
   end
 
@@ -106,6 +108,14 @@ module Tagger
         datum   = Metadatum.find_or_create_by!(:value => value, :user_id => @cloud_file.user_id, :metadata_type_id => type.id)
         Metatagging.find_or_create_by!(:metadatum_id => datum.id, :cloud_file_id => @cloud_file.id)
       end
+
+      # Uploads release artwork
+      if @artwork_data.present?
+        temp_artwork = Tempfile.new(SecureRandom.uuid)
+        temp_artwork.binmode
+        temp_artwork.write(@artwork_data)
+        CloudFileTaggerUploader.perform(temp_artwork.path, bucket, :folder_id => cloud_file.folder_id, :release_id => cloud_file.release_id)
+      end
     end
   end
 
@@ -139,7 +149,7 @@ module Tagger
       @id3_attr[:track_num] = id3_info.track_nr
       @id3_attr[:genre]     = id3_info.genre
       @id3_attr[:comments]  = id3_info.comments.try(:strip)
-      @id3_attr[:artwork]   = id3_info.get_frame(:APIC).try(:content)
+      @artwork_data         = id3_info.get_frame(:APIC).try(:content)
 
 
       ################
@@ -193,7 +203,9 @@ module Tagger
       @metadata = Hashie::Mash.new({
         :genre => @id3_attr[:genre],
         :comments => @id3_attr[:comments],
-        :acoustid_fingerprint => fingerprint.try(:cleansed_fingerprint)
+        :acoustid_fingerprint => fingerprint.try(:cleansed_fingerprint),
+        :original_subpath => Folder.subpath(path_to_file),
+        :original_fullpath => path_to_file,
       }).compact
     end
   end

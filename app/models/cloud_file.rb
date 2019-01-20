@@ -65,9 +65,9 @@ class CloudFile < ActiveRecord::Base
 
     def upload(path_to_file, bucket, options={})
       if options[:async].present?
-        Resque.enqueue(CloudFileUploader, path_to_file, bucket, options)
+        Resque.enqueue(CloudFileTaggerUploader, path_to_file, bucket, options)
       else
-        CloudFileUploader.perform(path_to_file, bucket, options)
+        CloudFileTaggerUploader.perform(path_to_file, bucket, options)
       end
     end
 
@@ -88,7 +88,7 @@ class CloudFile < ActiveRecord::Base
 
   def url
     raise "Region Not Defined for bucket: #{self.bucket.name}" if self.bucket.region_id.blank?
-    @url ||= "http://#{self.bucket.name}.#{self.bucket.region.endpoint}/#{md5.scan(/.{2}|.+/).join("/")}/#{self.asset}"
+    @url ||= "http://#{self.bucket.name}.#{self.bucket.region.endpoint}/#{content_flavor}/#{md5.scan(/.{2}|.+/).join("/")}/#{self.asset}"
   end
 
   def filename
@@ -106,6 +106,14 @@ class CloudFile < ActiveRecord::Base
       # required
       :key => self.path
     )
+  end
+
+  def content_flavor
+    if self.peepy?
+      "peepshow"
+    else
+      self.content_type.to_s.split("/").try("first")
+    end
   end
 
   def tag_list=(tag_array)

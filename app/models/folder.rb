@@ -24,27 +24,33 @@ class Folder < ActiveRecord::Base
     # test fn below
     def test_load
       # Folder.upload "/Users/jinx/Dropbox/eivu/sample", 2
-      Folder.upload "/Users/jinx/Music/Amazon\ MP3", 2
+      # Folder.upload "/Users/jinx/Music/Amazon\ MP3", 2
+
+      
       # Folder.upload "/Users/jinx/Desktop/task", 2
-      # Folder.upload "/Users/jinx/Desktop/sample", 2
+      Folder.upload "/Users/jinx/Desktop/sample", 2
     end
     # test fn above
     #############
 
-    def create_from_path(path_to_file, bucket)
+    def create_from_path(path_to_file)
       #save file in "root" of folder if ignore is blank
       return nil if @@ignore.blank?
       @folder = @parent = nil
-      bucket = @@bucket || Bucket.determine(bucket)
-      path_name = Pathname.new(path_to_file.gsub(@@ignore,""))
+      # bucket = @@bucket || Bucket.determine(bucket)
+      path_name = Pathname.new(path_to_file.gsub(@@ignore,""))   
       path_name.dirname.to_s.split("/").each do |folder_name|
-        @folder   = Folder.find_or_create_by!(:name => folder_name.to_s, :ancestry => @parent.try(:path_ids).try(:join, "/"), :bucket => bucket)
+        binding.pry
+        @folder   = Folder.find_or_create_by!(:name => folder_name.to_s, :ancestry => @parent.try(:path_ids).try(:join, "/"))
         @parent   = @folder
       end
       @folder
     end
 
-
+    def subpath(path_to_item)
+      path_to_item.gsub(@@ignore,"")
+    end
+    
     def upload(path_to_dir, bucket, options={})
       bucket = @@bucket || Bucket.determine(bucket)
       Folder.traverse(path_to_dir) do |path_to_item|
@@ -99,7 +105,6 @@ class Folder < ActiveRecord::Base
             puts "  skipping (#{error})"
             puts "  from"
             puts error.backtrace.join("\n")
-            binding.pry
             @@errors << { error.message => path_to_item }
           end
         end
