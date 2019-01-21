@@ -160,7 +160,7 @@ module Tagger
     def best_matching_release
       if @id3_attr[:release].present? && @fingerprint.response.present?
         release = @fingerprint.matching_release(@id3_attr[:release])
-        release ||= ({:title => @id3_attr[:release] } || @fingerprint.first_release )
+        release ||= other_release_info
       elsif @id3_attr[:release].present?
         { :title => @id3_attr[:release] }
       elsif @fingerprint.first_release.present?
@@ -176,6 +176,8 @@ module Tagger
         { :title => @id3_attr[:release] }
       elsif @fingerprint.response.present?
         @fingerprint.first_release
+      elsif @id3_attr[:release].present?
+        { :title => @id3_attr[:release] } 
       else
         {}
       end      
@@ -259,7 +261,7 @@ module Tagger
         :comments => @id3_attr[:comments],
         :acoustid_fingerprint => @fingerprint.try(:cleansed_fingerprint),
         :original_subpath => Folder.subpath(@path_to_file),
-        :original_fullpath => path_to_file,
+        :original_fullpath => @path_to_file,
       }).compact
     end
   end
