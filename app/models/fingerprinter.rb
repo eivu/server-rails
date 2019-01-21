@@ -66,6 +66,35 @@ class Fingerprinter
   end
 
 
+  # release[group] closest to input string
+  def matching_release(string)
+    return nil if best_recording.blank? || string.blank?
+    titles = best_recording.releasegroups.collect(&:title)
+
+    matcher = FuzzyMatch.new(titles)
+    match = matcher.find(string)
+
+    hash = best_recording.releasegroups.detect {|hash| hash.title == match }
+
+    if hash.present?
+      hash.rename_key(:id, :ext_id)
+    else
+      nil
+    end
+  end
+
+
+  # first release[group] defined in the response
+  def first_release
+    hash = best_recording.try(:releasegroups).try(:first)
+    if hash.present?
+      hash.rename_key(:id, :ext_id)
+    else
+      {}
+    end
+  end
+
+
   ##################
   private
   ##################
