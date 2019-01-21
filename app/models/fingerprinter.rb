@@ -55,12 +55,13 @@ class Fingerprinter
   def parse_results
     # make sure both results and the recordings block exist
     # dup is being used throughout so the original object can be referenced without encountering any side effects
+
     if first_result_recordings.present? && best_recording.present?
       @acoustid   = best_recording.try(:id)
       result    = best_recording.dup
       deleted_rg= result.delete(:releasegroups)
 
-      album     = @matching_release || deleted_rg.try(:first) || Hashie::Mash.new
+      album     = self.matched_release || deleted_rg.try(:first) || Hashie::Mash.new
       @track    = result.dup.slice(:id, :title, :duration).rename_key(:id, :ext_id)
       @track.artists = parse_artists(result.dup.artists)
       @release  = album.dup.slice(:id, :title, :type).rename_key(:id, :ext_id)
@@ -73,6 +74,14 @@ class Fingerprinter
     :ok
   end
 
+
+  def matched_release
+    if self.found_via_fuzzy?
+      filtered_release
+    else
+      nil
+    end
+  end
 
   # # release[group] closest to input string
   # def matching_release(string)
@@ -92,22 +101,6 @@ class Fingerprinter
   # end
 
 
-  def return_matching_release_hashes(obj)
-    return nil if obj.blank? || @release_name.blank?
-    titles = obj.releasegroups.collect(&:title)
-
-    matcher = FuzzyMatch.new(titles)
-    match = matcher.find(@release_name)
-
-    hash = obj.releasegroups.detect {|hash| hash.title == match }
-
-    if hash.present?
-      hash#.rename_key(:id, :ext_id)
-      # hash
-    else
-      nil
-    end
-  end
 
 
   ##################
@@ -157,14 +150,50 @@ class Fingerprinter
   def filtered_release
     return nil if first_result_recordings.blank? || @release_name.blank?
     # caching the result
+
     @filtered_release ||= 
       (
         filtered = first_result_recordings.select{|x| (x.try(:duration).to_i - @duration).abs <= 5 } || Hashie::Mash.new
-        filtered = filtered.collect{|x| return_matching_release_hashes(x) }.compact.uniq
-        release  = filtered.first
-        release
+        release = filter_matching_releases_from_array(filtered)
       )
   end
+
+
+  def return_matching_release_hashes(obj)
+    return nil if obj.blank? || @release_name.blank?
+    titles = obj.releasegroups.collect(&:title)
+
+    matcher = FuzzyMatch.new(titles)
+    match = matcher.find(@release_name)
+
+    hash = obj.releasegroups.detect {|hash| hash.title == match }
+
+    if hash.present?
+      hash#.rename_key(:id, :ext_id)
+      # hash
+    else
+      nil
+    end
+  end
+
+
+  def filter_matching_releases_from_array(obj)
+    return nil if obj.blank? || @release_name.blank?
+    titles = obj.collect {|x| x.releasegroups.collect(&:title)}.flatten
+
+    matcher = FuzzyMatch.new(titles)
+    match = matcher.find(@release_name)
+
+    return nil if match.blank?
+
+    obj.each do |entry|
+      value = entry.releasegroups.detect {|hash| hash.title == match }
+      return value if value.present?
+    end
+
+    nil
+  end
+
 
 
 end
