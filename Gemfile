@@ -19,7 +19,7 @@ gem "rjson"  #templating for json (no version in gem because it doenst have any 
 gem 'id3tag', '~> 0.11.0' #mp3 id3 tagger
 gem 'resque', '~> 1.25', '>= 1.25.2'
 gem "oj" #faster json parsing
-gem 'carrierwave', '~> 1.0' #file uploads
+gem "fuzzy_match" #Find a needle (a document or record) in a haystack using string similarity and (optionally) regular expression rules. Uses Dice's Coefficient (aka Pair Similiarity) and Levenshtein Distance internally.
 gem 'hashie', '~> 3.6' # collection of classes and mixins that make hashes more powerful.
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
