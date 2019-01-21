@@ -48,7 +48,7 @@ class Folder < ActiveRecord::Base
     end
 
     def subpath(path_to_item)
-      path_to_item.gsub(@@ignore,"")
+      path_to_item.gsub(@@ignore.to_s,"")
     end
     
     def upload(path_to_dir, bucket, options={})
