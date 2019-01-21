@@ -4,6 +4,8 @@ module Determinable
 
   module ClassMethods
     def determine(obj)
+      # short circuit if the obj is blank
+      return nil if  obj.blank?
       klass = self
       if obj.kind_of?(klass)
         obj
