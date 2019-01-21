@@ -1,6 +1,6 @@
 class CloudFile < ActiveRecord::Base
 
-  belongs_to :folder
+  belongs_to :folder, :counter_cache => true
   belongs_to :bucket#, :inverse_of => :cloud_file
   belongs_to :release, :counter_cache => true
   has_one :user, :through => :bucket
