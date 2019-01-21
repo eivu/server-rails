@@ -1,4 +1,4 @@
-module Determinable
+module ConfigureAndSavable
 
   extend ActiveSupport::Concern
 

@@ -1,5 +1,5 @@
 class Artist < ApplicationRecord
-  include Determinable
+  include ConfigureAndSavable
   has_many :artist_releases, :dependent => :destroy
   has_many :releases, :through => :artist_releases
 

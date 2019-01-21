@@ -1,5 +1,5 @@
 class Release < ApplicationRecord
-  include Determinable
+  include ConfigureAndSavable
   belongs_to :release_type
 
   has_many :cloud_files, :dependent => :destroy, :counter_cache => :cloud_files_count
