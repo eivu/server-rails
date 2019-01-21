@@ -1,6 +1,6 @@
 #Folders are only metadata to preserve the same tree layout as found on the user's drive
 class Folder < ActiveRecord::Base
-  # acts_as_tree order: "name"
+  include Determinable
   has_ancestry
 
   belongs_to :bucket
