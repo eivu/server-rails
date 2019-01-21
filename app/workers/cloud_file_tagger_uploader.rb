@@ -22,7 +22,7 @@ class CloudFileTaggerUploader
         store_dir = "#{mime.mediatype}/#{md5.scan(/.{2}|.+/).join("/")}"
         filename  = File.basename(path_to_file)
         sanitized_filename = CloudFile.sanitize(filename)
-        folder    = Folder.determine(options[:folder]) || Folder.create_from_path(path_to_file)
+        folder    = Folder.determine(options[:folder_id]) || Folder.create_from_path(path_to_file)
 
         #test if file already exists
         old_id = CloudFile.where(:md5 => md5, :bucket_id => bucket.id).first.try(:id)
