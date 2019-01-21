@@ -17,6 +17,8 @@ class Folder < ActiveRecord::Base
   #making it a set so duplicates won't be stored
   @@errors = Set.new
 
+  SKIPABLE_FILETYPES = [".m4p"]
+
 
   class << self
 
@@ -95,7 +97,7 @@ class Folder < ActiveRecord::Base
       @@ignore += "/" unless @@ignore.ends_with?("/")
       #grab all folders in the dir
       Dir.glob("#{path_to_dir}/**/*").each do |path_to_item|
-        next if path_to_item.starts_with?(".") || File.directory?(path_to_item)
+        next if path_to_item.starts_with?(".") || SKIPABLE_FILETYPES.any? {|ext| path_to_item.ends_with?(ext) } || File.directory?(path_to_item)
         begin
           yield path_to_item
         # should rescue RuntimeError => e
