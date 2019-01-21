@@ -8,10 +8,12 @@ module Tagger
       # Tagger::Factory.generate(cloud_file).identify!
 # path = "/Users/jinx/Music/iTunes/iTunes\ Media/Music/Compilations/Essential\ Mix/11.08.2008\ \(256kbit\).m4a"
  # path = "/Users/jinx/Music/iTunes/iTunes\ Media/Music/White\ Label/Alicia/01\ Alicia.mp3"
-      cf = CloudFile.find(1978)
-      cf.path_to_file = "/Users/jinx/Desktop/sample/Justin\ Timberlake/Suit\ \&\ Tie\ \(Feat\ JAY\ Z\)\ -\ Single/01\ Suit\ \&\ Tie.mp3"
+      # cf = CloudFile.find(1978)
+      # cf.path_to_file = "/Users/jinx/Desktop/sample/Justin\ Timberlake/Suit\ \&\ Tie\ \(Feat\ JAY\ Z\)\ -\ Single/01\ Suit\ \&\ Tie.mp3"
       # Tagger::Factory.generate("/Users/jinx/Dropbox/eivu/sample/Mala/Alicia/01\ Alicia.mp3").identify!
-      Tagger::Factory.generate(cf).identify
+      # obj = cf
+      obj = "/Users/jinx/Desktop/sample/Justin\ Timberlake/Greatest\ Hits/05\ Rock\ Your\ Body.mp3"
+      Tagger::Factory.generate(obj).identify
     end
 
 
@@ -159,19 +161,25 @@ module Tagger
 
     def best_matching_release
       if @id3_attr[:release].present? && @fingerprint.response.present?
-        release = @fingerprint.matching_release(@id3_attr[:release])
-        release ||= other_release_info
+        # use release if it was found via fuzzy, otherwise use other_release_sources
+        release = @fingerprint.release if @fingerprint.found_via_fuzzy?
+        release ||= other_release_sources
       elsif @id3_attr[:release].present?
-        { :title => @id3_attr[:release] }
+        release = { :title => @id3_attr[:release] }
       elsif @fingerprint.first_release.present?
-        @fingerprint.first_release
+        release = @fingerprint.first_release
       else
-        {}
+        release = {}
       end
+      release
     end
 
-
-    def other_release_info
+    # order of choice for release name after fuzzy matching fails
+    # 1: id3 tag if _source is defined
+    # 2: anything from API
+    # 3: id3 tag
+    # 4: empty hash
+    def other_release_sources
       if @id3_attr[:_source].present?
         { :title => @id3_attr[:release] }
       elsif @fingerprint.response.present?
@@ -211,7 +219,7 @@ module Tagger
       ################
       #
       # Get Info via AcouticFingerprint Service
-      @fingerprint     = Fingerprinter.new(@path_to_file)
+      @fingerprint     = Fingerprinter.new(@id3_attr[:title], @id3_attr[:release], @path_to_file)
       @fingerprint.submit if @fingerprint.cleansed_fingerprint.present?
 
       @flags_via_path = Tagger::Audio.set_flags_via_path(@path_to_file)
@@ -258,11 +266,12 @@ module Tagger
       # is used by save_data fn
       @metadata = Hashie::Mash.new({
         :genre => @id3_attr[:genre],
-        :comments => @id3_attr[:comments],
+        :comments => @id3_attr[:comments].strip,
         :acoustid_fingerprint => @fingerprint.try(:cleansed_fingerprint),
         :original_subpath => Folder.subpath(@path_to_file),
         :original_fullpath => @path_to_file,
       }).compact
+
     end
   end
 

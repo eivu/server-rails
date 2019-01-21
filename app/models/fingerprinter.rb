@@ -41,6 +41,10 @@ class Fingerprinter
     @cleansed_fingerprint = @fingerprint.try(:gsub, /[^0-9a-z ]/i, '')
   end
 
+  def found_via_fuzzy?
+    @found_via_fuzzy.present?
+  end
+
   def submit
     @fp_url = "https://api.acoustid.org/v2/lookup?client=o4Wf01oR4K&duration=#{@duration}&fingerprint=#{@fingerprint}&meta=recordings+releasegroups+compress"
     @raw_response = RestClient.get @fp_url
@@ -56,7 +60,7 @@ class Fingerprinter
       result    = best_recording.dup
       deleted_rg= result.delete(:releasegroups)
 
-      album     = @best_release || deleted_rg.try(:first) || Hashie::Mash.new
+      album     = @matching_release || deleted_rg.try(:first) || Hashie::Mash.new
       @track    = result.dup.slice(:id, :title, :duration).rename_key(:id, :ext_id)
       @track.artists = parse_artists(result.dup.artists)
       @release  = album.dup.slice(:id, :title, :type).rename_key(:id, :ext_id)
@@ -122,8 +126,8 @@ class Fingerprinter
     # retrieve release with closest release/album title or with a similiar duration
     if filtered_release.present?
       best_recording = first_result_recordings.detect {|entry| entry.releasegroups.include?(filtered_release) }
-      # if we found something, then the matching entry is indeed the best release
-      @best_release  = filtered_release if best_recording.present?
+      # if we found something, then let's flag we found it via fuzzy matching
+      @found_via_fuzzy  = true if best_recording.present?
     else
       best_recording = first_result_recordings.detect{|x| (x.try(:duration).to_i - @duration).abs <= 5 }
     end
