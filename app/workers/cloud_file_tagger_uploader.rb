@@ -6,7 +6,7 @@ class CloudFileTaggerUploader
   class << self
 
     def perform(path_to_file, bucket, options={})
-      CloudFileTaggerUploader.perform(path_to_file, bucket, options)
+      CloudFileTaggerUploader.upload(path_to_file, bucket, options)
     end
 
     def upload(path_to_file, bucket, options={})

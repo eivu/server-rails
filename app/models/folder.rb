@@ -40,7 +40,6 @@ class Folder < ActiveRecord::Base
       # bucket = @@bucket || Bucket.determine(bucket)
       path_name = Pathname.new(path_to_file.gsub(@@ignore,""))   
       path_name.dirname.to_s.split("/").each do |folder_name|
-        binding.pry
         @folder   = Folder.find_or_create_by!(:name => folder_name.to_s, :ancestry => @parent.try(:path_ids).try(:join, "/"))
         @parent   = @folder
       end
