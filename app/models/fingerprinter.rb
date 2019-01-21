@@ -62,8 +62,6 @@ class Fingerprinter
       @release  = album.dup.slice(:id, :title, :type).rename_key(:id, :ext_id)
       # if album artists are blank use the result artists
       @release.artists = parse_artists(album.artists || result.artists)
-
-      binding.pry
     else
       @track  = {}
       @release = {}
