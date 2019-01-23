@@ -5,7 +5,8 @@ class ExternalsController < ApplicationController
     redirect_to overview_path if user_signed_in?
   end
 
+
+
   def show
   end
-
 end
