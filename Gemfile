@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby '2.5.1'
 
 # i/o
-gem 'rails', '5.1.6.1'
+gem 'rails', '5.2.2'
 gem "random_data", "~> 1.6.0" #allows to easily create random date, like Random.email or Random.last
 gem 'pg', '~> 0.18' #postgres
 gem 'ancestry' #used to nest project_products by providing a parent_id and many convenience methods
