@@ -1,6 +1,6 @@
 class Api::V1Controller < ApplicationController
-  skip_before_filter :verify_authenticity_token, :authenticate_user!#, if: :json_request?
-  before_filter :find_user
+  skip_before_action :verify_authenticity_token, :authenticate_user!#, if: :json_request?
+  before_action :find_user
 
   ############################################################################
   private

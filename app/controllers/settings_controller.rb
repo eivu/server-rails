@@ -1,6 +1,6 @@
 class SettingsController < ApplicationController
 
-  before_filter :set_left_nav_dir
+  before_action :set_left_nav_dir
 
   ############################################################################
   private

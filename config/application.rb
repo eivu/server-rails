@@ -12,7 +12,7 @@ module Eivu
     config.autoload_paths += %W(#{config.root}/app/**)
 
     config.to_prepare do
-      Devise::SessionsController.skip_before_filter :authenticate_user!
+      Devise::SessionsController.skip_before_action :authenticate_user!
     end
 
     # Settings in config/environments/* take precedence over those specified here.
