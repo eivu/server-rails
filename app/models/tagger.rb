@@ -12,8 +12,13 @@ module Tagger
       # cf.path_to_file = "/Users/jinx/Desktop/sample/Justin\ Timberlake/Suit\ \&\ Tie\ \(Feat\ JAY\ Z\)\ -\ Single/01\ Suit\ \&\ Tie.mp3"
       # Tagger::Factory.generate("/Users/jinx/Dropbox/eivu/sample/Mala/Alicia/01\ Alicia.mp3").identify!
       # obj = cf
-      obj = "/Users/jinx/Desktop/sample/Justin\ Timberlake/Greatest\ Hits/05\ Rock\ Your\ Body.mp3"
-      Tagger::Factory.generate(obj).identify
+      # obj = "/Users/jinx/Desktop/sample/Justin\ Timberlake/Greatest\ Hits/05\ Rock\ Your\ Body.mp3"
+      # obj = "/Users/jinx/Desktop/sample/Justin\ Timberlake/Greatest\ Hits/13\ \(Oh\ No\)\ What\ You\ Got.mp3"
+      # obj = "/Users/jinx/Desktop/sample/Justin\ Timberlake/Greatest\ Hits/08\ Summer\ Love\ \(Set\ The\ Mood\).mp3"
+      # obj = "/Users/jinx/Desktop/sample/Justin\ Timberlake/Greatest\ Hits/02\ What\ Goes\ Around,\ Comes\ Around.mp3"
+      obj= "/Users/jinx/Desktop/foo/Justin\ Timberlake/Justified/06\ Rock\ Your\ Body.mp3"
+      t = Tagger::Factory.generate(obj)
+      t.identify
     end
 
 
@@ -166,8 +171,8 @@ module Tagger
         release ||= other_release_sources
       elsif @id3_attr[:release].present?
         release = { :title => @id3_attr[:release] }
-      elsif @fingerprint.first_release.present?
-        release = @fingerprint.first_release
+      elsif @fingerprint.release.present?
+        release = @fingerprint.release
       else
         release = {}
       end
@@ -183,7 +188,7 @@ module Tagger
       if @id3_attr[:_source].present?
         { :title => @id3_attr[:release] }
       elsif @fingerprint.response.present?
-        @fingerprint.first_release
+        @fingerprint.release.present?
       elsif @id3_attr[:release].present?
         { :title => @id3_attr[:release] } 
       else
@@ -205,10 +210,10 @@ module Tagger
         id3_artist = []
       end
 
-      @id3_attr[:_source]   = id3_info.get_frame(:PRIV).try(:owner_identifier) #"www.amazon.com"
+      @id3_attr[:_source]   = id3_info.get_frames(:PRIV).try(:first).try(:owner_identifier) #"www.amazon.com" o "PeakValue"
       @id3_attr[:artists]   = Tagger::Audio.parse_artist_string(id3_info.artist) #id3_artist
-      @id3_attr[:title]     = id3_info.title
-      @id3_attr[:release]   = id3_info.album
+      @id3_attr[:title]     = id3_info.title.try(:strip)
+      @id3_attr[:release]   = id3_info.album.try(:strip)
       @id3_attr[:year]      = id3_info.year
       @id3_attr[:track_num] = id3_info.track_nr
       @id3_attr[:genre]     = id3_info.genre
@@ -266,12 +271,11 @@ module Tagger
       # is used by save_data fn
       @metadata = Hashie::Mash.new({
         :genre => @id3_attr[:genre],
-        :comments => @id3_attr[:comments].strip,
+        :comments => @id3_attr[:comments],
         :acoustid_fingerprint => @fingerprint.try(:cleansed_fingerprint),
         :original_subpath => Folder.subpath(@path_to_file),
         :original_fullpath => @path_to_file,
       }).compact
-
     end
   end
 

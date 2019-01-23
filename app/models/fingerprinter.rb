@@ -118,7 +118,10 @@ class Fingerprinter
 
     # retrieve release with closest release/album title or with a similiar duration
     if filtered_release.present?
-      best_recording = first_result_recordings.detect {|entry| entry.releasegroups.include?(filtered_release) }
+      # best_recording = first_result_recordings.detect {|entry| entry.releasegroups.include?(filtered_release) }
+      
+      best_recording = first_result_recordings.detect {|entry| entry.releasegroups.try(:include?, filtered_release) }
+
       # if we found something, then let's flag we found it via fuzzy matching
       @found_via_fuzzy  = true if best_recording.present?
     else
@@ -153,7 +156,7 @@ class Fingerprinter
 
     @filtered_release ||= 
       (
-        filtered = first_result_recordings.select{|x| (x.try(:duration).to_i - @duration).abs <= 5 } || Hashie::Mash.new
+        filtered = first_result_recordings.select{|x| (x.try(:duration).to_i - @duration).abs <= 15 } || Hashie::Mash.new
         release = filter_matching_releases_from_array(filtered)
       )
   end
