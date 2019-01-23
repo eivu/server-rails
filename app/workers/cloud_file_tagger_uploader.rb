@@ -18,14 +18,22 @@ class CloudFileTaggerUploader
         file      = File.open(path_to_file)
         mime      = MimeMagic.by_magic(file)
         md5       = Digest::MD5.file(path_to_file).hexdigest.upcase
-        
-        store_dir = "#{mime.mediatype}/#{md5.scan(/.{2}|.+/).join("/")}"
+
+        flags     = Tagger::Base.set_flags_via_path(path_to_file)
+        if flags[:peepy].present?
+          mediatype = "peepshow"
+        else 
+          mediatype = mime.mediatype
+        end
+        store_dir = "#{mediatype}/#{md5.scan(/.{2}|.+/).join("/")}"
         filename  = File.basename(path_to_file)
         sanitized_filename = CloudFile.sanitize(filename)
         folder    = Folder.determine(options[:folder_id]) || Folder.create_from_path(path_to_file)
 
         #test if file already exists
-        old_id = CloudFile.where(:md5 => md5, :bucket_id => bucket.id).first.try(:id)
+        old_id = CloudFile.where(:md5 => md5, :bucket_id => bucket.id, :folder_id => folder.try(:id)).first.try(:id)
+
+        # audio files can be duplicated
         raise "File already exists (id: #{old_id})" if old_id.present?
 
         #upload file and create cloud file object
