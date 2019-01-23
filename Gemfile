@@ -15,6 +15,7 @@ gem 'rest-client'#, '~> 1.8.0' #A simple HTTP and REST client for Ruby, inspired
 gem 'attr_encrypted', '~> 3.0', '>= 3.0.3' #Generates attr_accessors that encrypt and decrypt attributes transparently
 gem 'has_secure_token' #generate the 24-character unique token
 gem 'bitfields', '~> 0.6.0' #store multiple booleans in a single integer
+gem 'foreman', '~> 0.82.0' #Manage Procfile-based applications http://ddollar.github.com/foreman
 # gem "rjson"  #templating for json (no version in gem because it doenst have any depenedencies)
 gem 'webpacker', '~> 3.5' #Use Webpack to manage app-like JavaScript modules in Rails
 gem 'id3tag', '~> 0.11.0' #mp3 id3 tagger
@@ -32,7 +33,7 @@ gem 'jquery-rails' # Use jquery as the JavaScript library
 gem 'sass-rails', '~> 5.0.7' # Use SCSS for stylesheets and useful for Sass-powered version of Bootstrap
 gem 'bootstrap-sass', '~> 3.3.7' #twitter bootstrap stylings
 # gem 'coffee-rails', '~> 4.1.0'
-# gem 'jbuilder'#, '~> 2.8' # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
+gem 'jb', '~> 0.4.1' #Faster and simpler Jbuilder alternative
 # bundle exec rake doc:rails generates the API under doc/api.
 
 group :doc do 
