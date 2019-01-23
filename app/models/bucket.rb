@@ -14,9 +14,10 @@ class Bucket < ActiveRecord::Base
     def redo
       # Bucket.last.cloud_files.where("created_at >  '2016-01-01'").destroy_all
       # Artist.where("created_at >  '2016-01-01'").destroy_all
-      # Release.where("created_at >  '2016-01-01'").destroy_all
-      # Folder.where("created_at >  '2016-01-01'").destroy_all
-      # Folder.test_load
+      Release.where("id > 100").destroy_all
+      Folder.where("id > 529").destroy_all
+      CloudFile.where("id > 2000").destroy_all
+      Folder.test_load
     end
   end
 
