@@ -2,4 +2,12 @@
 
 <div id="app">
   {{ message }}
+
+
+
+  <ul>
+    <li v-for="folder in folders">
+      {{ folder[0].name }}
+    </li>
+  </ul>
 </div>
