@@ -4,7 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
   var app = new Vue({
     el: '#app',
     data: {
-      message: 'Hello Vue!'
+      message: 'Hello Vue!',
+      folders: [{"Justin":{"Album #1":{}}},{"XX":{"XX":{}}}]
     },
     // mounted: {
     //   axios
