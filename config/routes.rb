@@ -31,6 +31,6 @@ Rails.application.routes.draw do
 
   # trick pulled from http://stackoverflow.com/questions/3791096/devise-logged-in-root-route-rails-3
   # there might be a better way of doing this...
-  root'external#homepage'#, :constraints => lambda {|r| r.env["warden"].authenticate? }
+  root'externals#homepage'#, :constraints => lambda {|r| r.env["warden"].authenticate? }
 
 end
