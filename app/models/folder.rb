@@ -8,6 +8,8 @@ class Folder < ActiveRecord::Base
 
   validates_uniqueness_of :name, :scope => :ancestry
 
+  # scope :clean, where(:peepy => false)
+  scope(:clean, -> { where(:peepy => false) })
   default_scope { where(:peepy => false) }
 
   #for current version of app, everything is being saved to same bucket, as development proceeds this must be altered
