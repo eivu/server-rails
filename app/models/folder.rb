@@ -19,7 +19,7 @@ class Folder < ActiveRecord::Base
   #making it a set so duplicates won't be stored
   @@errors = Set.new
 
-  SKIPABLE_FILETYPES = [".m4p"]
+  SKIPABLE_FILETYPES = %w(m4p nfo sfv)
 
 
   class << self
