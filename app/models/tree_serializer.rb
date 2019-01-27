@@ -9,7 +9,7 @@ class TreeSerializer
     when "Folder"
       sub_folders = object.children.order(:name).collect {|sub_folder| TreeSerializer.build(sub_folder)}
       cloud_files = object.children.order(:name).collect {|cloud_file| TreeSerializer.build(cloud_file)}
-      tree = object_attr.merge("entry_type" => "grouping", "klass" => object.class.name, "children" => (sub_folders + cloud_files))
+      tree = object_attr.merge("entry_type" => "grouping", "klass" => object.class.name.underscore, "children" => (sub_folders + cloud_files))
     when "NilClass"
       folders = Folder.roots.collect {|folder| TreeSerializer.build(folder)}
       cloud_files = CloudFile.where(:folder_id => nil).order(:name).collect {|cloud_file| TreeSerializer.build(cloud_file)}
