@@ -5,9 +5,12 @@
   {{ message }}
 
 
+
+
   <ul>
-    <li v-for="folder in treeData">
-      {{ folder.name }}
-    </li>
+  	<tree-node
+      v-for="node in treeData"
+      v-bind:node="node"
+    ></tree-node>
   </ul>
 </div>
