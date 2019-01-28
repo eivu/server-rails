@@ -1,9 +1,11 @@
 class TreeSerializer
 
   def self.build(object=nil)
-    base_hash = object.try(:attributes) || {}
-    klass = object.class.name.underscore
-    object_attr = base_hash.merge("klass" => klass, "vue_id" => "#{klass}_#{object.id}")
+    if object.present?
+      base_hash = object.try(:attributes) || {}
+      klass = object.class.name.underscore
+      object_attr = base_hash.merge("klass" => klass, "vue_id" => "#{klass}_#{object.id}")
+    end
     case object.class.name
     when "CloudFile"
       tree = object_attr.merge("entry_type" => "file")
