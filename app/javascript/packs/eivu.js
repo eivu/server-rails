@@ -5,14 +5,22 @@ Vue.prototype.$http = axios;
 
 Vue.component('tree-node', {
   props: ['node'],
+  data() {
+    return { showChildren: false, dataLoaded: false }
+  },
   template: 
     `<li v-bind:id="node.id">
-      <div v-bind:class="node.klass">{{ node.name }}</div>
-      <ul v-if="node.children">
+      <div v-bind:class="node.klass" @click="toggleChildren">{{ node.name }}</div>
+      <ul v-if="node.children && showChildren">
         <tree-node v-for="child in node.children" v-bind:node="child" :key="child.vue_id">
         </tree-node>
       </ul>
-    </li>`
+    </li>`,
+  methods: {
+    toggleChildren() {
+      this.showChildren = !this.showChildren;
+    }
+  }
 })
 
 document.addEventListener('DOMContentLoaded', () => {
