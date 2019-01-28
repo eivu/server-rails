@@ -1,4 +1,4 @@
-class AddEncryptedAccessKeyIdAndSecretAccessKeyToUsers < ActiveRecord::Migration
+class AddEncryptedAccessKeyIdAndSecretAccessKeyToUsers < ActiveRecord::Migration[5.0]
   def change
     add_column :users, :encrypted_access_key_id, :string
     add_column :users, :encrypted_access_key_id_salt, :string

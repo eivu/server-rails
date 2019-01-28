@@ -1,4 +1,4 @@
-class SetRegions < ActiveRecord::Migration
+class SetRegions < ActiveRecord::Migration[5.0]
   def up
     [
       {:descr => "US Standard *", :name => "us-east-1",:endpoint => "s3.amazonaws.com",:location => ""},
