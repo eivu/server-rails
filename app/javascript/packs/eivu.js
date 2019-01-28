@@ -9,7 +9,7 @@ Vue.component('tree-node', {
     `<li v-bind:id="node.id">
       <div v-bind:class="node.klass">{{ node.name }}</div>
       <ul v-if="node.children">
-        <tree-node v-for="child in node.children" v-bind:node="child" :key="node.id">
+        <tree-node v-for="child in node.children" v-bind:node="child" :key="child.vue_id">
         </tree-node>
       </ul>
     </li>`

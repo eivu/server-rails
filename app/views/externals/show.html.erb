@@ -4,14 +4,11 @@
 <div id="app">
   {{ message }}
 
-
-
-
   <ul>
   	<tree-node
       v-for="node in treeData"
       v-bind:node="node"
-      :key="node.id">  	
+      :key="node.vue_id">  	
     </tree-node>
   </ul>
 </div>
