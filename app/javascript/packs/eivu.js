@@ -4,7 +4,7 @@ Vue.prototype.$http = axios;
 // Vue.use(axios) doesn't work i don't know why
 
 Vue.component('tree-node', {
-  props: ['node'],
+  props: ['node', 'children'],
   data() {
     return { showChildren: false, dataLoaded: false }
   },
