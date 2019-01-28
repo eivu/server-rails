@@ -4,7 +4,7 @@ class Folder < ActiveRecord::Base
   has_ancestry
 
   belongs_to :bucket
-  has_many :cloud_files
+  has_many :cloud_files, -> { order("release_pos" )}
 
   validates_uniqueness_of :name, :scope => :ancestry
 
