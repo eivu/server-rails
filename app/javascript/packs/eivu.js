@@ -18,7 +18,11 @@ Vue.component('tree-node', {
     </li>`,
   methods: {
     toggleChildren() {
+      fetchData()
       this.showChildren = !this.showChildren;
+    },
+    async fetchData() {
+      debugger;
     }
   }
 })
