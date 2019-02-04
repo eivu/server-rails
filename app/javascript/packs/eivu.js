@@ -1,5 +1,8 @@
 import Vue from 'vue/dist/vue.esm';
 import axios from 'axios';
+import "babel-core/register"
+import 'babel-polyfill'
+
 Vue.prototype.$http = axios;
 // Vue.use(axios) doesn't work i don't know why
 
