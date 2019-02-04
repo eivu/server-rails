@@ -21,11 +21,17 @@ Vue.component('tree-node', {
     </li>`,
   methods: {
     toggleChildren() {
-      fetchData()
+      this.fetchData()
       this.showChildren = !this.showChildren;
     },
     async fetchData() {
-      debugger;
+      // debugger;
+      this.$http
+        .get(`/api/v1/folders/${this.node.id}`)
+        .then(
+          response => (
+          this.children = response.data.data.children))
+
     }
   }
 })
