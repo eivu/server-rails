@@ -16,7 +16,7 @@ class TreeSerializer
       cloud_files = object.cloud_files.order(:name).collect {|cloud_file| TreeSerializer.build(cloud_file, depth - 1)}.compact
       tree = object_attr.merge("entry_type" => "grouping", "klass" => object.class.name.underscore, "children" => (sub_folders + cloud_files))
     when "NilClass"
-      folders = Folder.roots.collect {|folder| TreeSerializer.build(folder)}
+      folders = Folder.roots.collect {|folder| TreeSerializer.build(folder,depth - 1)}
       cloud_files = CloudFile.where(:folder_id => nil).order(:name).collect {|cloud_file| TreeSerializer.build(cloud_file, depth - 1)}.compact
       tree = folders + cloud_files
     else

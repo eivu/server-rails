@@ -7,30 +7,50 @@ Vue.prototype.$http = axios;
 // Vue.use(axios) doesn't work i don't know why
 
 Vue.component('tree-node', {
-  props: ['node', 'children'],
+  props: ['node'],
   data() {
-    return { showChildren: false, dataLoaded: false }
+    return { showChildren: false, dataLoaded: false, children: [] }
   },
   template: 
     `<li v-bind:id="node.id">
       <div v-bind:class="node.klass" @click="toggleChildren">{{ node.name }}</div>
       <ul v-if="node.children && showChildren">
-        <tree-node v-for="child in node.children" v-bind:node="child" :key="child.vue_id">
+        <tree-node v-for="child in children" v-bind:node="child" :key="child.vue_id">
         </tree-node>
       </ul>
     </li>`,
   methods: {
     toggleChildren() {
+
       this.fetchData()
       this.showChildren = !this.showChildren;
+
     },
-    async fetchData() {
-      // debugger;
-      this.$http
-        .get(`/api/v1/folders/${this.node.id}`)
+    fetchData() {
+
+
+      this.$http.get(`/api/v1/folders/${this.node.id}`)
         .then(
-          response => (
-          this.children = response.data.data.children))
+          response => {
+          this.children = response.data.data.children
+          this.dataLoaded = true;
+          }
+        )
+        .catch((error) => {
+          console.log(error);
+        });
+
+      // debugger;
+      // await this.$http
+      //   .get(`/api/v1/folders/${this.node.id}`)
+      //   .then(
+      //     response => (
+      //     this.children = response.data.data.children))
+      //     console.log
+      //     (this.children)
+      //   .catch((error) => {
+      //     console.log(error);
+      //   });
 
     }
   }
