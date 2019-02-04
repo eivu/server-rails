@@ -27,15 +27,18 @@ Vue.component('tree-node', {
 
     },
     fetchData() {
-
-
+      // create a child to stub a loading message
+      this.children = [{id: (new Date().getTime() * -1), name:"Loading...."}]
       this.$http.get(`/api/v1/folders/${this.node.id}`)
         .then(
           response => {
+
           this.children = response.data.data.children
           this.dataLoaded = true;
-          }
-        )
+
+})
+
+          // console.log(response.data.data.children)
         .catch((error) => {
           console.log(error);
         });
