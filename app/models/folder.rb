@@ -10,6 +10,7 @@ class Folder < ActiveRecord::Base
 
   # scope :clean, where(:peepy => false)
   scope(:clean, -> { where(:peepy => false) })
+  scope(:has_files, -> { where("cloud_files_count > 0") })
   default_scope { where(:peepy => false) }
 
   #for current version of app, everything is being saved to same bucket, as development proceeds this must be altered
