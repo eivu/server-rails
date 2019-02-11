@@ -21,10 +21,8 @@ Vue.component('tree-node', {
     </li>`,
   methods: {
     toggleChildren() {
-
       this.fetchData()
       this.showChildren = !this.showChildren;
-
     },
     fetchData() {
       // create a child to stub a loading message
@@ -36,7 +34,8 @@ Vue.component('tree-node', {
           this.children = response.data.data.children
           this.dataLoaded = true;
 
-})
+          }
+        )
 
           // console.log(response.data.data.children)
         .catch((error) => {
@@ -64,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
     el: '#app',
     data: {
       message: 'Hello Vue!',
-      treeData: []
+      treeData: [{id: (new Date().getTime() * -1), name:"Loading...."}]
     },
     mounted () {
       this.$http
