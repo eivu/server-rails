@@ -25,7 +25,9 @@ Vue.component('tree-node', {
   template: 
     `<li v-bind:id="node.id">
         <div v-if="node.entry_type == 'grouping'">Grouing</div>
-        <div v-else-if="node.entry_type == 'file'">file</div>
+        <div v-else-if="node.entry_type == 'file'">
+          <cloud-file v-bind:file="node"></cloud-file>
+        </div>
        <div v-bind:class="node.klass" v-bind:type="node.entry_type" @click="toggleChildren">{{ node.name }}</div>
       <ul v-if="node.children && showChildren">
         <tree-node v-for="child in children" v-bind:node="child" :key="child.vue_id">
