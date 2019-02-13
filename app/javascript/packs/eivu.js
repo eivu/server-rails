@@ -23,12 +23,14 @@ Vue.component('tree-node', {
     return { showChildren: false, dataLoaded: false, children: [] }
   },
   template: 
-    `<li v-bind:id="node.id">
-        <div v-if="node.entry_type == 'grouping'">Grouing</div>
-        <div v-else-if="node.entry_type == 'file'">
+    `<li v-bind:id="node.id" v-bind:class="node.entry_type">
+        <span v-if="node.entry_type == 'grouping'">
+          <div v-bind:class="node.klass" v-bind:type="node.entry_type" @click="toggleChildren">{{ node.name }}</div>
+        </span>
+        <span v-else-if="node.entry_type == 'file'">
           <cloud-file v-bind:file="node"></cloud-file>
-        </div>
-       <div v-bind:class="node.klass" v-bind:type="node.entry_type" @click="toggleChildren">{{ node.name }}</div>
+        </span>
+       
       <ul v-if="node.children && showChildren">
         <tree-node v-for="child in children" v-bind:node="child" :key="child.vue_id">
         </tree-node>
