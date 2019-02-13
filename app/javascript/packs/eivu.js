@@ -6,6 +6,17 @@ import 'babel-polyfill'
 Vue.prototype.$http = axios;
 // Vue.use(axios) doesn't work i don't know why
 
+Vue.component('cloud-file', {
+  props: ['file'],
+  template:
+    `<div class="row">
+      <div class="col-sm-4">{{ file.name }}</div>
+      <div class="col-sm-4">.col-sm-4</div>
+      <div class="col-sm-4">.col-sm-4</div>
+    </div>`
+});
+
+
 Vue.component('tree-node', {
   props: ['node'],
   data() {
@@ -13,7 +24,9 @@ Vue.component('tree-node', {
   },
   template: 
     `<li v-bind:id="node.id">
-      <div v-bind:class="node.klass" @click="toggleChildren">{{ node.name }}</div>
+        <div v-if="node.entry_type == 'grouping'">Grouing</div>
+        <div v-else-if="node.entry_type == 'file'">file</div>
+       <div v-bind:class="node.klass" v-bind:type="node.entry_type" @click="toggleChildren">{{ node.name }}</div>
       <ul v-if="node.children && showChildren">
         <tree-node v-for="child in children" v-bind:node="child" :key="child.vue_id">
         </tree-node>
