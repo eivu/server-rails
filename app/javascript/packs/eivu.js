@@ -10,9 +10,9 @@ Vue.component('cloud-file', {
   props: ['file'],
   template:
     `<div class="row">
-      <div class="col-sm-4">{{ file.name }}</div>
-      <div class="col-sm-4">.col-sm-4</div>
-      <div class="col-sm-4">.col-sm-4</div>
+      <div class="col-xs-1">{{ file.release_pos.pad() }}</div>
+      <div class="col-xs-4">{{ file.name }}</div>
+      <div class="col-xs-7">.col-sm-4</div>
     </div>`
 });
 
