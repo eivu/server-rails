@@ -41,12 +41,17 @@
   user-select: none;
 }
 
-#plyr_container.audio {
-  background: red;
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 50px;
-}    
+#plyr_wrapper.audio {
 
+  #plyr_buffer {
+    height: 50px;
+  }
+  #plyr_container {
+    background: red;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 50px;
+  }    
+}
