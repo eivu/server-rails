@@ -10,6 +10,8 @@ class CloudFile < ActiveRecord::Base
   has_many :metataggings, :dependent => :destroy
   has_many :metadata, :through => :metataggings#, :dependent => :destroy
 
+  scope(:alpha, -> { order("name") })
+
   # deprecated? below
   has_many :taggings, :source => :cloud_file_tagging#, :dependent => :destroy
   has_many :cloud_file_taggings#, :dependent => :destroy

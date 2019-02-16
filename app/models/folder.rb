@@ -10,6 +10,7 @@ class Folder < ActiveRecord::Base
 
   # scope :clean, where(:peepy => false)
   scope(:clean, -> { where(:peepy => false) })
+  scope(:alpha, -> { order("name") })
   scope(:has_files, -> { where("cloud_files_count > 0") })
   default_scope { where(:peepy => false) }
 
