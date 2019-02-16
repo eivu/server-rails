@@ -1,5 +1,6 @@
 <%= content_for :head do %>
   <script src="https://cdn.plyr.io/3.4.8/plyr.js"></script>
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.4.8/plyr.css">
 <% end %>
 
 <%= content_for :before_body_tag_closed do %>
@@ -59,8 +60,11 @@
 <div id="plyr_container">
   Audio:
 
-    <audio crossorigin playsinline>
-    <source src="https://cdn.plyr.io/static/demo/Kishi_Bashi_-_It_All_Began_With_a_Burst.mp3" type="audio/mp3">
+<div class="container">
+  <audio crossorigin playsinline>
+    <source src="http://eivutest.s3.amazonaws.com/audio/D9/F5/9E/65/AA/0C/B0/48/EF/30/4A/D7/1F/25/52/2D/01-03-_Ni_as_In_Paris__Explicit_.mp3" type="audio/mp3">
   </audio>
+</div>
+<!-- Plyr resources and browser polyfills are specified in the pen settings -->
 </div>
 </div>
