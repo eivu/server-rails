@@ -10,7 +10,7 @@ Vue.component('cloud-file', {
   props: ['file'],
   template:
     `<div class="row">
-      <div class="col-xs-1">{{ file.release_pos.pad() }}</div>
+      <div class="col-xs-1">{{ file.release_pos && file.release_pos.pad() }}</div>
       <div class="col-xs-4">{{ file.name }}</div>
       <div class="col-xs-7">.col-sm-4</div>
     </div>`
@@ -43,7 +43,7 @@ Vue.component('tree-node', {
     },
     fetchData() {
       // create a child to stub a loading message
-      this.children = [{id: (new Date().getTime() * -1), name:"Loading...."}]
+      this.children = [{id: (new Date().getTime() * -1), name:"Loading....", release_pos: 0 }]
       this.$http.get(`/api/v1/folders/${this.node.id}`)
         .then(
           response => {
@@ -59,18 +59,6 @@ Vue.component('tree-node', {
           console.log(error);
         });
 
-      // debugger;
-      // await this.$http
-      //   .get(`/api/v1/folders/${this.node.id}`)
-      //   .then(
-      //     response => (
-      //     this.children = response.data.data.children))
-      //     console.log
-      //     (this.children)
-      //   .catch((error) => {
-      //     console.log(error);
-      //   });
-
     }
   }
 })
@@ -80,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
     el: '#app',
     data: {
       message: 'Hello Vue!',
-      treeData: [{id: (new Date().getTime() * -1), name:"Loading...."}]
+      treeData: [{id: (new Date().getTime() * -1), name:"Loading....", release_pos: 0}]
     },
     mounted () {
       this.$http
