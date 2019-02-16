@@ -9,7 +9,7 @@ class TreeSerializer
     end
     case object.class.name
     when "CloudFile"
-      tree = object_attr.merge("entry_type" => "file")
+      tree = object_attr.merge("entry_type" => "file", "url" => object.url)
     when "Folder"
       sub_folders = object.children.order(:name).collect {|sub_folder| TreeSerializer.build(sub_folder, depth - 1)}.compact
 
