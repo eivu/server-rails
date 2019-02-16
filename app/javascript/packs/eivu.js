@@ -37,7 +37,7 @@ Vue.component('tree-node', {
           <cloud-file v-bind:file="node"></cloud-file>
         </span>
         <span v-else>
-          <di>v{{ node.name }}</div>
+          <div>{{ node.name }}</div>
         </span>
        
       <ul v-if="node.children && showChildren">
