@@ -17,7 +17,7 @@ gem 'has_secure_token' #generate the 24-character unique token
 gem 'bitfields', '~> 0.6.0' #store multiple booleans in a single integer
 gem 'foreman', '~> 0.82.0' #Manage Procfile-based applications http://ddollar.github.com/foreman
 # gem "rjson"  #templating for json (no version in gem because it doenst have any depenedencies)
-gem 'webpacker', '~> 3.5' #Use Webpack to manage app-like JavaScript modules in Rails
+gem 'webpacker', '>= 4.0.x' #Use Webpack to manage app-like JavaScript modules in Rails
 gem 'id3tag', '~> 0.11.0' #mp3 id3 tagger
 gem 'resque', '~> 1.25', '>= 1.25.2'
 gem "oj" #faster json parsing
