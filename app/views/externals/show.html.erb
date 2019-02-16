@@ -1,14 +1,9 @@
 <%= content_for :head do %>
-  <style>
-    div.folder {
-      display: inline-block;
-      border-bottom: 1px solid black;
-      cursor: pointer;
-    }
-    div.cloud_file {
-      /*font-family: "Courier New", Courier, monospace*/
-    }
-  </style>
+  <script src="https://cdn.plyr.io/3.4.8/plyr.js"></script>
+<% end %>
+
+<%= content_for :before_body_tag_closed do %>
+  <script src="https://cdn.plyr.io/3.4.8/plyr.js"></script>
 <% end %>
 
 
@@ -61,5 +56,11 @@
 
 <div id="plyr_wrapper" class="audio"> 
 <div id="plyr_buffer"></div>
-<div id="plyr_container">test</div>
+<div id="plyr_container">
+  Audio:
+
+    <audio crossorigin playsinline>
+    <source src="https://cdn.plyr.io/static/demo/Kishi_Bashi_-_It_All_Began_With_a_Burst.mp3" type="audio/mp3">
+  </audio>
+</div>
 </div>
