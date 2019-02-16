@@ -30,6 +30,9 @@ Vue.component('tree-node', {
         <span v-else-if="node.entry_type == 'file'">
           <cloud-file v-bind:file="node"></cloud-file>
         </span>
+        <span v-else>
+          <div>{{ node.name }}</div>
+        </span>
        
       <ul v-if="node.children && showChildren">
         <tree-node v-for="child in children" v-bind:node="child" :key="child.vue_id">
@@ -43,7 +46,7 @@ Vue.component('tree-node', {
     },
     fetchData() {
       // create a child to stub a loading message
-      this.children = [{id: (new Date().getTime() * -1), name:"Loading....", release_pos: 0 }]
+      this.children = [{id: (new Date().getTime() * -1), name:"Loading...." }]
       this.$http.get(`/api/v1/folders/${this.node.id}`)
         .then(
           response => {
@@ -68,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
     el: '#app',
     data: {
       message: 'Hello Vue!',
-      treeData: [{id: (new Date().getTime() * -1), name:"Loading....", release_pos: 0}]
+      treeData: [{id: (new Date().getTime() * -1), name:"Loading...." }]
     },
     mounted () {
       this.$http
