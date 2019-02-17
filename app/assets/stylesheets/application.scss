@@ -44,15 +44,21 @@
 #plyr_wrapper.audio {
 
   #plyr_buffer {
-    height: 50px;
+    height: 51px;
   }
   #plyr_container {
-    background: red;
+    border-bottom: 1px solid black;
+    background: black;
     position: fixed;
     left: 0;
     right: 0;
     bottom: 0;
     height: 50px;
+
+
+    .plyr--audio {
+      border-top: 1px solid black;
+    }
   }    
 }
 

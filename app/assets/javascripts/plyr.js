@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
   window.player = player;
 });
 
-
+// //Video information
 // document.addEventListener('DOMContentLoaded', function(event) {
 //   // This is the bare minimum JavaScript. You can opt to pass no arguments to setup.
 //   // const player = new Plyr('#plyr_container');
