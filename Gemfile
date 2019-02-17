@@ -23,6 +23,7 @@ gem 'resque', '~> 1.25', '>= 1.25.2'
 gem "oj" #faster json parsing
 gem "fuzzy_match" #Find a needle (a document or record) in a haystack using string similarity and (optionally) regular expression rules. Uses Dice's Coefficient (aka Pair Similiarity) and Levenshtein Distance internally.
 gem 'hashie', '~> 3.6' # collection of classes and mixins that make hashes more powerful.
+ gem 'uglifier', '>= 1.3.0' # has to be outside of assets, to its present at boot. Use Uglifier as compressor for JavaScript assets
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
 
@@ -65,7 +66,6 @@ group :assets do
 #   # Use Uglifier as compressor for JavaScript assets
 
 end
-   gem 'uglifier', '>= 1.3.0' # Use Uglifier as compressor for JavaScript assets
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
