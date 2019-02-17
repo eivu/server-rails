@@ -17,13 +17,20 @@ Vue.component('cloud-file', {
       <div class="col-xs-1">{{ file.release_pos && file.release_pos.pad() }}</div>
       <div class="col-xs-4">{{ file.name }}</div>
       <div class="col-xs-7">
-        <i class="fas fa-play"></i>
+        <a href="javascript:void(0)">
+          <i class="fas fa-play" @click="play"></i>
+        </a>
         <i class="fas fa-plus"></i>
         <a v-bind:href="file.url" target="_blank">
           <i class="fas fa-external-link-alt"></i>
         </a>
       </div>
-    </div>`
+    </div>`,
+  methods: {
+    play() {
+      this.$store.commit("play_file", this.file);
+    }
+  }
 });
 
 
@@ -32,8 +39,18 @@ const store = new Vuex.Store({
     current_track: null
   },
   mutations: {
-    increment (state) {
-      state.count++
+    play_file (state, file) {
+      state.current_track = file;
+      player.source = {
+        type: 'audio',
+        title: state.current_track.name,
+        sources: [
+          {
+            src: state.current_track.url,
+            type: 'audio/mp3',
+          },
+        ],
+      };
     }
   }
 })
