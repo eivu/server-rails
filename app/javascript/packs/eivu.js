@@ -29,6 +29,9 @@ Vue.component('cloud-file', {
   methods: {
     play() {
       this.$store.commit("play_file", this.file);
+    },
+    isPlaying() {
+      window.player.playing;
     }
   }
 });
@@ -41,7 +44,7 @@ const store = new Vuex.Store({
   mutations: {
     play_file (state, file) {
       state.current_track = file;
-      player.source = {
+      window.player.source = {
         type: 'audio',
         title: state.current_track.name,
         sources: [
