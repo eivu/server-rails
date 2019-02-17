@@ -2,6 +2,10 @@ import Vue from 'vue/dist/vue.esm';
 import axios from 'axios';
 import "babel-core/register"
 import 'babel-polyfill'
+import Vuex from 'vuex'
+
+Vue.use(Vuex)
+
 
 Vue.prototype.$http = axios;
 // Vue.use(axios) doesn't work i don't know why
@@ -23,8 +27,22 @@ Vue.component('cloud-file', {
 });
 
 
+const store = new Vuex.Store({
+  state: {
+    current_track: null
+  },
+  mutations: {
+    increment (state) {
+      state.count++
+    }
+  }
+})
+
+
+
 Vue.component('tree-node', {
   props: ['node'],
+  store,
   data() {
     return { showChildren: false, dataLoaded: false, children: [] }
   },
