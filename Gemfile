@@ -63,9 +63,9 @@ group :assets do
 #   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 #   # gem 'therubyracer', :platforms => :ruby
 #   # Use Uglifier as compressor for JavaScript assets
-   gem 'uglifier', '>= 1.3.0' # Use Uglifier as compressor for JavaScript assets
 
 end
+   gem 'uglifier', '>= 1.3.0' # Use Uglifier as compressor for JavaScript assets
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
