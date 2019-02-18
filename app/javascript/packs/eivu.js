@@ -146,10 +146,3 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   })
 })
-
-
-// <tree-node
-//       v-for="node in treeData"
-//       v-bind:node="node"
-//     ></tree-node>
-//   </ul>
