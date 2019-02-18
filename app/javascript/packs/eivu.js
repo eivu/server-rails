@@ -28,7 +28,7 @@ Vue.component('cloud-file', {
     </div>`,
   computed: {
     isPlaying: function() {
-      return window.player.playing; //&& this.$store.getters.current_track_vue_id == this.file.vue_id
+      // return window.player.playing; //&& this.$store.getters.current_track_vue_id == this.file.vue_id
       // return this.$store.getters.current_track_vue_id
       // return this.file.vue_id + "------"
     }
@@ -55,23 +55,23 @@ const store = new Vuex.Store({
       return state.current_track && state.current_track.vue_id
     },
     isPlaying: state => {
-      return window.player.playing;
+      // return window.player.playing;
     }
   },
   mutations: {
     play_file (state, file) {
       state.current_track = file;
-      window.player.source = {
-        type: 'audio',
-        title: state.current_track.name,
-        sources: [
-          {
-            src: state.current_track.url,
-            type: 'audio/mp3',
-          },
-        ],
-      };
-      window.player.play();
+      // window.player.source = {
+      //   type: 'audio',
+      //   title: state.current_track.name,
+      //   sources: [
+      //     {
+      //       src: state.current_track.url,
+      //       type: 'audio/mp3',
+      //     },
+      //   ],
+      // };
+      // window.player.play();
     }
   }
 })
