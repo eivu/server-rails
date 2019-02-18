@@ -44,7 +44,12 @@
 #plyr_wrapper.audio {
 
   #plyr_buffer {
-    height: 51px;
+    height: 61px;
+    /*
+       Border 1px
+       Audio plyr height 50px
+       browser status bar height 10px
+    */
   }
   #plyr_container {
     border-bottom: 1px solid black;
@@ -53,7 +58,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    height: 50px;
+    height: 60px;
 
 
     .plyr--audio {
