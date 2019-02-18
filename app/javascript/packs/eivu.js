@@ -5,6 +5,9 @@ import axios from 'axios';
 import "babel-core/register"
 import 'babel-polyfill'
 
+
+import plyr from './components/plyr.vue'
+
 Vue.use(VuePlyr)
 Vue.use(Vuex)
 
@@ -63,6 +66,7 @@ const store = new Vuex.Store({
   mutations: {
     play_file (state, file) {
       state.current_track = file;
+      debugger
       // window.player.source = {
       //   type: 'audio',
       //   title: state.current_track.name,
@@ -133,6 +137,7 @@ Vue.component('tree-node', {
 document.addEventListener('DOMContentLoaded', () => {
   var app = new Vue({
     el: '#app',
+    components: { plyr },
     data: {
       message: 'Hello Vue!',
       treeData: [{id: (new Date().getTime() * -1), name:"Loading...." }]
