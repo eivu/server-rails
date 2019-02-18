@@ -86,7 +86,6 @@ const store = new Vuex.Store({
 
 Vue.component('tree-node', {
   props: ['node'],
-  store,
   data() {
     return { showChildren: false, dataLoaded: false, children: [] }
   },
@@ -137,6 +136,7 @@ Vue.component('tree-node', {
 document.addEventListener('DOMContentLoaded', () => {
   var app = new Vue({
     el: '#app',
+    store,
     components: { plyr },
     data: {
       message: 'Hello Vue!',
