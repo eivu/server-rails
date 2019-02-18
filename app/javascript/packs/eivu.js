@@ -20,10 +20,6 @@ Vue.component('cloud-file', {
         <a href="javascript:void(0)">
           <i class="fas fa-play" @click="play"></i>
         </a>
-        <p>guess:{{ isPlaying }} pos:{{ file.release_pos }}</p>
-        <a href="javascript:void(0)">
-          <i class="fas fa-pause" @click="isPlaying == true"></i>
-        </a>
         <i class="fas fa-plus"></i>
         <a v-bind:href="file.url" target="_blank">
           <i class="fas fa-external-link-alt"></i>
@@ -32,8 +28,8 @@ Vue.component('cloud-file', {
     </div>`,
   computed: {
     isPlaying: function() {
-      // return this.$store.getters.isPlaying && this.$store.getters.current_track.vue_id == this.file.vue_id
-      return this.$store.getters.current_track_vue_id
+      return window.player.playing; //&& this.$store.getters.current_track_vue_id == this.file.vue_id
+      // return this.$store.getters.current_track_vue_id
       // return this.file.vue_id + "------"
     }
   },
