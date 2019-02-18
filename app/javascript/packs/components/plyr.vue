@@ -16,13 +16,16 @@
         // player: null
       };
     },
-    computed: {
-      player () { return this.$refs.plyr.player }
-    },
+    // computed: {
+    //   player () { return this.$refs.plyr.player }
+    // },
 
     // components: {},
     mounted() {
+      // debugger
       this.player = this.$refs.plyr.player;
+      // this.$store.commit("set_player", this.$refs.plyr.player);
+      // this.$store.commit("set_plyr", this.$refs.plyr);
     },
     // methods: {
     //   videoTimeUpdated: function(event) {

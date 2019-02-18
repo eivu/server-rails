@@ -25,6 +25,7 @@ Vue.component('cloud-file', {
         <a href="javascript:void(0)">
           <i class="fas fa-play" @click="play"></i>
         </a>
+        <b>-{{ isPlaying}}-</b>
         <i class="fas fa-plus"></i>
         <a v-bind:href="file.url" target="_blank">
           <i class="fas fa-external-link-alt"></i>
@@ -36,6 +37,7 @@ Vue.component('cloud-file', {
       // return window.player.playing; //&& this.$store.getters.current_track_vue_id == this.file.vue_id
       // return this.$store.getters.current_track_vue_id
       // return this.file.vue_id + "------"
+      // return this.$store.getters.plyr.player.playing;
     }
   },
   methods: {
@@ -50,7 +52,9 @@ Vue.component('cloud-file', {
 
 const store = new Vuex.Store({
   state: {
-    current_track: null
+    current_track: null,
+    player: null,
+    plyr: null
   },
   getters: {
     current_track: state => {
@@ -61,12 +65,14 @@ const store = new Vuex.Store({
     },
     isPlaying: state => {
       // return window.player.playing;
+    },
+    player: state => {
+      return state.player;
     }
   },
   mutations: {
     play_file (state, file) {
       state.current_track = file;
-      debugger
       // window.player.source = {
       //   type: 'audio',
       //   title: state.current_track.name,
@@ -78,8 +84,14 @@ const store = new Vuex.Store({
       //   ],
       // };
       // window.player.play();
+    },
+    set_player (state, player) {
+      state.player = player
+    },
+    set_plyr (state, plyr) {
+      state.plyr = plyr
     }
-  }
+  },
 })
 
 
