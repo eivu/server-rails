@@ -20,26 +20,47 @@ Vue.component('cloud-file', {
         <a href="javascript:void(0)">
           <i class="fas fa-play" @click="play"></i>
         </a>
+        <p>guess:{{ isPlaying }} pos:{{ file.release_pos }}</p>
+        <a href="javascript:void(0)">
+          <i class="fas fa-pause" @click="isPlaying == true"></i>
+        </a>
         <i class="fas fa-plus"></i>
         <a v-bind:href="file.url" target="_blank">
           <i class="fas fa-external-link-alt"></i>
         </a>
       </div>
     </div>`,
+  computed: {
+    isPlaying: function() {
+      // return this.$store.getters.isPlaying && this.$store.getters.current_track.vue_id == this.file.vue_id
+      return this.$store.getters.current_track_vue_id
+      // return this.file.vue_id + "------"
+    }
+  },
   methods: {
     play() {
       this.$store.commit("play_file", this.file);
-    },
-    isPlaying() {
-      window.player.playing;
     }
   }
 });
 
 
+
+
 const store = new Vuex.Store({
   state: {
     current_track: null
+  },
+  getters: {
+    current_track: state => {
+      return state.current_track;
+    },
+    current_track_vue_id: state => {
+      return state.current_track && state.current_track.vue_id
+    },
+    isPlaying: state => {
+      return window.player.playing;
+    }
   },
   mutations: {
     play_file (state, file) {
