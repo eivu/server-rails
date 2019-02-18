@@ -54,6 +54,7 @@ const store = new Vuex.Store({
           },
         ],
       };
+      window.player.play();
     }
   }
 })
