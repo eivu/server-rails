@@ -1,9 +1,11 @@
 import Vue from 'vue/dist/vue.esm';
+import Vuex from 'vuex'
+import VuePlyr from 'vue-plyr'
 import axios from 'axios';
 import "babel-core/register"
 import 'babel-polyfill'
-import Vuex from 'vuex'
 
+Vue.use(VuePlyr)
 Vue.use(Vuex)
 
 
