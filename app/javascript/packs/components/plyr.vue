@@ -8,27 +8,27 @@
 
 
 <script>
-export default {
-  name: "plyr",
-  data() {
-    return {
-      duration: null,
-      // player: null
-    };
-  },
-  computed: {
-    player () { return this.$refs.plyr.player }
-  }
+  export default {
+    name: "plyr",
+    data() {
+      return {
+        duration: null,
+        // player: null
+      };
+    },
+    computed: {
+      player () { return this.$refs.plyr.player }
+    },
 
-  // components: {},
-  // mounted() {
-  //   this.player = this.$refs.player.player;
-  // },
-  // methods: {
-  //   videoTimeUpdated: function(event) {
-  //     this.duration = this.player.currentTime;
-  //   }
-};
+    // components: {},
+    mounted() {
+      this.player = this.$refs.plyr.player;
+    },
+    // methods: {
+    //   videoTimeUpdated: function(event) {
+    //     this.duration = this.player.currentTime;
+    //   }
+  };
 </script>
 
 <!-- 
