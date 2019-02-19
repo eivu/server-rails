@@ -20,11 +20,16 @@ Vue.component('cloud-file', {
       <div class="col-xs-1">{{ file.release_pos && file.release_pos.pad() }}</div>
       <div class="col-xs-4">{{ file.name }}</div>
       <div class="col-xs-7">
-        <span v-if=""
-        <a href="javascript:void(0)">
-          <i class="fas fa-play" @click="play"></i>
-        </a>
-        <b>-{{ isPlaying}}-</b>
+        <span v-if="isPlaying">
+          <a href="javascript:void(0)">
+            <i class="fas fa-pause" @click="pause"></i>
+          </a>
+        </span>
+        <span v-else>
+          <a href="javascript:void(0)">
+            <i class="fas fa-play" @click="play"></i>
+          </a>
+        </span>
         <i class="fas fa-plus"></i>
         <a v-bind:href="file.url" target="_blank">
           <i class="fas fa-external-link-alt"></i>
@@ -34,9 +39,6 @@ Vue.component('cloud-file', {
   computed: {
     isPlaying: function() {
       return this.$store.getters.isPlaying && this.activeTrack;
-      // return this.$store.getters.current_track_vue_id
-      // return this.file.vue_id + "------"
-      // return this.$store.getters.isPlaying
     },
     activeTrack: function() {
       return this.$store.getters.current_track_vue_id == this.file.vue_id
@@ -45,6 +47,9 @@ Vue.component('cloud-file', {
   methods: {
     play() {
       this.$store.commit("play_file", this.file);
+    },
+    pause() {
+      this.$store.commit("pause")
     }
   }
 });
@@ -83,6 +88,9 @@ const store = new Vuex.Store({
         ],
       };
       state.plyr.player.play();
+    },
+    pause (state) {
+      state.plyr.player.pause();
     },
     setPlayState(state, boolean) {
       state.playing = boolean;
