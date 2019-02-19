@@ -46,10 +46,10 @@ Vue.component('cloud-file', {
   },
   methods: {
     play() {
-      this.$store.commit("play_file", this.file);
-    },
-    pause() {
-      this.$store.commit("pause")
+      if (this.activeTrack)
+        this.$store.commit("togglePlay");
+      else
+        this.$store.commit("play_file", this.file);
     }
   }
 });
@@ -91,6 +91,9 @@ const store = new Vuex.Store({
     },
     pause (state) {
       state.plyr.player.pause();
+    },
+    togglePlay (state) {
+      state.plyr.player.togglePlay();
     },
     setPlayState(state, boolean) {
       state.playing = boolean;

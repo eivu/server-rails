@@ -19,6 +19,7 @@
     // },
     mounted() {
       this.player = this.$refs.plyr.player;
+      window.player = this.player;
       this.player.on('play', () => this.$store.commit("setPlayState", true));
       this.player.on('pause', () => this.$store.commit("setPlayState", false));
       this.$store.commit("setPlyr", this.$refs.plyr);
