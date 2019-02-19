@@ -20,6 +20,7 @@ Vue.component('cloud-file', {
       <div class="col-xs-1">{{ file.release_pos && file.release_pos.pad() }}</div>
       <div class="col-xs-4">{{ file.name }}</div>
       <div class="col-xs-7">
+        <span v-if=""
         <a href="javascript:void(0)">
           <i class="fas fa-play" @click="play"></i>
         </a>
@@ -32,10 +33,13 @@ Vue.component('cloud-file', {
     </div>`,
   computed: {
     isPlaying: function() {
-      return this.$store.getters.isPlaying && this.$store.getters.current_track_vue_id == this.file.vue_id
+      return this.$store.getters.isPlaying && this.activeTrack;
       // return this.$store.getters.current_track_vue_id
       // return this.file.vue_id + "------"
       // return this.$store.getters.isPlaying
+    },
+    activeTrack: function() {
+      return this.$store.getters.current_track_vue_id == this.file.vue_id
     }
   },
   methods: {
