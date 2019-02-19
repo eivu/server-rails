@@ -48,8 +48,10 @@ Vue.component('cloud-file', {
     play() {
       if (this.activeTrack)
         this.$store.commit("togglePlay");
-      else
+      else {
         this.$store.commit("play_file", this.file);
+        debugger
+      }
     }
   }
 });
@@ -114,6 +116,7 @@ Vue.component('tree-node', {
   template: 
     `<li v-bind:id="node.id" v-bind:class="node.entry_type">
         <span v-if="node.entry_type == 'grouping'">
+            <a href="#" @click="activeTree">tree</a>
           <div v-bind:class="node.klass" v-bind:type="node.entry_type" @click="toggleChildren">{{ node.name }}</div>
         </span>
         <span v-else-if="node.entry_type == 'file'">
@@ -128,7 +131,15 @@ Vue.component('tree-node', {
         </tree-node>
       </ul>
     </li>`,
+  computed: {
+    // activeTree: function() {
+    //   debugger
+    // }
+  },
   methods: {
+    activeTree() {
+      debugger
+    },
     toggleChildren() {
       this.fetchData()
       this.showChildren = !this.showChildren;
