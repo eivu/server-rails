@@ -73,17 +73,17 @@ const store = new Vuex.Store({
   mutations: {
     play_file (state, file) {
       state.current_track = file;
-      // window.player.source = {
-      //   type: 'audio',
-      //   title: state.current_track.name,
-      //   sources: [
-      //     {
-      //       src: state.current_track.url,
-      //       type: 'audio/mp3',
-      //     },
-      //   ],
-      // };
-      // window.player.play();
+      state.plyr.player.source = {
+        type: 'audio',
+        title: state.current_track.name,
+        sources: [
+          {
+            src: state.current_track.url,
+            type: 'audio/mp3',
+          },
+        ],
+      };
+      state.plyr.player.play();
     },
     set_player (state, player) {
       state.player = player

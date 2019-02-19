@@ -13,19 +13,17 @@
     data() {
       return {
         duration: null,
-        // player: null
       };
     },
-    // computed: {
-    //   player () { return this.$refs.plyr.player }
-    // },
-
-    // components: {},
+    computed: {
+      playing () { return 1;
+        //this.$refs.plyr.player.playing 
+      }
+    },
     mounted() {
-      // debugger
       this.player = this.$refs.plyr.player;
-      // this.$store.commit("set_player", this.$refs.plyr.player);
-      // this.$store.commit("set_plyr", this.$refs.plyr);
+      this.$store.commit("set_player", this.$refs.plyr.player);
+      this.$store.commit("set_plyr", this.$refs.plyr);
     },
     // methods: {
     //   videoTimeUpdated: function(event) {
