@@ -2,11 +2,9 @@ import Vue from 'vue/dist/vue.esm';
 import Vuex from 'vuex'
 import VuePlyr from 'vue-plyr'
 import axios from 'axios';
+import plyr from './components/plyr.vue'
 import "babel-core/register"
 import 'babel-polyfill'
-
-
-import plyr from './components/plyr.vue'
 
 Vue.use(VuePlyr)
 Vue.use(Vuex)
@@ -61,10 +59,10 @@ const store = new Vuex.Store({
       return state.current_track;
     },
     current_track_vue_id: state => {
-      return state.current_track && state.current_track.vue_id
+      return state.current_track && state.current_track.vue_id;
     },
     isPlaying: state => {
-      return state.playing
+      return state.playing;
     }
   },
   mutations: {
@@ -81,6 +79,9 @@ const store = new Vuex.Store({
         ],
       };
       state.plyr.player.play();
+    },
+    setPlayState(state, boolean) {
+      state.playing = boolean;
     },
     setPlyr (state, plyr) {
       state.plyr = plyr

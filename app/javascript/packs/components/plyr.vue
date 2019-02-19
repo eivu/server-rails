@@ -15,14 +15,12 @@
         duration: null,
       };
     },
-    computed: {
-      playing () { return 1;
-        //this.$refs.plyr.player.playing 
-      }
-    },
+    // computed: {
+    // },
     mounted() {
       this.player = this.$refs.plyr.player;
-      this.player.on('play', () => alert(1));
+      this.player.on('play', () => this.$store.commit("setPlayState", true));
+      this.player.on('pause', () => this.$store.commit("setPlayState", false));
       this.$store.commit("setPlyr", this.$refs.plyr);
     },
     // methods: {
