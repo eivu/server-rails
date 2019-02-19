@@ -32,10 +32,10 @@ Vue.component('cloud-file', {
     </div>`,
   computed: {
     isPlaying: function() {
-      // return window.player.playing; //&& this.$store.getters.current_track_vue_id == this.file.vue_id
+      return this.$store.getters.isPlaying && this.$store.getters.current_track_vue_id == this.file.vue_id
       // return this.$store.getters.current_track_vue_id
       // return this.file.vue_id + "------"
-      return this.$store.getters.isPlaying
+      // return this.$store.getters.isPlaying
     }
   },
   methods: {
