@@ -37,7 +37,7 @@ Vue.component('cloud-file', {
       // return window.player.playing; //&& this.$store.getters.current_track_vue_id == this.file.vue_id
       // return this.$store.getters.current_track_vue_id
       // return this.file.vue_id + "------"
-      // return this.$store.getters.plyr.player.playing;
+      return this.$store.getters.isPlaying
     }
   },
   methods: {
@@ -64,7 +64,7 @@ const store = new Vuex.Store({
       return state.current_track && state.current_track.vue_id
     },
     isPlaying: state => {
-      // return window.player.playing;
+      return state.plyr.player.playing;
     },
     player: state => {
       return state.player;
