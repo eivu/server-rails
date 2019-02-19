@@ -22,7 +22,7 @@ Vue.component('cloud-file', {
       <div class="col-xs-7">
         <span v-if="isPlaying">
           <a href="javascript:void(0)">
-            <i class="fas fa-pause" @click="pause"></i>
+            <i class="fas fa-pause" @click="play"></i>
           </a>
         </span>
         <span v-else>
