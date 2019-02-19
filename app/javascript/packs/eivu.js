@@ -53,7 +53,7 @@ Vue.component('cloud-file', {
 const store = new Vuex.Store({
   state: {
     current_track: null,
-    player: null,
+    playing: null,
     plyr: null
   },
   getters: {
@@ -64,10 +64,7 @@ const store = new Vuex.Store({
       return state.current_track && state.current_track.vue_id
     },
     isPlaying: state => {
-      return state.plyr.player.playing;
-    },
-    player: state => {
-      return state.player;
+      return state.playing
     }
   },
   mutations: {
@@ -85,10 +82,7 @@ const store = new Vuex.Store({
       };
       state.plyr.player.play();
     },
-    set_player (state, player) {
-      state.player = player
-    },
-    set_plyr (state, plyr) {
+    setPlyr (state, plyr) {
       state.plyr = plyr
     }
   },
