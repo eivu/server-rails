@@ -22,6 +22,8 @@
     },
     mounted() {
       this.player = this.$refs.plyr.player;
+      this.player.on('play', () => alert(1));
+      window.player = this.$refs.plyr.player;
       this.$store.commit("set_player", this.$refs.plyr.player);
       this.$store.commit("set_plyr", this.$refs.plyr);
     },
