@@ -49,8 +49,7 @@ Vue.component('cloud-file', {
       if (this.activeTrack)
         this.$store.commit("togglePlay");
       else {
-        this.$store.commit("play_file", this.file);
-        debugger
+        this.$store.commit("playCloudFile", this);
       }
     }
   }
@@ -62,6 +61,7 @@ Vue.component('cloud-file', {
 const store = new Vuex.Store({
   state: {
     current_track: null,
+    currentTrackObject: null,
     playing: null,
     plyr: null
   },
@@ -74,11 +74,32 @@ const store = new Vuex.Store({
     },
     isPlaying: state => {
       return state.playing;
+    },
+    currentTrackObject: state => {
+      return state.currentTrackObject;
+    },
+    nextAutoTrackObject: (state, getters) => {
+      // declare variables to holdl current and next pos
+      var pos;
+      var nextPos;
+
+      if (state.currentTrackObject) {
+        // find the position for the current track
+        pos = state.currentTrackObject.$parent.$parent.$children.findIndex(function(element) {
+          return element.node.vue_id == getters.current_track_vue_id
+        });
+
+        // return the next track
+        nextPos = pos + 1
+        // go up the tree to the grouping ($parent.$parent) and then down past the node to the cloud file component 
+        return state.currentTrackObject.$parent.$parent.$children[nextPos].$children[0];
+      }
     }
   },
   mutations: {
-    play_file (state, file) {
-      state.current_track = file;
+    playCloudFile (state, object) {
+      state.currentTrackObject = object
+      state.current_track = object.file;
       state.plyr.player.source = {
         type: 'audio',
         title: state.current_track.name,
@@ -116,7 +137,6 @@ Vue.component('tree-node', {
   template: 
     `<li v-bind:id="node.id" v-bind:class="node.entry_type">
         <span v-if="node.entry_type == 'grouping'">
-            <a href="#" @click="activeTree">tree</a>
           <div v-bind:class="node.klass" v-bind:type="node.entry_type" @click="toggleChildren">{{ node.name }}</div>
         </span>
         <span v-else-if="node.entry_type == 'file'">
@@ -132,13 +152,13 @@ Vue.component('tree-node', {
       </ul>
     </li>`,
   computed: {
-    // activeTree: function() {
-    //   debugger
-    // }
+    // testing: function() {
+    //   return  this.$store.getters.nextAutoTrackObject && this.$store.getters.nextAutoTrackObject.node.name;
+    // },
   },
   methods: {
-    activeTree() {
-      debugger
+    test () {
+      this.$store.getters.nextAutoTrackObject;
     },
     toggleChildren() {
       this.fetchData()
