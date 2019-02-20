@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import VuePlyr from 'vue-plyr'
 import axios from 'axios';
 import plyr from './components/plyr.vue'
+import CloudFile from './components/cloudFile.vue'
 import "babel-core/register"
 import 'babel-polyfill'
 
@@ -13,47 +14,6 @@ Vue.use(Vuex)
 Vue.prototype.$http = axios;
 // Vue.use(axios) doesn't work i don't know why
 
-Vue.component('cloud-file', {
-  props: ['file'],
-  template:
-    `<div class="row">
-      <div class="col-xs-1">{{ file.release_pos && file.release_pos.pad() }}</div>
-      <div class="col-xs-4">{{ file.name }}</div>
-      <div class="col-xs-7">
-        <span v-if="isPlaying">
-          <a href="javascript:void(0)">
-            <i class="fas fa-pause" @click="play"></i>
-          </a>
-        </span>
-        <span v-else>
-          <a href="javascript:void(0)">
-            <i class="fas fa-play" @click="play"></i>
-          </a>
-        </span>
-        <i class="fas fa-plus"></i>
-        <a v-bind:href="file.url" target="_blank">
-          <i class="fas fa-external-link-alt"></i>
-        </a>
-      </div>
-    </div>`,
-  computed: {
-    isPlaying: function() {
-      return this.$store.getters.isPlaying && this.activeTrack;
-    },
-    activeTrack: function() {
-      return this.$store.getters.current_track_vue_id == this.file.vue_id
-    }
-  },
-  methods: {
-    play() {
-      if (this.activeTrack)
-        this.$store.commit("togglePlay");
-      else {
-        this.$store.commit("playCloudFile", this);
-      }
-    }
-  }
-});
 
 
 
@@ -137,6 +97,7 @@ const store = new Vuex.Store({
 
 Vue.component('tree-node', {
   props: ['node'],
+  components: { CloudFile },
   data() {
     return { showChildren: false, dataLoaded: false, children: [] }
   },
@@ -146,7 +107,7 @@ Vue.component('tree-node', {
           <div v-bind:class="node.klass" v-bind:type="node.entry_type" @click="toggleChildren">{{ node.name }}</div>
         </span>
         <span v-else-if="node.entry_type == 'file'">
-          <cloud-file v-bind:file="node"></cloud-file>
+          <CloudFile v-bind:file="node"></CloudFile>
         </span>
         <span v-else>
           <div>{{ node.name }}</div>
