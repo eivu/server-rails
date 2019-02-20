@@ -24,19 +24,14 @@
       this.player.on('pause', () => this.$store.commit("setPlayState", false));
       this.player.on('ended', () => {
         var nextTrackObject = this.$store.getters.nextAutoTrackObject;
-debugger
-        // if currentTrackObject is the same as nextTrackObject clear it out
+        // when currentTrackObject is the same as nextTrackObject clear it out
         if (nextTrackObject === undefined)
           this.$store.commit("clearCurrentTrackObject");
         else // otherwise play the next found track
           nextTrackObject && this.$store.commit("playCloudFile", nextTrackObject)
       })
       this.$store.commit("setPlyr", this.$refs.plyr);
-    },
-    // methods: {
-    //   videoTimeUpdated: function(event) {
-    //     this.duration = this.player.currentTime;
-    //   }
+    }
   };
 </script>
 
