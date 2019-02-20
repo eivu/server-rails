@@ -25,7 +25,7 @@
       this.player.on('ended', () => {
         var nextTrackObject = this.$store.getters.nextAutoTrackObject;
         // when currentTrackObject is the same as nextTrackObject clear it out
-        if (nextTrackObject === undefined)
+        if (!nextTrackObject)
           this.$store.commit("clearCurrentTrackObject");
         else // otherwise play the next found track
           nextTrackObject && this.$store.commit("playCloudFile", nextTrackObject)
