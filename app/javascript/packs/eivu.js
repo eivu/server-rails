@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import VuePlyr from 'vue-plyr'
 import axios from 'axios';
 import plyr from './components/plyr.vue'
-import CloudFile from './components/cloudFile.vue'
+import CloudFile from './components/cloud-file.vue'
 import "babel-core/register"
 import 'babel-polyfill'
 
