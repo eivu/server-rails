@@ -21,6 +21,8 @@ gem 'webpacker', '>= 4.0.x' #Use Webpack to manage app-like JavaScript modules i
 gem 'id3tag', '~> 0.11.0' #mp3 id3 tagger
 gem 'resque', '~> 1.25', '>= 1.25.2'
 gem "oj" #faster json parsing
+gem 'andyw8-itunes-library', '~> 0.1.3'
+gem 'itunes_parser', '~> 1.1', '>= 1.1.3' #A fast and simple iTunes XML parser based on nokogiri-plist
 gem "fuzzy_match" #Find a needle (a document or record) in a haystack using string similarity and (optionally) regular expression rules. Uses Dice's Coefficient (aka Pair Similiarity) and Levenshtein Distance internally.
 gem 'hashie', '~> 3.6' # collection of classes and mixins that make hashes more powerful.
  gem 'uglifier', '>= 1.3.0' # has to be outside of assets, to its present at boot. Use Uglifier as compressor for JavaScript assets
