@@ -82,6 +82,7 @@ const store = new Vuex.Store({
       // declare variables to holdl current and next pos
       var pos;
       var nextPos;
+      var nextNodeObject;
 
       if (state.currentTrackObject) {
         // find the position for the current track
@@ -91,8 +92,10 @@ const store = new Vuex.Store({
 
         // return the next track
         nextPos = pos + 1
-        // go up the tree to the grouping ($parent.$parent) and then down past the node to the cloud file component 
-        return state.currentTrackObject.$parent.$parent.$children[nextPos].$children[0];
+        // go up the tree to the grouping ($parent.$parent) to the next node
+        nextNodeObject = state.currentTrackObject.$parent.$parent.$children[nextPos]
+        // return the cloudfile component of the next node
+        return nextNodeObject && nextNodeObject.$children[0];
       }
     }
   },
@@ -111,6 +114,9 @@ const store = new Vuex.Store({
         ],
       };
       state.plyr.player.play();
+    },
+    clearCurrentTrackObject (state) {
+      state.currentTrackObject = null;
     },
     pause (state) {
       state.plyr.player.pause();
