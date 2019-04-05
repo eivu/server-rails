@@ -19,6 +19,7 @@ database.yml
 config/fog.yml
 config/aws.yml
 /public/uploads/tmp/public/packs
+public/packs/
 /public/packs-test
 /node_modules
 yarn-debug.log*
