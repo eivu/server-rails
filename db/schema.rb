@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_21_201549) do
+ActiveRecord::Schema.define(version: 2019_03_31_221126) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,8 +62,8 @@ ActiveRecord::Schema.define(version: 2019_01_21_201549) do
     t.string "name"
     t.integer "user_id"
     t.integer "region_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.index ["region_id"], name: "index_buckets_on_region_id"
     t.index ["user_id"], name: "index_buckets_on_user_id"
   end
@@ -71,8 +71,8 @@ ActiveRecord::Schema.define(version: 2019_01_21_201549) do
   create_table "cloud_file_taggings", id: :serial, force: :cascade do |t|
     t.integer "cloud_file_id"
     t.integer "tag_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.index ["cloud_file_id"], name: "index_cloud_file_taggings_on_cloud_file_id"
     t.index ["tag_id"], name: "index_cloud_file_taggings_on_tag_id"
   end
@@ -87,8 +87,8 @@ ActiveRecord::Schema.define(version: 2019_01_21_201549) do
     t.float "rating"
     t.boolean "nsfw", default: false
     t.boolean "peepy", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer "folder_id"
     t.string "info_url"
     t.integer "bucket_id"
@@ -100,6 +100,7 @@ ActiveRecord::Schema.define(version: 2019_01_21_201549) do
     t.integer "year"
     t.integer "release_pos"
     t.integer "user_id"
+    t.integer "num_plays", default: 0, null: false
     t.index ["bucket_id"], name: "index_cloud_files_on_bucket_id"
     t.index ["data_source_id"], name: "index_cloud_files_on_data_source_id"
     t.index ["duration"], name: "index_cloud_files_on_duration"
@@ -113,8 +114,8 @@ ActiveRecord::Schema.define(version: 2019_01_21_201549) do
 
   create_table "folders", id: :serial, force: :cascade do |t|
     t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string "ancestry"
     t.integer "bucket_id"
     t.boolean "peepy", default: false, null: false
@@ -128,16 +129,16 @@ ActiveRecord::Schema.define(version: 2019_01_21_201549) do
     t.string "value"
     t.integer "user_id"
     t.integer "metadata_type_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.index ["metadata_type_id"], name: "index_metadata_on_metadata_type_id"
     t.index ["user_id"], name: "index_metadata_on_user_id"
   end
 
   create_table "metadata_types", id: :serial, force: :cascade do |t|
     t.string "value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "metataggings", id: :serial, force: :cascade do |t|
@@ -154,8 +155,8 @@ ActiveRecord::Schema.define(version: 2019_01_21_201549) do
     t.string "name", null: false
     t.string "endpoint", null: false
     t.string "location"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "release_types", id: :serial, force: :cascade do |t|
@@ -186,15 +187,15 @@ ActiveRecord::Schema.define(version: 2019_01_21_201549) do
     t.string "value"
     t.integer "user_id"
     t.boolean "private"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.index ["user_id"], name: "index_tags_on_user_id"
   end
 
   create_table "users", id: :serial, force: :cascade do |t|
     t.string "username"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
