@@ -10,7 +10,6 @@ module Eivu
   class Application < Rails::Application
     #autoload everything in the app folder
     config.autoload_paths += %W(#{config.root}/app/**)
-    # config.autoload_paths += %W(#{config.root}/lib/**)
     config.autoload_paths << Rails.root.join('lib')
 
     config.to_prepare do
