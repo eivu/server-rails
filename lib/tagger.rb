@@ -58,7 +58,7 @@ module Tagger
   end
 
   class Factory
-    def self.generate(input)
+    def self.generate(input, options={})
       if input.is_a? String
         path_to_file = input
       elsif input.is_a? CloudFile
@@ -75,7 +75,7 @@ module Tagger
       end
 
       klass     = Kernel.const_get("Tagger::#{mime.mediatype.titlecase}")
-      klass.new(input, mime, file)
+      klass.new(input, mime, file, options)
     end
   end
 
@@ -112,7 +112,7 @@ module Tagger
 
 
 
-    def initialize(input, mime, file)
+    def initialize(input, mime, file, options={})
       if input.is_a? String
         @path_to_file = input
       elsif input.is_a? CloudFile
@@ -122,6 +122,7 @@ module Tagger
 
       @mime       = mime
       @file       = file
+      @options    = options
       @attributes = {}
     end
 
