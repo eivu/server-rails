@@ -53,6 +53,7 @@ group :development, :test, :cucumber do
   # gem 'spring' # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem "better_errors" 
   gem 'binding_of_caller' #irb on better-errors error pages
+  gem 'rb-readline'
   gem 'pry'
   gem 'pry-byebug' #replaces pry-debugger becasuse pry-debugger doesnt work with ruby 2
 end

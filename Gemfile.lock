@@ -196,6 +196,7 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
+    rb-readline (0.5.5)
     rdoc (4.3.0)
     redis (4.1.0)
     redis-namespace (1.6.0)
@@ -295,6 +296,7 @@ DEPENDENCIES
   rails (= 5.2.2)
   rails_12factor
   random_data (~> 1.6.0)
+  rb-readline
   resque (~> 1.25, >= 1.25.2)
   rest-client
   sass-rails (~> 5.0.7)
