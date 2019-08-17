@@ -1,8 +1,11 @@
+# i = ItunesLibrary.new
+# ti=track_info = ItunesTrackInfo.new(rt)
+
 class ItunesLibrary
 
   attr_reader :path, :parser, :tracks
 
-  def initialize(path="", bucket)
+  def initialize(path="", bucket="")
     path    = "/Users/jinx/Music/iTunes/iTunes\ Music\ Library.xml" if path.blank?
     @path   = path
     @bucket = Bucket.determine(bucket)

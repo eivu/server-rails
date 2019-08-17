@@ -60,9 +60,9 @@ class Fingerprinter
       @acoustid   = best_recording.try(:id)
       result    = best_recording.dup
       deleted_rg= result.delete(:releasegroups)
-
-      album     = self.matched_release || deleted_rg.try(:first) || Hashie::Mash.new
-      @track    = result.dup.slice(:id, :title, :duration).rename_key(:id, :ext_id)
+      album     = self.matched_release || deleted_rg.try(:first) || {}
+      temp_data = result.dup.recursive_symbolize_keys!
+      @track    = Hashie::Mash.new(temp_data.slice(:id, :title, :duration).rename_key(:id, :ext_id))
       @track.artists = parse_artists(result.dup.artists)
       @release  = album.dup.slice(:id, :title, :type).rename_key(:id, :ext_id)
       # if album artists are blank use the result artists

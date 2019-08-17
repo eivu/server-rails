@@ -18,7 +18,7 @@ module Tagger
       # obj = "/Users/jinx/Desktop/sample/Justin\ Timberlake/Greatest\ Hits/13\ \(Oh\ No\)\ What\ You\ Got.mp3"
       # obj = "/Users/jinx/Desktop/sample/Justin\ Timberlake/Greatest\ Hits/08\ Summer\ Love\ \(Set\ The\ Mood\).mp3"
       # obj = "/Users/jinx/Desktop/sample/Justin\ Timberlake/Greatest\ Hits/02\ What\ Goes\ Around,\ Comes\ Around.mp3"
-      obj= "/Users/jinx/Desktop/foo/Justin\ Timberlake/Justified/06\ Rock\ Your\ Body.mp3"
+      obj= "/Users/jinx/Dropbox/eivu/sample/Justin\ Timberlake/Justified/06\ Rock\ Your\ Body.mp3"
       t = Tagger::Factory.generate(obj)
       t.identify
     end
@@ -123,6 +123,7 @@ module Tagger
       @mime       = mime
       @file       = file
       @options    = options
+      @itunes_track_info = @options[:itunes_track_info]
       @attributes = {}
     end
 
@@ -170,12 +171,12 @@ module Tagger
     end
 
     def best_matching_release
-      if @id3_attr[:release].present? && @fingerprint.response.present?
+      if @mp3_attr[:release].present? && @fingerprint.response.present?
         # use release if it was found via fuzzy, otherwise use other_release_sources
         release = @fingerprint.release if @fingerprint.found_via_fuzzy?
         release ||= other_release_sources
-      elsif @id3_attr[:release].present?
-        release = { :title => @id3_attr[:release] }
+      elsif @mp3_attr[:release].present?
+        release = { :title => @mp3_attr[:release] }
       elsif @fingerprint.release.present?
         release = @fingerprint.release
       else
@@ -190,63 +191,83 @@ module Tagger
     # 3: id3 tag
     # 4: empty hash
     def other_release_sources
-      if @id3_attr[:_source].present?
-        { :title => @id3_attr[:release] }
+      if @mp3_attr[:_source].present?
+        { :title => @mp3_attr[:release] }
       elsif @fingerprint.response.present?
         @fingerprint.release.present?
-      elsif @id3_attr[:release].present?
-        { :title => @id3_attr[:release] } 
+      elsif @mp3_attr[:release].present?
+        { :title => @mp3_attr[:release] } 
       else
         {}
       end      
     end
 
-    def identify
-      @id3_attr       = Hashie::Mash.new
-      @fp_attr = {}
-      ################
-      #
-      # Get Info via ID3
-      id3_info        = ID3Tag.read(@file)
-      
-      if id3_info.artist.present?
-        id3_artist = [{:name => id3_info.artist, :primary => true}]
-      else
-        id3_artist = []
-      end
 
-      @id3_attr[:_source]   = id3_info.get_frames(:PRIV).try(:first).try(:owner_identifier) #"www.amazon.com" o "PeakValue"
-      @id3_attr[:artists]   = Tagger::Audio.parse_artist_string(id3_info.artist) #id3_artist
-      @id3_attr[:title]     = id3_info.title.try(:strip)
-      @id3_attr[:release]   = id3_info.album.try(:strip)
-      @id3_attr[:year]      = id3_info.year
-      @id3_attr[:track_num] = id3_info.track_nr
-      @id3_attr[:genre]     = id3_info.genre
-      @id3_attr[:comments]  = id3_info.comments.try(:strip)
-      @artwork_data         = id3_info.get_frame(:APIC).try(:content)
+    def parse_metadata
+
+      if @itunes_track_info.present?
+        @mp3_attr[:_source]   = itunes_track_info.xxxxx
+        @mp3_attr[:artists]   = Tagger::Audio.parse_artist_string(itunes_track_info.artist)
+        @mp3_attr[:title]     = itunes_track_info.name
+        @mp3_attr[:release]   = itunes_track_info.album
+        @mp3_attr[:year]      = itunes_track_info.year
+        @mp3_attr[:track_num] = itunes_track_info.track_number
+        @mp3_attr[:genre]     = itunes_track_info.genre
+        @mp3_attr[:num_plays] = itunes_track_info.play_count
+      else
+        ################
+        #
+        # Get Info via ID3
+        mp3_info        = ID3Tag.read(@file)
+        
+        if mp3_info.artist.present?
+          id3_artist = [{:name => mp3_info.artist, :primary => true}]
+        else
+          id3_artist = []
+        end
+
+        @mp3_attr[:_source]   = mp3_info.get_frames(:PRIV).try(:first).try(:owner_identifier) #"www.amazon.com" o "PeakValue"
+        @mp3_attr[:artists]   = Tagger::Audio.parse_artist_string(mp3_info.artist) #id3_artist
+        @mp3_attr[:title]     = mp3_info.title.try(:strip)
+        @mp3_attr[:release]   = mp3_info.album.try(:strip)
+        @mp3_attr[:year]      = mp3_info.year
+        @mp3_attr[:track_num] = mp3_info.track_nr
+        @mp3_attr[:genre]     = mp3_info.genre
+        @mp3_attr[:comments]  = mp3_info.comments.try(:strip)
+        @artwork_data         = mp3_info.get_frame(:APIC).try(:content)
+      end
+      @mp3_attr
+    end
+
+
+
+    def identify
+      @mp3_attr       = Hashie::Mash.new
+      @fp_attr = {}
+
 
 
       ################
       #
       # Get Info via AcouticFingerprint Service
-      @fingerprint     = Fingerprinter.new(@id3_attr[:title], @id3_attr[:release], @path_to_file)
+      @fingerprint     = Fingerprinter.new(@mp3_attr[:title], @mp3_attr[:release], @path_to_file)
       @fingerprint.submit if @fingerprint.cleansed_fingerprint.present?
 
       @flags_via_path = Tagger::Audio.set_flags_via_path(@path_to_file)
 
 
-      if @id3_attr[:_source].present?
-        track_name   = @id3_attr[:title]
-        release_name = @id3_attr[:release]
+      if @mp3_attr[:_source].present?
+        track_name   = @mp3_attr[:title]
+        release_name = @mp3_attr[:release]
       else
-        track_name   = @fingerprint.track.try(:title) || @id3_attr.title
+        track_name   = @fingerprint.track.try(:title) || @mp3_attr.title
       end
 
       track_id         = @fingerprint.track.try(:ext_id)
       release_id       = best_matching_release.try(:ext_id)
       release_name     = best_matching_release.try(:title) 
-      @release_artists = @fingerprint.try(:release).try(:artists) || @id3_attr[:artists]
-      @track_artists   = @fingerprint.try(:track).try(:artists) || @id3_attr[:artists]
+      @release_artists = @fingerprint.try(:release).try(:artists) || @mp3_attr[:artists]
+      @track_artists   = @fingerprint.try(:track).try(:artists) || @mp3_attr[:artists]
 
       # creates hash to release metadata, nil values will be rmeoved.
       # is used by save_data fn
@@ -267,16 +288,16 @@ module Tagger
         :name => track_name,
         :ext_id => track_id,
         :data_source_id => (track_id.present? ? 1 : nil),
-        :release_pos => @id3_attr[:track_num],
-        :year => @id3_attr[:year],
+        :release_pos => @mp3_attr[:track_num],
+        :year => @mp3_attr[:year],
         :duration => @fingerprint.try(:duration)
       }.merge(@flags_via_path).compact
 
       # creates hash to store metadata, nil values will be rmeoved.
       # is used by save_data fn
       @metadata = Hashie::Mash.new({
-        :genre => @id3_attr[:genre],
-        :comments => @id3_attr[:comments],
+        :genre => @mp3_attr[:genre],
+        :comments => @mp3_attr[:comments],
         :acoustid_fingerprint => @fingerprint.try(:cleansed_fingerprint),
         :original_subpath => Folder.subpath(@path_to_file),
         :original_fullpath => @path_to_file,
