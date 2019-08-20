@@ -59,7 +59,24 @@ group :development, :test, :cucumber do
   gem 'rb-readline'
   gem 'pry'
   gem 'pry-byebug' #replaces pry-debugger becasuse pry-debugger doesnt work with ruby 2
+  gem 'annotate', require: false
 end
+
+group :test do
+  gem 'database_cleaner', require: false
+  gem 'rspec-rails'
+  # gem 'rspec_junit_formatter' # for circleci
+  gem 'rails-controller-testing'
+  gem 'rspec-json_expectations'
+  gem 'timecop'
+  gem 'shoulda-matchers', '4.0.0.rc1'
+  gem 'simplecov', require: false
+  gem 'whenever-test'
+  gem 'webmock'
+  gem 'vcr'
+  gem 'nyan-cat-formatter'
+end
+
 
 # Gems used only for assets and not required
 # in production environments by default.
