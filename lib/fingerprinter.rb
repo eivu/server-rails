@@ -15,6 +15,25 @@
 
 class Fingerprinter
 
+
+  # converts artist hash into a format that can be used with Tagger and the larger app
+  def self.parse_artists(array)
+    # & means primary, anything else means supporting
+    join_chars = ["&"] + array.collect {|x| x[:joinphrase]}.compact.collect(&:strip)
+  
+    array.collect.with_index do |hash, index|
+      hash.symbolize_keys!
+      if array.size == 1 || join_chars[index] == "&"
+        hash = hash.slice(:id, :name).merge(:primary => true)
+      else
+        hash = hash.slice(:id, :name).merge(:primary => false)
+      end
+      hash.rename_key(:id, :ext_id)
+    end
+  end
+
+
+
   attr_reader :path_to_file, :output, :fp_url, :response, :raw_response, :cleansed_fingerprint, :duration, :track, :release
 
   def initialize(track_name, release_name, path_to_file=nil)
@@ -62,11 +81,12 @@ class Fingerprinter
       deleted_rg= result.delete(:releasegroups)
       album     = self.matched_release || deleted_rg.try(:first) || {}
       temp_data = result.dup.recursive_symbolize_keys!
+
       @track    = Hashie::Mash.new(temp_data.slice(:id, :title, :duration).rename_key(:id, :ext_id))
-      @track.artists = parse_artists(result.dup.artists)
+      @track.artists = Fingerprinter.parse_artists(result.dup.artists)
       @release  = album.dup.slice(:id, :title, :type).rename_key(:id, :ext_id)
       # if album artists are blank use the result artists
-      @release.artists = parse_artists(album.artists || result.artists)
+      @release.artists = Fingerprinter.parse_artists(album.artists || result.artists)
     else
       @track  = {}
       @release = {}
@@ -133,20 +153,6 @@ class Fingerprinter
   end
 
 
-  # converts artist hash into a format that can be used with Tagger and the larger app
-  def parse_artists(array)
-    # & means primary, anything else means supporting
-    join_chars = ["&"] + array.collect {|x| x[:joinphrase]}.compact.collect(&:strip)
-  
-    array.collect.with_index do |hash, index|
-      if join_chars[index] == "&"
-        hash = hash.slice(:id, :name).merge(:primary => true)
-      else
-        hash = hash.slice(:id, :name).merge(:primary => false)
-      end
-      hash.rename_key(:id, :ext_id)
-    end
-  end
 
 
   # finds fuzzy matching releases across all recordings 
