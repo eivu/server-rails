@@ -165,8 +165,8 @@ module Tagger
 
 
   class Audio < Base
-    def identify_and_update!
-      identify
+    def identify_and_update!(info=nil)
+      identify(info)
       save_data!
     end
 

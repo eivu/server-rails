@@ -1,17 +1,20 @@
 # i = ItunesLibrary.new
 # ti=track_info = ItunesTrackInfo.new(rt)
+# ItunesLibrary.new.ingest_and_indentify
+
 
 class ItunesLibrary
 
-  attr_reader :path, :parser, :tracks
+  attr_reader :path, :parser, :tracks, :raw_tracks
 
-  def initialize(path="", bucket="")
+  def initialize(path="", bucket=1)
     path    = "/Users/jinx/Music/iTunes/iTunes\ Music\ Library.xml" if path.blank?
     @path   = path
     @bucket = Bucket.determine(bucket)
     @parser = ItunesParser.new(:file => @path)
-    @tracks = @parser.tracks.values
-    @num_tracks = @tracks.count
+    @raw_tracks = @parser.tracks.values
+    # @tracks = @raw_tracks.collect {|raw_track| ItunesTrackInfo.new(raw_track)}
+    @num_tracks = @raw_tracks.count
   end
 
 
@@ -38,9 +41,9 @@ class ItunesLibrary
 
 
   def ingest_and_indentify
-    binding.pry
     @tracks.each do |raw_track_info|
       track_info = ItunesTrackInfo.new(raw_track_info)
+      binding.pry
       cloud_file = CloudFile.ingest(track_info.path_to_file, @bucket, :itunes_track_info => track_info)
     end
   end

@@ -84,7 +84,7 @@ class Fingerprinter
 
       @track    = Hashie::Mash.new(temp_data.slice(:id, :title, :duration).rename_key(:id, :ext_id))
       @track.artists = Fingerprinter.parse_artists(result.dup.artists)
-      @release  = album.dup.slice(:id, :title, :type).rename_key(:id, :ext_id)
+      @release  = Hashie::Mash.new(album.dup.slice('id', 'title', 'type')).rename_key(:id, :ext_id)
       # if album artists are blank use the result artists
       @release.artists = Fingerprinter.parse_artists(album.artists || result.artists)
     else
