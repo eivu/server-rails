@@ -5,12 +5,11 @@
 
 class Itunes::Library
 
-  attr_reader :path, :parser, :tracks, :raw_tracks
+  attr_reader :path, :parser, :tracks, :raw_tracks, :num_tracks
 
-  def initialize(path="", bucket=1)
+  def initialize(path="")
     path    = "/Users/jinx/Music/iTunes/iTunes\ Music\ Library.xml" if path.blank?
     @path   = path
-    @bucket = Bucket.determine(bucket)
     @parser = ItunesParser.new(:file => @path)
     @raw_tracks = @parser.tracks.values
     @tracks = @raw_tracks.collect {|raw_track| Itunes::Track.new(raw_track)}

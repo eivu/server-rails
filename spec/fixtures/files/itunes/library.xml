@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Major Version</key><integer>1</integer>
+	<key>Minor Version</key><integer>1</integer>
+	<key>Date</key><date>2019-08-25T19:34:12Z</date>
+	<key>Application Version</key><string>12.9.4.94</string>
+	<key>Features</key><integer>5</integer>
+	<key>Show Content Ratings</key><true/>
+	<key>Music Folder</key><string></string>
+	<key>Library Persistent ID</key><string>F7EB0CD96CD4CA9C</string>
+	<key>Tracks</key>
+	<dict>
+		<key>103</key>
+		<dict>
+			<key>Track ID</key><integer>103</integer>
+			<key>Name</key><string>Dust and Memories</string>
+			<key>Artist</key><string>Unheard Music Concepts</string>
+			<key>Album Artist</key><string>Unheard Music Concepts</string>
+			<key>Album</key><string>The Lasso of Time</string>
+			<key>Genre</key><string>Jazz</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>3891397</integer>
+			<key>Total Time</key><integer>121573</integer>
+			<key>Track Number</key><integer>13</integer>
+			<key>Year</key><integer>2019</integer>
+			<key>Date Modified</key><date>2019-08-25T19:18:37Z</date>
+			<key>Date Added</key><date>2019-08-25T19:22:43Z</date>
+			<key>Bit Rate</key><integer>256</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Comments</key><string>URL: http://freemusicarchive.org/music/Unheard_Music_Concepts/The_Lasso_of_Time/Dust_and_Memories
+Comments: http://freemusicarchive.org/
+Curator: 
+Copyright: Attribution: http://creativecommons.org/licenses/by/4.0/</string>
+			<key>Sort Album</key><string>Lasso of Time</string>
+			<key>Persistent ID</key><string>C85D334586004BEF</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>Music/Unheard%20Music%20Concepts/The%20Lasso%20of%20Time/13%20Dust%20and%20Memories.mp3</string>
+			<key>File Folder Count</key><integer>5</integer>
+			<key>Library Folder Count</key><integer>1</integer>
+		</dict>
+		<key>105</key>
+		<dict>
+			<key>Track ID</key><integer>105</integer>
+			<key>Name</key><string>Dakota</string>
+			<key>Artist</key><string>Unheard Music Concepts</string>
+			<key>Album Artist</key><string>Unheard Music Concepts</string>
+			<key>Album</key><string>The Lasso of Time</string>
+			<key>Genre</key><string>Jazz</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>4336105</integer>
+			<key>Total Time</key><integer>135471</integer>
+			<key>Track Number</key><integer>16</integer>
+			<key>Year</key><integer>2019</integer>
+			<key>Date Modified</key><date>2019-08-25T19:18:37Z</date>
+			<key>Date Added</key><date>2019-08-25T19:22:43Z</date>
+			<key>Bit Rate</key><integer>256</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Comments</key><string>URL: http://freemusicarchive.org/music/Unheard_Music_Concepts/The_Lasso_of_Time/Dakota
+Comments: http://freemusicarchive.org/
+Curator: 
+Copyright: Attribution: http://creativecommons.org/licenses/by/4.0/</string>
+			<key>Sort Album</key><string>Lasso of Time</string>
+			<key>Persistent ID</key><string>60A06B519B9458A5</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>Music/Unheard%20Music%20Concepts/The%20Lasso%20of%20Time/16%20Dakota.mp3</string>
+			<key>File Folder Count</key><integer>5</integer>
+			<key>Library Folder Count</key><integer>1</integer>
+		</dict>
+		<key>107</key>
+		<dict>
+			<key>Track ID</key><integer>107</integer>
+			<key>Name</key><string>Unheard_Music_Concepts_-_23_-_23_Wacko</string>
+			<key>Artist</key><string>Unheard Music Concepts</string>
+			<key>Album Artist</key><string>Unheard Music Concepts</string>
+			<key>Album</key><string>The Lasso of Time</string>
+			<key>Genre</key><string>Jazz</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>2913372</integer>
+			<key>Total Time</key><integer>91010</integer>
+			<key>Track Number</key><integer>23</integer>
+			<key>Year</key><integer>2019</integer>
+			<key>Date Modified</key><date>2019-08-25T19:24:07Z</date>
+			<key>Date Added</key><date>2019-08-25T19:22:43Z</date>
+			<key>Bit Rate</key><integer>256</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Comments</key><string>URL: 
+Comments: http://freemusicarchive.org/
+Curator: 
+Copyright: Attribution: http://creativecommons.org/licenses/by/4.0/</string>
+			<key>Sort Album</key><string>Lasso of Time</string>
+			<key>Persistent ID</key><string>7D079D50DF5969EC</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>Music/Unheard%20Music%20Concepts/The%20Lasso%20of%20Time/Unheard_Music_Concepts_-_23_-_23_Wacko.mp3</string>
+			<key>File Folder Count</key><integer>5</integer>
+			<key>Library Folder Count</key><integer>1</integer>
+		</dict>
+		<key>109</key>
+		<dict>
+			<key>Track ID</key><integer>109</integer>
+			<key>Name</key><string>Cosmic Relevance</string>
+			<key>Artist</key><string>Unheard Music Concepts</string>
+			<key>Album Artist</key><string>Unheard Music Concepts</string>
+			<key>Album</key><string>The Lasso of Time</string>
+			<key>Genre</key><string>Jazz</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>6685872</integer>
+			<key>Total Time</key><integer>208901</integer>
+			<key>Track Number</key><integer>24</integer>
+			<key>Year</key><integer>2019</integer>
+			<key>Date Modified</key><date>2019-08-25T19:18:32Z</date>
+			<key>Date Added</key><date>2019-08-25T19:22:43Z</date>
+			<key>Bit Rate</key><integer>256</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Comments</key><string>URL: http://freemusicarchive.org/music/Unheard_Music_Concepts/The_Lasso_of_Time/Cosmic_Relevance
+Comments: http://freemusicarchive.org/
+Curator: 
+Copyright: Attribution: http://creativecommons.org/licenses/by/4.0/</string>
+			<key>Sort Album</key><string>Lasso of Time</string>
+			<key>Persistent ID</key><string>627D7E3F8A776ECA</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>Music/Unheard%20Music%20Concepts/The%20Lasso%20of%20Time/24%20Cosmic%20Relevance.mp3</string>
+			<key>File Folder Count</key><integer>5</integer>
+			<key>Library Folder Count</key><integer>1</integer>
+		</dict>
+	</dict>
+	<key>Playlists</key>
+	<array>
+		<dict>
+			<key>Name</key><string>Library</string>
+			<key>Description</key><string></string>
+			<key>Master</key><true/>
+			<key>Playlist ID</key><integer>111</integer>
+			<key>Playlist Persistent ID</key><string>6AAC3B2B68A2E415</string>
+			<key>Visible</key><false/>
+			<key>All Items</key><true/>
+			<key>Playlist Items</key>
+			<array>
+				<dict>
+					<key>Track ID</key><integer>103</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>105</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>107</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>109</integer>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>Name</key><string>Downloaded</string>
+			<key>Description</key><string></string>
+			<key>Playlist ID</key><integer>118</integer>
+			<key>Playlist Persistent ID</key><string>550208EC0191E111</string>
+			<key>Distinguished Kind</key><integer>65</integer>
+			<key>All Items</key><true/>
+			<key>Playlist Items</key>
+			<array>
+				<dict>
+					<key>Track ID</key><integer>103</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>105</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>109</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>107</integer>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>Name</key><string>Music</string>
+			<key>Description</key><string></string>
+			<key>Playlist ID</key><integer>125</integer>
+			<key>Playlist Persistent ID</key><string>935B89F3A4F9067C</string>
+			<key>Distinguished Kind</key><integer>4</integer>
+			<key>Music</key><true/>
+			<key>All Items</key><true/>
+			<key>Playlist Items</key>
+			<array>
+				<dict>
+					<key>Track ID</key><integer>103</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>105</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>109</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>107</integer>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>Name</key><string>Downloaded</string>
+			<key>Description</key><string></string>
+			<key>Playlist ID</key><integer>141</integer>
+			<key>Playlist Persistent ID</key><string>5EBA446DE8091B23</string>
+			<key>Distinguished Kind</key><integer>66</integer>
+			<key>All Items</key><true/>
+		</dict>
+		<dict>
+			<key>Name</key><string>Movies</string>
+			<key>Description</key><string></string>
+			<key>Playlist ID</key><integer>144</integer>
+			<key>Playlist Persistent ID</key><string>D5297F4C0F2E7420</string>
+			<key>Distinguished Kind</key><integer>2</integer>
+			<key>Movies</key><true/>
+			<key>All Items</key><true/>
+		</dict>
+		<dict>
+			<key>Name</key><string>Downloaded</string>
+			<key>Description</key><string></string>
+			<key>Playlist ID</key><integer>150</integer>
+			<key>Playlist Persistent ID</key><string>40DC94A067DCEA66</string>
+			<key>Distinguished Kind</key><integer>67</integer>
+			<key>All Items</key><true/>
+		</dict>
+		<dict>
+			<key>Name</key><string>TV Shows</string>
+			<key>Description</key><string></string>
+			<key>Playlist ID</key><integer>153</integer>
+			<key>Playlist Persistent ID</key><string>22212CD1AF8B560E</string>
+			<key>Distinguished Kind</key><integer>3</integer>
+			<key>TV Shows</key><true/>
+			<key>All Items</key><true/>
+		</dict>
+		<dict>
+			<key>Name</key><string>Podcasts</string>
+			<key>Description</key><string></string>
+			<key>Playlist ID</key><integer>156</integer>
+			<key>Playlist Persistent ID</key><string>0F7B8C6B6F0BEC25</string>
+			<key>Distinguished Kind</key><integer>10</integer>
+			<key>Podcasts</key><true/>
+			<key>All Items</key><true/>
+		</dict>
+		<dict>
+			<key>Name</key><string>Audiobooks</string>
+			<key>Description</key><string></string>
+			<key>Playlist ID</key><integer>163</integer>
+			<key>Playlist Persistent ID</key><string>312A1C6BC00D4E0F</string>
+			<key>Distinguished Kind</key><integer>5</integer>
+			<key>Audiobooks</key><true/>
+			<key>All Items</key><true/>
+		</dict>
+		<dict>
+			<key>Name</key><string>Genius</string>
+			<key>Description</key><string></string>
+			<key>Playlist ID</key><integer>166</integer>
+			<key>Playlist Persistent ID</key><string>F3DA67FA695C26AB</string>
+			<key>Distinguished Kind</key><integer>26</integer>
+			<key>All Items</key><true/>
+		</dict>
+	</array>
+</dict>
+</plist>
