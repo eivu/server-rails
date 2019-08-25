@@ -15,7 +15,6 @@
 
 class Fingerprinter
 
-
   # converts artist hash into a format that can be used with Tagger and the larger app
   def self.parse_artists(array)
     # & means primary, anything else means supporting
