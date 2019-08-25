@@ -68,6 +68,7 @@ module Tagger
 
       extension = File.extname(path_to_file)
       file      = File.open(path_to_file)
+      
       if extension.present?
         mime    = MimeMagic.by_extension(".m4a")
       else
