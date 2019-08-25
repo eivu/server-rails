@@ -1,0 +1,52 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.acoustid.org/v2/lookup?client=o4Wf01oR4K&duration=266&fingerprint=AQADtIkiRUoyHXI-VC7OKB2uII90oWmOfhli46kEHd8-5Dna6fBZXIKbZkh-xMfzo3mWB9cqfGmY4EeYP9Dk7IiOL3jYoD92BucRc4coJUdslMelPPiFPFmOJpIzQVulHvGVAT-m_MGjHDvi7cJhRcuIvsT9oIcjnkKr5PiH3sVFLRn8CGWFH9-J_8EvRhCVHidOB-UliEe_5HjzoevhH_-Rkj1yHj_8ozbkHF-O3GgaSUdFJQ-OGw5FzniSvAh3OIf2JAhpBf4TnLkSfMefwTk6IofqF3mYPcWJPmjsGuePM9NGVGbGoJHzYPSOJzp4ZCWD5DnGLMlxyhv6Es1xOvhyzEoePMePJs82PE0EeszxI9cHHfdw1SmeieByQv1QK0mJ5_iFX8WXfKiMJjkn6JGGJ6mE40F5DQ_8PNBOPFde8EmQB_OR7wqeHpUp2D60Fz9xJVrw58EN-RJ6oklD4th3fLvwQpHZ4Qz-WPjhi4F-9EmPy0SOm5KIt_CLf9iRa1k0ZZCOkHJavJG44znuHg--ZUe0_-jyHIrODdcH5ziVGfrwB111fDnO4-egoxl71Bu-6Eeeo2OOHz9qJfJw93iPHucu-EeP_OBlaMqLJgsrIZ8pob_wy3D14doRWqWg5iLiD30Cdzm8oz2D38i7okl-aKpyfBxy8WgXRwcf_BLc6HjKDBHJH09yfPihFVeu4CsFLZ-O6hkeJ8gvNEuSB9cOpAc0JyROKkKco9cXTFn24npy5Cm0I-1-VCa6wekQNgy0H2m3D9cMd4_A5_BO48sRUvSh84hk4eFRE_ly3If-o8wP_8gPf0Jaoz9-vA_UX_hxNsUlON9xnMeX6NAlpQrCjtJxZ4SlHL3wOsduvEfWZdCeC9OzFPk-PPjFo4u-odnx46jhow-DT5GQJzm0XUUoH3-OKw-eodmDfnh__JKRT4mOX7h0onFTtPdRO8jzBZeDh0SeQleOnDyqhcoWrPnwZ4XP492DPIV-hNnQL7jk4LnQ5NHRPzi_4mjG5-gz4yZC0RB1H6GOUxceX2i2HvWOXEXlCaLSGNUu5EryBMcd_EiVJhLxLYGuG-GTB5504i_6I3dQQ1eGOGNCOPxRHs8e5DW0OEU-nHAOJyPyKEkOnUf-Dv6M2wJvC_6N94jUSND3I_7x8ML54Ty-4Dmay-gSJTku1kFo-C1OaFlq5MSjRvhyJzhLXFnQU0UYrj3OQE-OS5IYqO4RPnCv4qLGoxfxJCHWHPH0giUNLR-D6CX8ZEXpG1-O6kvQaMd1o5SO5kaeL1AnH9GTMmh0OB_643Nw5WgelMzw_Ih9GnLzI9dxceg1pOQO14FU5sEpCmEuBeySI4fWqEb2xEKl4znRB64-lNNiIzQS7uiLR8R5NHJS9A_OD-3xhUf6Qz8R6iKeDqV_mMelwxZyHl_WQvxi4RRELiae3IQnlWBUEQ9R_fCrgFlCWeBcRbjRPAv2JDm0hD_y4_XxXsQ1HU2pbEXVrrh2wf-xZ8F5-PgFjwzmLMfjRjhto1ET5Qj1eMUDnYzRNNpR4xeHc8RePtBDgrEdNNsFXXgTFb9xB9JSWsKZDeG1wUe94ymu4xqYMwyy5IfeCo9Fo0-MjTr0p8iP62hCfAlp_A7CLjmh5cUvxFJyDTV_-KTwLkcodmqIS9Gh-R3SlUbnGT_-HB91hGuSJ2jmDsrzIpb0gumnYtuDmEJ340wDPTlG0SiT3HB4B_1z_NBnnEoKdmiY79DYD_ktXFmCKjqMnzBiUiuhRamSItsf1E6lwlbwD36Qf1B_PDo0MSFFHPsRElOWh8OPvMV7yJFzXCkZ9B2aF1cmHCcaVnzQruj3GRd55BK6Hxdp4eRRirphNxUuH3kYl9AjvKECJ1Rk3CdOkiij5NDToPeh5ciDesG9KsHjr2C0d6hF-Ef4Q_-FPDvRg6mPDy-P6U3RfMhfHDqFH7-gmjm6mRIc5-h_PD7-BFdyPDxOHtqOJrxxKUR-nMdf9DnuwfsQHOpZI3cu7PuCkjlukNuCDz2aOT_y5JjE5BD7FtXRC83INAkejdAlFX2MRlpWHFdHJfg9aD-ah8hz4eRUoGMyD018_IaP6JEyIbmUxIF5XBeOMzxqoSFx48-RTD9-ROt6lHtwoUfzfDilI9zDw2mSHToZHmUO5UWtC2HiLEeVNwY141sInwl8CfSP8wrSikESKbdQ6YE_oyRxHj-OJm3Rnbh33HqRH1-CWkTzQD9ONLny4I3KwJF4PEf0ZD5-vHlwL0LVKDh15InyIBmajgXzOoRD53gZ4t_hJ0eullC-xBX6J0PeIFKmoz_uTAejTMeHWhEGLU_MFL1wfSomRdoRW0kqPKOUojl-5DSeUQeTNAyN3gv-D9VqojkO-mCIhznhvcSzE-loHuGHO0FPpRB9nC5hNTxCZgV7_MeVBVeOH3MvVI1hoaKnHJFeQz_S6cVf8BSNJh_-J7j0SbiC_FBFHmHJF8125DqkHTmXgVaSHcdbTYjFFv-Oceqh5cHUMYe-6UUe4VLg5cb14bfgOAquqCk-3PDC48uD8IfYE-GT4-Tx8AmaJcfJ4KTh4hFCZRMLVdQR9oSno-dx9LiiofLA-gi7K_AXZPnRI1Vu9CauBL10Q8cv5Dyco09RPQK1EW0f5Myh7Rky3cGZHA7FHK-xzTtCGzoRHo-O7yjl48hPaDZMeQgpTnjQvKi1HPkOzQ--HGm2pcGPix7y40sD8SIAQggoABEADpCACMKAE0IAgIQDCgjDmDCACkEEA44YAAQzQDHBBQtCCmOINEgxZgQAhABkmEKCEIGQQAAIBwgQxBkjkQHdEIIIEgQYQ4RxSgBiiUBEAOYMcABIzBxCBnIjAHJGGKgQc0IJ4gwgxBimiVFAKAAAQY4IQZFiBhIgAGFSIIC0AIAhgxQAjAGBkPGAAcAIMRQIIIQQQhkKGAHKKKCI4AAIoQiAEDlglLCMCOKJQIIJQYRQhgmkOCFCEQaYIIARI4AgUDhCCUGIGOCEIoYCIQAgCEgBiFBEEQaEEcAAAgSBCAACCFDMKEEIMAYQxAQBkCFACAEAUGCcUQJABQgQSAlgwQNAEaQYIcYwQoABTAAACGEAKECUIlI4AwwgBEglCQNMKKEIMQYIBQghwgBBFBMGASYAQQAJCoRhhhBKDDIMDAiUEkIBAYgABBAohHGEcAkUBYBBB4BAiiAjEBAGAMAcUJAQg5wFAiMEAAJKYGeMUgQIAhwAgBgEgCcMEAUco0gQRAgjQBACBBDAEWOMAwQIA5CCQABDAGSAIIEIIEIY5pgjFgFCHAAGOCMQYYhQwAgkCgknCEFMaSAkZEAQgqggggBAlGGAUSKAUcAAZhxhSDEhDJBAIUCMEEgSZQCCSArDhHBGCWgMEAAwgEAhAABgBABGACIERIAQChUQCQgBBAFMAMCAApQQABkhgiBHhBACEEAcQkoABYESDBkmBEIEAgEAMYwLAJSwQloEjAVEEAQcA4pARAAkjBEABBDCMAsUYgAAIQwAhEnDiAFAAEMAIEYQwQIghBBIJKJUKGEIJYQhQAQxAgEnAGCACSCMNEwBgRWwRCgGlrJMGCEA9U4BYQCASDEABBACOQEREUIRogggAgAAjACDAEe4YKAIBAwgQCgGgBIAekeIURAYARBAijCFkBIANGWMAIoJ4wQBhgkEFDACESQI4MB4JRwwTEimhEDMMGEQE0AB&meta=recordings%20releasegroups%20compress
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - rest-client/2.0.2 (darwin17.7.0 x86_64) ruby/2.5.1p57
+      Host:
+      - api.acoustid.org
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '1463'
+      Access-Control-Allow-Origin:
+      - "*"
+    body:
+      encoding: UTF-8
+      string: '{"results": [{"id": "34001c38-a098-44a6-8166-39e03475d18e", "recordings":
+        [{"artists": [{"id": "f82bcf78-5b69-4622-a5ef-73800768d9ac", "joinphrase":
+        " & ", "name": "JAY Z"}, {"id": "164f0d73-1234-4e2c-8743-d77bf2191051", "joinphrase":
+        " feat. ", "name": "Kanye West"}, {"id": "859d0860-d480-4efd-970c-c05d5f1776b8",
+        "name": "Beyonc\u00e9"}], "duration": 266, "id": "f26027cf-73d9-4db6-8429-a7bd316713e1",
+        "releasegroups": [{"artists": [{"id": "f82bcf78-5b69-4622-a5ef-73800768d9ac",
+        "joinphrase": " & ", "name": "JAY Z"}, {"id": "164f0d73-1234-4e2c-8743-d77bf2191051",
+        "name": "Kanye West"}], "id": "a96597aa-93b4-4e14-9e6e-03892ab24979", "title":
+        "Watch the Throne", "type": "Album"}], "title": "Lift Off"}], "score": 0.932094},
+        {"id": "1f7a315d-a902-43eb-918d-6af16feb8a5f", "recordings": [{"artists":
+        [{"id": "f82bcf78-5b69-4622-a5ef-73800768d9ac", "joinphrase": " & ", "name":
+        "JAY Z"}, {"id": "164f0d73-1234-4e2c-8743-d77bf2191051", "joinphrase": " feat.
+        ", "name": "Kanye West"}, {"id": "859d0860-d480-4efd-970c-c05d5f1776b8", "name":
+        "Beyonc\u00e9"}], "duration": 266, "id": "f26027cf-73d9-4db6-8429-a7bd316713e1",
+        "releasegroups": [{"artists": [{"id": "f82bcf78-5b69-4622-a5ef-73800768d9ac",
+        "joinphrase": " & ", "name": "JAY Z"}, {"id": "164f0d73-1234-4e2c-8743-d77bf2191051",
+        "name": "Kanye West"}], "id": "a96597aa-93b4-4e14-9e6e-03892ab24979", "title":
+        "Watch the Throne", "type": "Album"}], "title": "Lift Off"}], "score": 0.519053}],
+        "status": "ok"}'
+    http_version: 
+  recorded_at: Tue, 20 Aug 2019 18:19:46 GMT
+recorded_with: VCR 5.0.0

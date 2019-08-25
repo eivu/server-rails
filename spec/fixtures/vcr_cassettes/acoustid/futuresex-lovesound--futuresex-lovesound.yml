@@ -1,0 +1,49 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.acoustid.org/v2/lookup?client=o4Wf01oR4K&duration=241&fingerprint=AQADtOIUPUm0YGh3-A_yOPCYGNOTcNApmD_e40-hB9V1_IfxJVak4Q1hHX2HH7VyfNAPjzl-vMi13GilGe-JkIeipMkRWkdzHWeUYJeKqrnwXCna6EHOQDsRJsT3jPg4_LqAWDdkdYbDJGtwQj98RmHxBOUPf4f2I5_woPqJv7iCHHIO64jl6ain4MqLvlGQPhehkcgfnFku4g2N5_BH5OnRXNmg4yT6FF-UNmiUo_qgU7iWiYEZZT9-C-db2Mb3EMWXw5WGV8fTHrdxolQu4YZelMfXY09xKXIgXgnSCn0wjzre4-tRhdEjofmPPEGyvMd9woeprfCYo5RO_Mg_onoPLWOGC89hSzHKHzknvINbHc9x5OphSrqhX_B6oauK8Dee44uN1LmgmLoQ5jlOfBueYlfwHY0Y9gj1HJqtIzw-ChcVo0921DqOXGgfNKOa48pwpviyQ9Ub_OgmNEW8xThCK8ehcjx84eGQP8d_dEvwS4iUR0gYMUYffNiVhLjw3WjyESmVBzoDnyd6fFMYnIoCucc_IleKTjnC5Cf0I2geInnkIj989Mer4-ZxtGsKNxeh9_B3_MFPuJIVtA-Hl0XJ5gjz-Eiu45p4PJfRX2iO8EkoaDmP_jA_-I_hSDLRQZWPP8GlTmgkJUf14egHHVcC8RYcqUeeZkKPZz-eZ-g_pG8FHXmLc0pOPNGx_QnyH8m84z9mTrgTEs8Fcy8e60jWH2GOXifMLRUeKaiVI5cCFbkeD_2GRpES4hc-Cs_x5gtO9ujh3_hxp8bVFqWYQxuj5Wg-XMfFHN-TEA3KkvjRfIF2CfdUPOWEfmiy46WGtE6Q_Ghak-iPUklTVM5x_MYzIcwkHn2CC--i4tBxJtbQI8zz49aE_ngD-7hCOmh35NSRHBdR62iifdi_IGQPLe6RJxFmSTiH54qEdjfyltCD5sT34RyhXkeOq8OvGY0Uvai0ZMgPHf0hbkd67She6fiP50QvpJRLJKxynIcf4o_wn7gutJoonEf6-NBD5KGMOzyey0fzFeGNfibECyfaZ8KZG014CtpwzfjVo1OUo4mo4-g7iONx4Tl-eJ8G2Tr0pseONjl4HQ8b9IfzHNqTY1Z05HqC5ok19HqxH2y14-QxRpfQXOjlQstD_PiHi0mPZ0bzE-eRdJeRPxaaXegc6aiNcgnxGB-HfpuEEz_8CueHXjh5JCN1hKnCC8eFPwxqHVNWkviRfjmSJ9FxEuPL4pGuoLl29EWP5OiPfKpQJVKUiKiMX7iDP4ZDZVOEB_k-6Enw_Min5GicEz3-fGjuGT3ye9DyH_kf-OjyGE3WCyF36AlC4zIu5vAUiRO-w0elH19VhGKSEeKPdIcftMGz4z7CM4cWTUw4IuI-tMuOB4wp9CeaDtdxVM7RaA7ySEf1Gzp8IYsf_NiTolG5ofqRPOwRPhWOJx7uGV90VL105HmQLOGWoz9-lNKeoKGSoQlVEiXD4j_CHx6lFN-gK0a-w_tRspTwCe2O9OhjaOcR5pnx5nCcZccjHueFMP-Ky0ogMkNnSsIXXSjS_QgfXniLTlsR5scRetnQ9MFjo5GO_tBycgiNP0fzLMek7cW9olQO6sV5VEe-Hap4NEbYHM1jgfnRj0eTH41CVI8xctGF7kETkTqeJejR-OiH5jtyDmoYKRFRvcjzTTj844cdHaE3aOGE8DjxmzB149dwHUcY_egi8bh04o3wo7nRp0C7-Piha4Sv4_uRn3i0CO1yIZT2YcqR7DoaXHiT5Bjx9A36K_hOJEeY4z8u7viFn8iHx0qhhXGFStOhC31eNB--Ej1ER6h45NbxHBWF60JFVUTIHjrSU6jUHZewi04Q3kJzl0iOH2d2PHSJJudw6cf2xAgvCpp12L7QMNdxKQ-ed3A0vC30KsUfNJOKLsWNF3304shX9D96TfiiwE1eOK6HLvwQ6kiqBl-DSVOOJ0HJHDmSvcOf5Bid49IJ58PXI-x5JIT_DJdEmApDNFUe4sQR7zGaX0ap7Tg0jgn8Ha6pB2-Z4oVO_PhgJsmDWhpK7tDy_PiHSuQxhTk-PUIupiL6HM2j4GNwSse_hBPG6MPdGH4RHsnRH2fRpyxq5fg-_DRyhZHhHV-Er0f9o-WOnwpOLkQXDk34GL_wNqilC02z6fiWE__xW0VJ3bg7dFIuQeMnpPGxPejxTJgbHH_Q8TKSbqyRBw3-Ed9wHRfyQ7fiwbxx9fhuNM-ioz90_aja4xyhJS-eH99RjxzMJIc_nIeew0m84RTRKpFxS9AoPWiqHMiXRDLuXnhuNO8Q_nhs9OWhdUzRuBT6PGgikRy0vcT1CF-NbspTOL7R4zeEVvlgK4dK3bCOHy0z5PvxPAiPs4LI4j8-BRuT5Dn-HDoRethxRgpuHVW0E41_nFLRPMfhHzaFM0dz9cgF9cifwuODB-fR92jG_Ojx0PjGIR_Mw7-FR0EdCmF-owsTfCh5pFJsEW8eJLHOoakSfPgmXAz-JxijXEbjIjzDQTPyFxXroOMOhwrRcCc-_AxuhOmR7FFxjZGO53iv4gkt9LvQ_HjwZDp64qlwKUN6kniy8LiISpSgRzmOKdE-Qc-h5YhuHzfxJBnxTEMTZ4efrOh8NLzRB48u4drx6EJ-_NCmOEUT9Th0-D0e_ESvo5moQ9-Ncxea_MLhH50v6AdAEJAIAEEIMwohAohRTCDiFAFCEiGEEJAAQohggBEliBEAAEEgAkoQYoBUDhAlBHgMGWIAsYAAAACEgHCmgNMEACAAMEhQAogBAiErLXCCQMGcAUIAYSQSBlgCoCIACUQZQlIwBtQRggAjjJCACAAkYRYwgAgwkgAkiAcAKSQEBfApAIQDgghlEAVQAKEcQYBwAgxhjgFkBDAKG2MAEIYRYIkChDigDABQAQKAFNYgIIwQxACCjATNGGIAOEIgIxBQBBBDABHKICUQANIoIoAUQlEMgGWOOAGEISIIhQAyRiAMiDHIEECYZIJBIxQxigoAieoKACCAQIIhJISDCgGDhAOAGQQ1QQgAAAlBUkgCNBAACMAYIIcYAAABABEmABEJEAAERAYyQIyABAgjYBPKYCAIAcJAYJiQQCGGDAECQWaAcFAhwyAxggGABAPEKekAU0wZY4QQhgLDDBMEMEEAIAgIRS5AxEkDFFCOGWGAEIIIRAgAQghggBAQUSQMosIIoKhVAEAgkKCAQCSuUUhIxABoBiACKKVGEAAAIYIZIAgwAAlJAHAKKgGAAsIQYoQBRBggACMKM6aEAkIAAARSijEHCHJICSEAMIIiZokBgBgC2CLIOUcRUAgAAZkRClkBIBAKAwAYEIAKQihQkAhgADFESoUAIQAIyAWxCgjCAVBOGEawcAgYATAgAhgEgDFKCEIIAEgACSxAAAgBBFBAC-OBAgQoIpRkRghgmNAaECHgIMAwwQQ5AhAggHOEGCEEIwIAhIBiCECggAPMAUQEEIIIAIxkAgBAHBBGIKMMMMoESSRxyinwBQBACAeMIgARhxgQAAKrCEIEQAMFIIAYAygAwgggADHAAiOAYNAQgBx2ABEkBHEAEwIEQoAh54kgBBBhCDAMOSEAQkoQAYABCBRgDCMIAGKEM0SooiggwABjhCIIGKqYUAQwIQUSBElAAGGUIQuUQIwx4BQRBqwAGEIOOAEIEsICZYgD&meta=recordings%20releasegroups%20compress
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - rest-client/2.0.2 (darwin17.7.0 x86_64) ruby/2.5.1p57
+      Host:
+      - api.acoustid.org
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '1204'
+      Access-Control-Allow-Origin:
+      - "*"
+    body:
+      encoding: UTF-8
+      string: '{"results": [{"id": "e4e6eb78-2823-4a47-a232-f7e1ec11c917", "recordings":
+        [{"artists": [{"id": "596ffa74-3d08-44ef-b113-765d43d12738", "name": "Justin
+        Timberlake"}], "duration": 241, "id": "4f4c0ac1-aadd-4294-a106-b5f356818a7f",
+        "releasegroups": [{"id": "00de8e96-b902-3d80-b980-1298937b0b2a", "title":
+        "FutureSex/LoveSounds", "type": "Album"}], "title": "FutureSex/LoveSound"},
+        {"artists": [{"id": "596ffa74-3d08-44ef-b113-765d43d12738", "name": "Justin
+        Timberlake"}], "duration": 241, "id": "6bf6154d-89f6-447a-bf6d-ed22f9949042",
+        "releasegroups": [{"id": "63d471eb-7694-4870-b8e5-dd76f42fd5b6", "secondarytypes":
+        ["Compilation"], "title": "Greatest Hits", "type": "Album"}], "title": "Futuresex
+        / Lovesound"}], "score": 0.934599}, {"id": "ae1e4c71-bf75-4770-99f1-b942a1f24730",
+        "score": 0.563884}, {"id": "1707d87a-a29b-4bc3-8979-736a9c5fb51b", "recordings":
+        [{"artists": [{"id": "596ffa74-3d08-44ef-b113-765d43d12738", "name": "Justin
+        Timberlake"}], "duration": 241, "id": "4f4c0ac1-aadd-4294-a106-b5f356818a7f",
+        "releasegroups": [{"id": "00de8e96-b902-3d80-b980-1298937b0b2a", "title":
+        "FutureSex/LoveSounds", "type": "Album"}], "title": "FutureSex/LoveSound"}],
+        "score": 0.540678}], "status": "ok"}'
+    http_version: 
+  recorded_at: Wed, 21 Aug 2019 04:33:40 GMT
+recorded_with: VCR 5.0.0
