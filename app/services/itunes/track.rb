@@ -11,7 +11,6 @@ class Itunes::Track
 
   def method_missing(method, *args)
     method = method.to_sym
-    #sometimes @attr is nil, *shrug*
     if @track_info[method].present?
       return @track_info[method]
     else
