@@ -32,6 +32,9 @@ gem 'sidekiq', '~> 4.1', '>= 4.1.2' #Simple, efficient background processing for
 # gem 'therubyracer',  platforms: :ruby
 
 
+# misc
+gem 'activejob-traffic_control', '~> 0.1.3'
+
 # presentation
 gem 'jquery-rails' # Use jquery as the JavaScript library
 # gem 'turbolinks' # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
@@ -65,6 +68,7 @@ end
 group :test do
   gem 'database_cleaner', require: false
   gem 'rspec-rails'
+  gem 'rspec-its', '~> 1.2'
   # gem 'rspec_junit_formatter' # for circleci
   gem 'rails-controller-testing'
   gem 'rspec-json_expectations'
