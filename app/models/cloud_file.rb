@@ -49,22 +49,26 @@ class CloudFile < ActiveRecord::Base
       req.request_head(url.path).code == "200"
     end
 
-
-    def ingest(path_to_file, bucket, options={})
-      cloud_file = CloudFile.upload path_to_file, bucket, options
-      tagger = Tagger::Factory.generate(cloud_file)
-      tagger.identify_and_update!
-      cloud_file
+    def exists?(md5:, bucket:, folder:)
+      CloudFile.where(:md5 => md5, :bucket_id => bucket.id, :folder_id => folder.try(:id)).first.try(:id)
     end
 
 
-    def ingest!(path_to_file, bucket, options={})
-      CloudFile.ingest path_to_file, bucket, options.merge(:prune => true)
-    end
+    # def ingest(path_to_file, bucket, options={})
+    #   cloud_file = CloudFile.upload path_to_file, bucket, options
+    #   tagger = Tagger::Factory.generate(cloud_file)
+    #   tagger.identify_and_update!
+    #   cloud_file
+    # end
 
-    def upload!(path_to_file, bucket, options={})
-      CloudFile.upload path_to_file, bucket, options.merge(:prune => true)
-    end
+
+    # def ingest!(path_to_file, bucket, options={})
+    #   CloudFile.ingest path_to_file, bucket, options.merge(:prune => true)
+    # end
+
+    # def upload!(path_to_file, bucket, options={})
+    #   CloudFile.upload path_to_file, bucket, options.merge(:prune => true)
+    # end
 
     def upload(path_to_file, bucket, options={})
       if options[:async].present?

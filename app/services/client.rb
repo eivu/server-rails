@@ -3,7 +3,7 @@
 
 class Client
 
-  def initialize(itunes_path: nil)
+  def initialize(itunes_path: nil, bucket: nil)
     if itunes_path.present?
       @itunes_path = itunes_path
       @itunes_lib  = Itunes::Library.new(@itunes_path)
@@ -12,7 +12,7 @@ class Client
 
   def import_itunes
     @tracks.each do |track|
-
+      CloudFileUploaderJob.perform_later track, @bucket
     end
   end
 
