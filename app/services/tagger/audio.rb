@@ -4,20 +4,6 @@ class Tagger::Audio < Tagger::Base
     save_data!
   end
 
-  def best_matching_release
-    if @mp3_attr[:release].present? && @fingerprint.response.present?
-      # use release if it was found via fuzzy, otherwise use other_release_sources
-      release = @fingerprint.release if @fingerprint.found_via_fuzzy?
-      release ||= other_release_sources
-    elsif @mp3_attr[:release].present?
-      release = { :title => @mp3_attr[:release] }
-    elsif @fingerprint.release.present?
-      release = @fingerprint.release
-    else
-      release = {}
-    end
-    release
-  end
 
   # order of choice for release name after fuzzy matching fails
   # 1: id3 tag if _source is defined

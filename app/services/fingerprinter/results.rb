@@ -1,19 +1,33 @@
-# Should be used for testing in a spec
-#   [{"joinphrase"=>" & ", "id"=>"f82bcf78-5b69-4622-a5ef-73800768d9ac", "name"=>"JAY Z"}, {"id"=>"164f0d73-1234-4e2c-8743-d77bf2191051", "name"=>"Kanye West"}],
-#   [{"joinphrase"=>" & ", "id"=>"0d7b68b7-6039-4883-8214-9eeb13f8c283", "name"=>"Zacari"}, {"id"=>"d8b9e0dd-2d22-49f3-9b19-6440527f1c8b", "name"=>"Babes Wodumo"}],
-#   [{"id"=>"381086ea-f511-4aba-bdf9-71c753dc5077", "name"=>"Kendrick Lamar"}],
-#   [{"joinphrase"=>" & ", "id"=>"381086ea-f511-4aba-bdf9-71c753dc5077", "name"=>"Kendrick Lamar"}, {"id"=>"272989c8-5535-492d-a25c-9f58803e027f", "name"=>"SZA"}],
-#   [{"joinphrase"=>" & ", "id"=>"f82bcf78-5b69-4622-a5ef-73800768d9ac", "name"=>"JAY Z"},
-#    {"joinphrase"=>" feat. ", "id"=>"164f0d73-1234-4e2c-8743-d77bf2191051", "name"=>"Kanye West"},
-#    {"id"=>"859d0860-d480-4efd-970c-c05d5f1776b8", "name"=>"Beyoncé"}]
-# ]
+class Fingerprinter::Results
+
+  attr_reader :path_to_file, :output, :fp_url, :response, :raw_response, :cleansed_fingerprint, :duration, :track, :release
 
 
-# libchromaprint-dev                                       - audio fingerprinting library - development files                   
-# libchromaprint-tools                                     - audio fingerprinting library - tools                               
-# libchromaprint1                                          - audio fingerprint library  
+  def initialize(results)
+  end
 
-class Fingerprinter
+
+  ######### Tagger
+
+  def best_matching_release
+    if @mp3_attr[:release].present? && @fingerprint.response.present?
+      # use release if it was found via fuzzy, otherwise use other_release_sources
+      release = @fingerprint.release if @fingerprint.found_via_fuzzy?
+      release ||= other_release_sources
+    elsif @mp3_attr[:release].present?
+      release = { :title => @mp3_attr[:release] }
+    elsif @fingerprint.release.present?
+      release = @fingerprint.release
+    else
+      release = {}
+    end
+    release
+  end
+
+
+
+
+  ######### Fingerprinter
 
   # converts artist hash into a format that can be used with Tagger and the larger app
   def self.parse_artists(array)
@@ -32,45 +46,7 @@ class Fingerprinter
   end
 
 
-
-  attr_reader :path_to_file, :output, :fp_url, :response, :raw_response, :cleansed_fingerprint, :duration, :track, :release
-
-  def initialize(track_name, release_name, path_to_file=nil)
-    @track_name   = track_name
-    @release_name = release_name
-    @path_to_file = path_to_file
-    generate
-  end
-
-  def generate
-    # call fingerprint calculator
-    @output = `fpcalc "#{@path_to_file}"`
-    # output is in the format of:
-    # DURATION=267
-    # FINGERPRINT=AQADtHKTZFJG7LSwHxeJuGmhj4i6Bj
-    @output.split("\n").each do |line|
-      key, value = line.strip.split("=")
-      instance_variable_set("@#{key.downcase}", value)
-    end
-    # make duration an integer
-    if @duration.present?
-      @duration = @duration.to_i
-    end
-    @cleansed_fingerprint = @fingerprint.try(:gsub, /[^0-9a-z ]/i, '')
-  end
-
-  def found_via_fuzzy?
-    @found_via_fuzzy.present?
-  end
-
-  def submit
-    @fp_url = "https://api.acoustid.org/v2/lookup?client=o4Wf01oR4K&duration=#{@duration}&fingerprint=#{@fingerprint}&meta=recordings+releasegroups+compress"
-    @raw_response = RestClient.get @fp_url
-    @response = Hashie::Mash.new(Oj.load(@raw_response))
-    parse_results
-  end
-
-  def parse_results
+  def parse
     # make sure both results and the recordings block exist
     # dup is being used throughout so the original object can be referenced without encountering any side effects
 
@@ -94,6 +70,16 @@ class Fingerprinter
   end
 
 
+
+  def found_via_fuzzy?
+    @found_via_fuzzy.present?
+  end
+
+
+
+
+
+
   def matched_release
     if self.found_via_fuzzy?
       filtered_release
@@ -101,25 +87,6 @@ class Fingerprinter
       nil
     end
   end
-
-  # # release[group] closest to input string
-  # def matching_release(string)
-  #   return nil if best_recording.blank? || string.blank?
-  #   titles = best_recording.releasegroups.collect(&:title)
-
-  #   matcher = FuzzyMatch.new(titles)
-  #   match = matcher.find(string)
-
-  #   hash = best_recording.releasegroups.detect {|hash| hash.title == match }
-
-  #   if hash.present?
-  #     hash.rename_key(:id, :ext_id)
-  #   else
-  #     nil
-  #   end
-  # end
-
-
 
 
   ##################
@@ -202,7 +169,4 @@ class Fingerprinter
     nil
   end
 
-
-
 end
-
