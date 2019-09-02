@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe Itunes::Library, type: :service do
+RSpec.describe Library::Itunes, type: :service do
   describe 'new instance' do
     let(:path_to_file) { "#{Rails.root}/spec/fixtures/files/itunes/library.xml" }
 
-    subject { Itunes::Library.new(path_to_file) }
+    subject { Library::Itunes.new(path_to_file) }
 
     specify '#num_tracks to have 4 tracks' do
       expect(subject.num_tracks).to eq(4)

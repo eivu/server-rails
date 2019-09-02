@@ -1,6 +1,5 @@
 # Client.new(itunes_path:"/Users/jinx/Music/iTunes/iTunes\ Music\ Library.xml")
 
-
 class Client
 
   def initialize(itunes_path: nil, bucket: nil)

@@ -29,9 +29,9 @@ RSpec.describe CloudFile, type: :model do
       # track_info = lib.raw_tracks[759]
       # path = "/Users/jinx/Dropbox/eivu/sample/Jay-Z\ \&\ Kanye\ West/Watch\ The\ Throne\ \(Deluxe\ Edition\)\ \[Explicit\]/01-02-\ Lift\ Off\ \[feat\ Beyoncé\]\ \[Explicit\].mp3"
       # path = "/Users/jinx/Music/iTunes/iTunes\ Media/Music/Kanye\ West/Late\ Registration/15\ Skit\ \#3.mp3"
-      path = "/Users/jinx/Dropbox/eivu/sample/Mala/Alicia/01\ Alicia.mp3"
-      tagger = Tagger::Factory.generate(path)
-      tagger.identify
+      # path = "/Users/jinx/Dropbox/eivu/sample/Mala/Alicia/01\ Alicia.mp3"
+      # tagger = Tagger::Factory.generate(path)
+      # tagger.identify
     end
   end
 end

@@ -13,11 +13,11 @@
 # libchromaprint-tools                                     - audio fingerprinting library - tools                               
 # libchromaprint1                                          - audio fingerprint library  
 
-class Fingerprinter::Core
+class Fingerprinter::Acoustid
 
   attr_reader :path_to_file, :output, :fp_url, :response, :raw_response, :cleansed_fingerprint
 
-  def initialize(track_name, release_name, path_to_file=nil)
+  def initialize(path_to_file)
     @path_to_file = path_to_file
     generate
   end

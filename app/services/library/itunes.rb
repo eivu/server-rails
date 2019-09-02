@@ -3,7 +3,7 @@
 # ItunesLibrary.new.ingest_and_identify
 
 
-class Itunes::Library
+class Library::Itunes
 
   attr_reader :path, :parser, :tracks, :raw_tracks, :num_tracks
 

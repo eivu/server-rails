@@ -1,4 +1,4 @@
-class Itunes::Track
+class Track::Audio
 
   def initialize(raw_track_info)
     @track_info = raw_track_info.simplify
