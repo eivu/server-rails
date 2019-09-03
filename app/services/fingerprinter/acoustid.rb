@@ -15,7 +15,7 @@
 
 class Fingerprinter::Acoustid
 
-  attr_reader :path_to_file, :output, :fp_url, :response, :raw_response, :cleansed_fingerprint
+  attr_reader :duration, :path_to_file, :output, :fp_url, :response, :raw_response, :cleansed_fingerprint, :fingerprint
 
   def initialize(path_to_file)
     @path_to_file = path_to_file
@@ -37,13 +37,13 @@ class Fingerprinter::Acoustid
       @duration = @duration.to_i
     end
     @cleansed_fingerprint = @fingerprint.try(:gsub, /[^0-9a-z ]/i, '')
+    @fp_url = "https://api.acoustid.org/v2/lookup?client=o4Wf01oR4K&duration=#{@duration}&fingerprint=#{@fingerprint}&meta=recordings+releasegroups+compress"
   end
 
   def submit
-    @fp_url = "https://api.acoustid.org/v2/lookup?client=o4Wf01oR4K&duration=#{@duration}&fingerprint=#{@fingerprint}&meta=recordings+releasegroups+compress"
     @raw_response = RestClient.get @fp_url
     @response = Hashie::Mash.new(Oj.load(@raw_response))
-    parse_results
+    # parse_results
   end
 
 
