@@ -13,5 +13,11 @@
   "devDependencies": {
     "clean-webpack-plugin": "^1.0.1",
     "webpack-dev-server": "2.11.2"
+  },
+  "name": "eivu-vue",
+  "description": "vue implentation of eivu",
+  "version": "0.0.1",
+  "engines": {
+    "node": "11.10.1"
   }
 }
