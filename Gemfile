@@ -39,6 +39,7 @@ gem 'sass-rails', '~> 5.0.7' # Use SCSS for stylesheets and useful for Sass-powe
 gem 'bootstrap-sass', '~> 3.3.7' #twitter bootstrap stylings
 # gem 'coffee-rails', '~> 4.1.0'
 gem 'jb', '~> 0.4.1' #Faster and simpler Jbuilder alternative
+gem 'graphql', '~> 1.9', '>= 1.9.16'
 # bundle exec rake doc:rails generates the API under doc/api.
 
 group :doc do 
@@ -84,3 +85,5 @@ end
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+
+gem 'graphiql-rails', group: :development
