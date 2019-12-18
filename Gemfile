@@ -50,7 +50,7 @@ group :production do
   gem 'rails_12factor'
 end
 
-gem 'puma', "3.12"
+gem 'puma', "3.12.2"
 
 group :development, :test, :cucumber do
   # gem 'spring' # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
