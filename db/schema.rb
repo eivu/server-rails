@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_17_001548) do
+ActiveRecord::Schema.define(version: 2019_12_18_215008) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -124,6 +124,8 @@ ActiveRecord::Schema.define(version: 2019_12_17_001548) do
     t.integer "subfolders_counts", default: 0, null: false
     t.index ["ancestry"], name: "index_folders_on_ancestry"
     t.index ["bucket_id"], name: "index_folders_on_bucket_id"
+    t.index ["cloud_files_count"], name: "index_folders_on_cloud_files_count"
+    t.index ["subfolders_counts"], name: "index_folders_on_subfolders_counts"
   end
 
   create_table "metadata", id: :serial, force: :cascade do |t|
