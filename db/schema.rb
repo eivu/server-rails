@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_31_221126) do
+ActiveRecord::Schema.define(version: 2019_12_17_001548) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -121,6 +121,7 @@ ActiveRecord::Schema.define(version: 2019_03_31_221126) do
     t.boolean "peepy", default: false, null: false
     t.boolean "nsfw", default: false, null: false
     t.integer "cloud_files_count", default: 0, null: false
+    t.integer "subfolders_counts", default: 0, null: false
     t.index ["ancestry"], name: "index_folders_on_ancestry"
     t.index ["bucket_id"], name: "index_folders_on_bucket_id"
   end
