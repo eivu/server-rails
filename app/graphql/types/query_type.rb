@@ -8,11 +8,18 @@ module Types
       description: "An example field added by the generator"
 
     
-    def test_field
-      'Hello World'
+    field :root, [Types::FolderType], null: false, description: 'Returns a list of folders located in root'
+    field :get_folder_from_id, [Types::ResourceType], null:false, description: 'fetch contents of folder' do
+      argument :id, ID, required: false
     end
 
-    field :root, [Types::FolderType], null: false, description: 'Returns a list of folders located in root'
+    def get_folder_from_id(**args)
+      # Folder.find_by_id(args[:id])
+      if args[:id].blank?
+        Folder.roots.alpha + CloudFile.where(folder_id: nil)
+      end
+    end
+
 
     def root
       Folder.roots

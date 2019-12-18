@@ -1,7 +1,7 @@
 module Types
   class ResourceType < Types::BaseUnion
     description 'Represents either a Folder or a CloudFile'
-    possible_types CloudFile, Folder
+    possible_types CloudFileType, FolderType
 
     def self.resolve_type(object, _context)
       case object
