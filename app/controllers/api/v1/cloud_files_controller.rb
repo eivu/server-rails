@@ -2,7 +2,6 @@ class Api::V1::CloudFilesController < Api::V1Controller
 
   def create
     begin
-      binding.pry
       #just querying to make sure the user owns the bucket. if a user's bucket isn't found this will raise an error
       current_user.buckets.find(params[:cloud_file][:bucket_id])
       params[:cloud_file][:relative_path] = nil if params[:preserve_tree].blank?

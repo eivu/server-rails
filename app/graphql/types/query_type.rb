@@ -14,9 +14,11 @@ module Types
     end
 
     def get_folder_from_id(**args)
-      # Folder.find_by_id(args[:id])
-      if args[:id].blank?
-        Folder.roots.alpha + CloudFile.where(folder_id: nil)
+      id = args[:id]
+      if id.blank?
+        Folder.roots.alpha + CloudFile.includes(:artists, :release).where(folder_id: nil)
+      else
+        Folder.where("ancestry like '%#{id}'") + CloudFile.includes(:artists, :release).where(folder_id: id)
       end
     end
 

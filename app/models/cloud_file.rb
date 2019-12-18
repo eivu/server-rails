@@ -1,4 +1,5 @@
 class CloudFile < ActiveRecord::Base
+  include Reactable
 
   belongs_to :folder, :counter_cache => true
   belongs_to :bucket#, :inverse_of => :cloud_file
