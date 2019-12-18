@@ -36,7 +36,7 @@ gem 'sidekiq', '~> 4.1', '>= 4.1.2' #Simple, efficient background processing for
 gem 'jquery-rails' # Use jquery as the JavaScript library
 # gem 'turbolinks' # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'sass-rails', '~> 5.0.7' # Use SCSS for stylesheets and useful for Sass-powered version of Bootstrap
-gem 'bootstrap-sass', '~> 3.3.7' #twitter bootstrap stylings
+gem 'bootstrap-sass', '~> 3.4.1' #twitter bootstrap stylings
 # gem 'coffee-rails', '~> 4.1.0'
 gem 'jb', '~> 0.4.1' #Faster and simpler Jbuilder alternative
 gem 'graphql', '~> 1.9', '>= 1.9.16'
