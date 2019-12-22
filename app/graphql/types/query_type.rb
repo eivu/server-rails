@@ -24,7 +24,7 @@ module Types
 
 
     def root
-      Folder.roots
+      Folder.roots.alpha
     end
   end
 end
