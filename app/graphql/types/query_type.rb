@@ -18,7 +18,7 @@ module Types
       if id.blank?
         Folder.has_content.roots.alpha + CloudFile.includes(:artists, :release).where(folder_id: nil)
       else
-        Folder.has_content.where("ancestry like '%#{id}'") + CloudFile.includes(:artists, :release).where(folder_id: id)
+        Folder.has_content.where("ancestry like '%#{id}'") + CloudFile.includes(:artists, :release).where(folder_id: id).order(:release_pos)
       end
     end
 
