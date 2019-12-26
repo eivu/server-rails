@@ -1,7 +1,7 @@
 module Types
   class CloudFileType < Types::BaseObject
     field :id, ID, null: false
-    field :name, String, null: false
+    field :name, String, null: true
     field :asset, String, null: false
     field :content_type, String, null: false
     field :release_id, Integer, null: true
