@@ -27,16 +27,10 @@ gem 'itunes_parser', '~> 1.1', '>= 1.1.3' #A fast and simple iTunes XML parser b
 gem "fuzzy_match" #Find a needle (a document or record) in a haystack using string similarity and (optionally) regular expression rules. Uses Dice's Coefficient (aka Pair Similiarity) and Levenshtein Distance internally.
 gem 'hashie', '~> 3.6' # collection of classes and mixins that make hashes more powerful.
 gem 'uglifier', '>= 1.3.0' # has to be outside of assets, to its present at boot. Use Uglifier as compressor for JavaScript assets
+gem 'sidekiq', '~> 4.1', '>= 4.1.2' #Simple, efficient background processing for Ruby.
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
 
-
-# Backgound Processing
-gem 'sidekiq', '~> 5.0', '>= 5.0.5' #simple, efficient background processing for Ruby.
-gem 'sidekiq-failures', github: 'bsharpe/sidekiq-failures', branch: :master
-gem 'sidekiq-limit_fetch'
-gem 'sidekiq-scheduler'
-gem 'activejob-traffic_control', '~> 0.1.3' #Traffic control for ActiveJob: Concurrency/enabling/throttling
 
 # presentation
 gem 'jquery-rails' # Use jquery as the JavaScript library
@@ -65,25 +59,7 @@ group :development, :test, :cucumber do
   gem 'rb-readline'
   gem 'pry'
   gem 'pry-byebug' #replaces pry-debugger becasuse pry-debugger doesnt work with ruby 2
-  gem 'annotate', require: false
 end
-
-group :test do
-  gem 'database_cleaner', require: false
-  gem 'rspec-rails'
-  gem 'rspec-its', '~> 1.2'
-  # gem 'rspec_junit_formatter' # for circleci
-  gem 'rails-controller-testing'
-  gem 'rspec-json_expectations'
-  gem 'timecop'
-  gem 'shoulda-matchers', '4.0.0.rc1'
-  gem 'simplecov', require: false
-  gem 'whenever-test'
-  gem 'webmock'
-  gem 'vcr'
-  gem 'nyan-cat-formatter'
-end
-
 
 # Gems used only for assets and not required
 # in production environments by default.
