@@ -31,6 +31,8 @@ gem 'sidekiq', '~> 4.1', '>= 4.1.2' #Simple, efficient background processing for
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
 
+# Backgound Processing
+gem 'activejob-traffic_control', '~> 0.1.3' #Traffic control for ActiveJob: Concurrency/enabling/throttling
 
 # presentation
 gem 'jquery-rails' # Use jquery as the JavaScript library
