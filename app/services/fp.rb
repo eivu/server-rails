@@ -1,2 +1,2 @@
-class Fp < Fingerprinter
+class Fp #< Fingerprinter
 end
