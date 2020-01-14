@@ -30,7 +30,7 @@ class User < ActiveRecord::Base
     provisioning_uri(Rails.application.class.name)
   end
 
-  def otp_qrcode
+  def otp_qr_code
     QrcodeGenerator.uri_as_svg(otp_uri)
   end
 
