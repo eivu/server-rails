@@ -2,11 +2,11 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
+# This file is the source Rails uses to define your schema when running `rails
+# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
@@ -21,8 +21,6 @@ ActiveRecord::Schema.define(version: 2020_01_11_001857) do
     t.integer "relationship_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["artist_id"], name: "index_artist_cloud_files_on_artist_id"
-    t.index ["cloud_file_id"], name: "index_artist_cloud_files_on_cloud_file_id"
   end
 
   create_table "artist_releases", id: :serial, force: :cascade do |t|
@@ -31,8 +29,6 @@ ActiveRecord::Schema.define(version: 2020_01_11_001857) do
     t.integer "relationship_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["artist_id"], name: "index_artist_releases_on_artist_id"
-    t.index ["release_id"], name: "index_artist_releases_on_release_id"
   end
 
   create_table "artists", id: :serial, force: :cascade do |t|
@@ -47,15 +43,6 @@ ActiveRecord::Schema.define(version: 2020_01_11_001857) do
     t.integer "misc_files_count", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["audio_files_count"], name: "index_artists_on_audio_files_count"
-    t.index ["cloud_files_count"], name: "index_artists_on_cloud_files_count"
-    t.index ["data_source_id"], name: "index_artists_on_data_source_id"
-    t.index ["ext_id", "data_source_id"], name: "index_artists_on_ext_id_and_data_source_id"
-    t.index ["ext_id"], name: "index_artists_on_ext_id"
-    t.index ["misc_files_count"], name: "index_artists_on_misc_files_count"
-    t.index ["peep_files_count"], name: "index_artists_on_peep_files_count"
-    t.index ["releases_count"], name: "index_artists_on_releases_count"
-    t.index ["video_files_count"], name: "index_artists_on_video_files_count"
   end
 
   create_table "buckets", id: :serial, force: :cascade do |t|
@@ -64,8 +51,6 @@ ActiveRecord::Schema.define(version: 2020_01_11_001857) do
     t.integer "region_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["region_id"], name: "index_buckets_on_region_id"
-    t.index ["user_id"], name: "index_buckets_on_user_id"
   end
 
   create_table "cloud_file_taggings", id: :serial, force: :cascade do |t|
@@ -73,8 +58,6 @@ ActiveRecord::Schema.define(version: 2020_01_11_001857) do
     t.integer "tag_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["cloud_file_id"], name: "index_cloud_file_taggings_on_cloud_file_id"
-    t.index ["tag_id"], name: "index_cloud_file_taggings_on_tag_id"
   end
 
   create_table "cloud_files", id: :serial, force: :cascade do |t|
@@ -101,15 +84,6 @@ ActiveRecord::Schema.define(version: 2020_01_11_001857) do
     t.integer "release_pos"
     t.integer "user_id"
     t.integer "num_plays", default: 0, null: false
-    t.index ["bucket_id"], name: "index_cloud_files_on_bucket_id"
-    t.index ["data_source_id"], name: "index_cloud_files_on_data_source_id"
-    t.index ["duration"], name: "index_cloud_files_on_duration"
-    t.index ["ext_id", "data_source_id"], name: "index_cloud_files_on_ext_id_and_data_source_id"
-    t.index ["ext_id"], name: "index_cloud_files_on_ext_id"
-    t.index ["folder_id"], name: "index_cloud_files_on_folder_id"
-    t.index ["release_id"], name: "index_cloud_files_on_release_id"
-    t.index ["user_id"], name: "index_cloud_files_on_user_id"
-    t.index ["year"], name: "index_cloud_files_on_year"
   end
 
   create_table "folders", id: :serial, force: :cascade do |t|
@@ -122,10 +96,6 @@ ActiveRecord::Schema.define(version: 2020_01_11_001857) do
     t.boolean "nsfw", default: false, null: false
     t.integer "cloud_files_count", default: 0, null: false
     t.integer "subfolders_count", default: 0, null: false
-    t.index ["ancestry"], name: "index_folders_on_ancestry"
-    t.index ["bucket_id"], name: "index_folders_on_bucket_id"
-    t.index ["cloud_files_count"], name: "index_folders_on_cloud_files_count"
-    t.index ["subfolders_count"], name: "index_folders_on_subfolders_count"
   end
 
   create_table "metadata", id: :serial, force: :cascade do |t|
@@ -134,8 +104,6 @@ ActiveRecord::Schema.define(version: 2020_01_11_001857) do
     t.integer "metadata_type_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["metadata_type_id"], name: "index_metadata_on_metadata_type_id"
-    t.index ["user_id"], name: "index_metadata_on_user_id"
   end
 
   create_table "metadata_types", id: :serial, force: :cascade do |t|
@@ -149,8 +117,6 @@ ActiveRecord::Schema.define(version: 2020_01_11_001857) do
     t.integer "metadatum_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["cloud_file_id"], name: "index_metataggings_on_cloud_file_id"
-    t.index ["metadatum_id"], name: "index_metataggings_on_metadatum_id"
   end
 
   create_table "regions", id: :serial, force: :cascade do |t|
@@ -179,11 +145,6 @@ ActiveRecord::Schema.define(version: 2020_01_11_001857) do
     t.boolean "nsfw", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["cloud_files_count"], name: "index_releases_on_cloud_files_count"
-    t.index ["data_source_id"], name: "index_releases_on_data_source_id"
-    t.index ["ext_id", "data_source_id"], name: "index_releases_on_ext_id_and_data_source_id"
-    t.index ["ext_id"], name: "index_releases_on_ext_id"
-    t.index ["release_type_id"], name: "index_releases_on_release_type_id"
   end
 
   create_table "tags", id: :serial, force: :cascade do |t|
@@ -192,7 +153,6 @@ ActiveRecord::Schema.define(version: 2020_01_11_001857) do
     t.boolean "private"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["user_id"], name: "index_tags_on_user_id"
   end
 
   create_table "users", id: :serial, force: :cascade do |t|
@@ -221,12 +181,10 @@ ActiveRecord::Schema.define(version: 2020_01_11_001857) do
     t.string "encrypted_secret_access_key_iv"
     t.string "token"
     t.string "otp_secret_key"
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "artist_cloud_files", "artists"
-  add_foreign_key "artist_cloud_files", "cloud_files"
-  add_foreign_key "artist_releases", "artists"
-  add_foreign_key "artist_releases", "releases"
+  add_foreign_key "artist_cloud_files", "artists", name: "artist_cloud_files_artist_id_fkey"
+  add_foreign_key "artist_cloud_files", "cloud_files", name: "artist_cloud_files_cloud_file_id_fkey"
+  add_foreign_key "artist_releases", "artists", name: "artist_releases_artist_id_fkey"
+  add_foreign_key "artist_releases", "releases", name: "artist_releases_release_id_fkey"
 end

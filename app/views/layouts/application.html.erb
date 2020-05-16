@@ -32,13 +32,15 @@
         </button>
         <%= link_to "EIVU", root_path, :class => "navbar-brand" %>
       </div>
-      <%= render :partial => "/layouts/top_internal_nav" %>
+      <%# rails is complaining about the partial %>
+      <%= render template: "/layouts/_top_internal_nav" %>
     </div>
     <div id="wrapper">
       <div id="sidebar-wrapper" class="col-md-1">
           <div id="sidebar">
             <ul class="nav list-group">
-              <%= render :partial => "/#{(@left_nav_dir || "layouts")}/left_nav" %>
+              <%# rails is complaining about the partial %>
+              <%= render template: "/#{(@left_nav_dir || "layouts")}/_left_nav" %>
             </ul>
           </div>
         </div>
