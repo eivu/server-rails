@@ -1,3 +1,32 @@
+# == Schema Information
+#
+# Table name: cloud_files
+#
+#  id             :integer          not null, primary key
+#  name           :string
+#  asset          :string
+#  md5            :string
+#  content_type   :string
+#  filesize       :bigint           default(0)
+#  description    :text
+#  rating         :float
+#  nsfw           :boolean          default(FALSE)
+#  peepy          :boolean          default(FALSE)
+#  created_at     :datetime
+#  updated_at     :datetime
+#  folder_id      :integer
+#  info_url       :string
+#  bucket_id      :integer
+#  duration       :integer          default(0)
+#  settings       :integer          default(0), not null
+#  ext_id         :string
+#  data_source_id :integer
+#  release_id     :integer
+#  year           :integer
+#  release_pos    :integer
+#  user_id        :integer
+#  num_plays      :integer          default(0), not null
+#
 class CloudFile < ApplicationRecord
   include Reactable
 

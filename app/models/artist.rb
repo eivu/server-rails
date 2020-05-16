@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: artists
+#
+#  id                :integer          not null, primary key
+#  name              :string
+#  ext_id            :string
+#  data_source_id    :integer
+#  cloud_files_count :integer          default(0), not null
+#  releases_count    :integer          default(0), not null
+#  video_files_count :integer          default(0), not null
+#  audio_files_count :integer          default(0), not null
+#  peep_files_count  :integer          default(0), not null
+#  misc_files_count  :integer          default(0), not null
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#
 class Artist < ApplicationRecord
   include Reactable
   include ConfigureAndSavable

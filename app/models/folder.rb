@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: folders
+#
+#  id                :integer          not null, primary key
+#  name              :string
+#  created_at        :datetime
+#  updated_at        :datetime
+#  ancestry          :string
+#  bucket_id         :integer
+#  peepy             :boolean          default(FALSE), not null
+#  nsfw              :boolean          default(FALSE), not null
+#  cloud_files_count :integer          default(0), not null
+#  subfolders_count  :integer          default(0), not null
+#
 #Folders are only metadata to preserve the same tree layout as found on the user's drive
 class Folder < ApplicationRecord
   include Determinable

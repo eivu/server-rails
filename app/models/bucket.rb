@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: buckets
+#
+#  id         :integer          not null, primary key
+#  name       :string
+#  user_id    :integer
+#  region_id  :integer
+#  created_at :datetime
+#  updated_at :datetime
+#
 class Bucket < ApplicationRecord
   include Determinable
   belongs_to :user#, :inverse_of => :bucket

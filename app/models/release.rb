@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: releases
+#
+#  id                :integer          not null, primary key
+#  name              :string
+#  ext_id            :string
+#  data_source_id    :integer
+#  cloud_files_count :integer          default(0), not null
+#  release_type_id   :integer
+#  bundle_pos        :integer          default(1)
+#  peepy             :boolean          default(FALSE)
+#  nsfw              :boolean          default(FALSE)
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#
 class Release < ApplicationRecord
   include ConfigureAndSavable
   include Reactable

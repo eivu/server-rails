@@ -1,3 +1,34 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                               :integer          not null, primary key
+#  username                         :string
+#  created_at                       :datetime
+#  updated_at                       :datetime
+#  email                            :string           default(""), not null
+#  encrypted_password               :string           default(""), not null
+#  reset_password_token             :string
+#  reset_password_sent_at           :datetime
+#  remember_created_at              :datetime
+#  sign_in_count                    :integer          default(0), not null
+#  current_sign_in_at               :datetime
+#  last_sign_in_at                  :datetime
+#  current_sign_in_ip               :inet
+#  last_sign_in_ip                  :inet
+#  confirmation_token               :string
+#  confirmed_at                     :datetime
+#  confirmation_sent_at             :datetime
+#  unconfirmed_email                :string
+#  encrypted_access_key_id          :string
+#  encrypted_access_key_id_salt     :string
+#  encrypted_access_key_id_iv       :string
+#  encrypted_secret_access_key      :string
+#  encrypted_secret_access_key_salt :string
+#  encrypted_secret_access_key_iv   :string
+#  token                            :string
+#  otp_secret_key                   :string
+#
 class User < ApplicationRecord
   has_secure_token
   has_one_time_password
@@ -6,9 +37,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  # #uses attr_encrypted to prevent access_key_id and secret_access_key from being stored in the db as plain text
-  # attr_encrypted :access_key_id, :key => SECURITY_KEY, :mode => :per_attribute_iv_and_salt
-  # attr_encrypted :secret_access_key, :key => SECURITY_KEY, :mode => :per_attribute_iv_and_salt
+  # uses attr_encrypted to encrypt data at rest access_key_id and secret_access_key
+  attr_encrypted :access_key_id, :key => ATTR_ENCRYPTED_SECURITY_KEY
+  attr_encrypted :secret_access_key, :key => ATTR_ENCRYPTED_SECURITY_KEY
 
   has_many :buckets
   has_many :cloud_files, :through => :buckets

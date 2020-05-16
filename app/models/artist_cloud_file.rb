@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: artist_cloud_files
+#
+#  id              :integer          not null, primary key
+#  artist_id       :integer
+#  cloud_file_id   :integer
+#  relationship_id :integer
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
 class ArtistCloudFile < ApplicationRecord
   belongs_to :artist
   belongs_to :cloud_file

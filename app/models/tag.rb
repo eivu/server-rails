@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: tags
+#
+#  id         :integer          not null, primary key
+#  value      :string
+#  user_id    :integer
+#  private    :boolean
+#  created_at :datetime
+#  updated_at :datetime
+#
 class Tag < ApplicationRecord
   belongs_to :user
   has_many :cloud_file_taggings
