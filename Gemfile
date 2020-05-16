@@ -11,6 +11,7 @@ gem 'devise', '~> 4.7', '>= 4.7.1' #user authentication
 gem 'mimemagic', '~> 0.3.5' #determine mime type by magic
 gem 'mini_magick', '~> 4.5', '>= 4.5.1' #there's an issues with v3.7 https://github.com/carrierwaveuploader/carrierwave/issues/1282
 gem 'rest-client'#, '~> 1.8.0' #A simple HTTP and REST client for Ruby, inspired by the Sinatra microframework style of specifying actions
+gem 'ensurance', '~> 0.1.19' #Add ability to "ensure" ActiveRecords are full records
 gem 'attr_encrypted', '~> 3.1' #Generates attr_accessors that encrypt and decrypt attributes transparently
 gem 'has_secure_token' #generate the 24-character unique token
 gem 'bitfields', '~> 0.6.0' #store multiple booleans in a single integer
