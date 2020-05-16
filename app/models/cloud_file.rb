@@ -1,4 +1,4 @@
-class CloudFile < ActiveRecord::Base
+class CloudFile < ApplicationRecord
   include Reactable
 
   belongs_to :folder, :counter_cache => true

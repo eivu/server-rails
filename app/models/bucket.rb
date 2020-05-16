@@ -1,4 +1,4 @@
-class Bucket < ActiveRecord::Base
+class Bucket < ApplicationRecord
   include Determinable
   belongs_to :user#, :inverse_of => :bucket
   belongs_to :region

@@ -1,4 +1,4 @@
-class MetadataType < ActiveRecord::Base
+class MetadataType < ApplicationRecord
   has_many :metadata
   # validates_uniqueness_of :value, :scope => :user_id
 

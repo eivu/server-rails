@@ -1,4 +1,4 @@
-class Tag < ActiveRecord::Base
+class Tag < ApplicationRecord
   belongs_to :user
   has_many :cloud_file_taggings
   has_many :cloud_files, :through => :cloud_file_taggings

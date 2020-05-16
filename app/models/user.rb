@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   has_secure_token
   has_one_time_password
   # Include default devise modules. Others available are:

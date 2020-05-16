@@ -1,4 +1,4 @@
-class Metatagging < ActiveRecord::Base
+class Metatagging < ApplicationRecord
   belongs_to :cloud_file
   belongs_to :metadatum
 
