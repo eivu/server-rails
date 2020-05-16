@@ -15,7 +15,6 @@
 #
 #Folders are only metadata to preserve the same tree layout as found on the user's drive
 class Folder < ApplicationRecord
-  include Determinable
   include Reactable
   has_ancestry
 
@@ -47,7 +46,7 @@ class Folder < ApplicationRecord
       #save file in "root" of folder if ignore is blank
       return nil if @@ignore.blank?
       @folder = @parent = nil
-      # bucket = @@bucket || Bucket.determine(bucket)
+      # bucket = @@bucket || Bucket.ensure(bucket)
       path_name = Pathname.new(path_to_file.gsub(@@ignore,""))   
       path_name.dirname.to_s.split("/").each do |folder_name|
         @folder   = Folder.find_or_create_by!(:name => folder_name.to_s, :ancestry => @parent.try(:path_ids).try(:join, "/"))
@@ -61,7 +60,7 @@ class Folder < ApplicationRecord
     end
     
     def upload(path_to_dir, bucket, options={})
-      bucket = @@bucket || Bucket.determine(bucket)
+      bucket = @@bucket || Bucket.ensure(bucket)
       Folder.traverse(path_to_dir) do |path_to_item|
         puts "=== UPLOADING #{path_to_item.gsub(@@ignore,"")}"
         CloudFile.ingest(path_to_item, bucket, options)
@@ -75,7 +74,7 @@ class Folder < ApplicationRecord
 
 
     def clean!(path_to_dir, bucket)
-      bucket = Bucket.determine(bucket)
+      bucket = Bucket.ensure(bucket)
       Folder.traverse(path_to_dir) do |path_to_item|
         md5  = Digest::MD5.file(path_to_item).hexdigest.upcase
         cloud_file = CloudFile.where(:md5 => md5, :bucket_id => bucket.id).first

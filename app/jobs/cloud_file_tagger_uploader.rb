@@ -1,4 +1,4 @@
-class CloudFileTaggerUploader
+class CloudFileTaggerUploader < ApplicationJob
 
   @queue = :uploads
 

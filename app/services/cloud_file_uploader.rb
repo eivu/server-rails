@@ -1,57 +1,11 @@
-class CloudFileUploaderJob < ApplicationJob
-
-  queue_as :default
-
-  def perform(*args)
-    puts :now
-    # Do something later
-    Bucket.ensure(bucket)
-    CloudFile.ingest(path_to_item, bucket, options)
-
-
-    cloud_file = CloudFile.upload path_to_file, bucket, options
-    tagger = Tagger::Factory.generate(cloud_file)
-    tagger.identify_and_update!
-    cloud_file
-  end
-
-  class << self
-    def construct_file_info(path_to_file)
-      # get metadata
-      file      = File.open(path_to_file)
-      mime      = MimeMagic.by_magic(file)
-      md5       = Digest::MD5.file(path_to_file).hexdigest.upcase
-
-      # needed to construct remote s3 path
-      flags     = Tagger::Base.set_flags_via_path(path_to_file)
-      if flags[:peepy].present?
-        mediatype = "peepshow"
-      else 
-        mediatype = mime.mediatype
-      end
-
-
-      store_dir = "#{mediatype}/#{md5.scan(/.{2}|.+/).join("/")}"
-      sanitized_filename = CloudFile.sanitize(filename)
-
-      {
-        remote_path: "#{store_dir}/#{sanitized_filename}",
-        filename: File.basename(path_to_file),
-        md5: md5,
-        filesize: file.size,
-        mime_type: mime.type,
-      }
-    end
-  end
-
+class CloudFileUploaderService
 
   def upload(path_to_file, bucket, options={})
     ActiveRecord::Base.transaction do
       # fetch bucket
       bucket    = Bucket.ensure(bucket)
       folder    = Folder.ensure(options[:folder_id]) || Folder.create_from_path(path_to_file)
-      file_info = CloudFileUploaderJob.construct_file_info(path_to_file)
-
+      file_info = FileInfoService.inspect(path_to_file)
 
       # audio files can be duplicated
       raise "File already exists (id: #{old_id})" if CloudFile.exists?(md5: file_info[:mime_type], bucket: bucket, folder: folder)
@@ -76,5 +30,4 @@ class CloudFileUploaderJob < ApplicationJob
       cloud_file
     end    
   end
-
 end
