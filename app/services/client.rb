@@ -11,7 +11,7 @@ class Client
 
   def import_itunes
     @tracks.each do |track|
-      CloudFileUploaderJob.perform_later track, @bucket
+      CloudFileIngesterJob.perform_later track, @bucket
     end
   end
 

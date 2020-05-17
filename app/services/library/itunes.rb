@@ -45,7 +45,7 @@ class Library::Itunes
     @tracks.each do |raw_track_info|
       track_info = Itunes::Track.new(raw_track_info)
       binding.pry
-      cloud_file = CloudFile.ingest(track_info.path_to_file, @bucket, :itunes_track_info => track_info)
+      CloudFileIngesterJob.perform_now(path_to_item, @bucket, :itunes_track_info => track_info)
     end
   end
 

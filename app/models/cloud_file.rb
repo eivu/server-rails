@@ -38,7 +38,7 @@ class CloudFile < ApplicationRecord
   has_many :artists, :through => :artist_cloud_files
 
   has_many :metataggings, :dependent => :destroy
-  has_many :metadata, :through => :metataggings#, :dependent => :destroy
+  has_many :metadata, :through => :metataggings, :dependent => :destroy
 
   scope(:alpha, -> { order("name") })
 
@@ -50,16 +50,14 @@ class CloudFile < ApplicationRecord
 
   accepts_nested_attributes_for :metataggings
 
-  # validates_uniqueness_of :md5, :scope => :bucket_id
+  validates_uniqueness_of :md5, :scope => :bucket_id
   validates_presence_of :bucket_id
 
   attr_accessor :relative_path, :path_to_file
 
   # used for file uploads?
-  # before_save :parse_relative_path
   # after_create  :increment_counts
   after_destroy :delete_remote, :prune_release#, :decrement_counts
-
 
 
 
@@ -71,7 +69,6 @@ class CloudFile < ApplicationRecord
   end
 
   class << self
-
     def online?(uri)
       url = URI.parse(uri)
       req = Net::HTTP.new(url.host, url.port)
@@ -80,31 +77,6 @@ class CloudFile < ApplicationRecord
 
     def exists?(md5:, bucket:, folder:)
       CloudFile.where(:md5 => md5, :bucket_id => bucket.id, :folder_id => folder.try(:id)).first.try(:id)
-    end
-
-
-    # def ingest(path_to_file, bucket, options={})
-    #   cloud_file = CloudFile.upload path_to_file, bucket, options
-    #   tagger = Tagger::Factory.generate(cloud_file)
-    #   tagger.identify_and_update!
-    #   cloud_file
-    # end
-
-
-    # def ingest!(path_to_file, bucket, options={})
-    #   CloudFile.ingest path_to_file, bucket, options.merge(:prune => true)
-    # end
-
-    # def upload!(path_to_file, bucket, options={})
-    #   CloudFile.upload path_to_file, bucket, options.merge(:prune => true)
-    # end
-
-    def upload(path_to_file, bucket, options={})
-      if options[:async].present?
-        Resque.enqueue(CloudFileTaggerUploader, path_to_file, bucket, options)
-      else
-        CloudFileTaggerUploader.perform(path_to_file, bucket, options)
-      end
     end
 
     def sanitize(name)

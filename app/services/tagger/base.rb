@@ -76,7 +76,7 @@ class Tagger::Base
       temp_artwork = Tempfile.new(SecureRandom.uuid)
       temp_artwork.binmode
       temp_artwork.write(@artwork_data)
-      CloudFileTaggerUploader.perform(temp_artwork.path, @cloud_file.bucket, :folder_id => @cloud_file.folder_id, :release_id => @cloud_file.release_id)
+      CloudFileUploaderService.upload(temp_artwork.path, @cloud_file.bucket, :folder_id => @cloud_file.folder_id, :release_id => @cloud_file.release_id)
     end
   end
 end

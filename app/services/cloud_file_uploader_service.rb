@@ -10,12 +10,15 @@ class CloudFileUploaderService
         mime      = MimeMagic.by_magic(file)
         md5       = Digest::MD5.file(path_to_file).hexdigest.upcase
 
+        # peepy, nsfw, etc...
         flags     = Tagger::Base.set_flags_via_path(path_to_file)
+
         if flags[:peepy].present?
           mediatype = "peepshow"
         else 
           mediatype = mime.mediatype
         end
+
         store_dir = "#{mediatype}/#{md5.scan(/.{2}|.+/).join("/")}"
         filename  = File.basename(path_to_file)
         sanitized_filename = CloudFile.sanitize(filename)

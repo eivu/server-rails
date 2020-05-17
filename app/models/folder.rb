@@ -63,7 +63,7 @@ class Folder < ApplicationRecord
       bucket = @@bucket || Bucket.ensure(bucket)
       Folder.traverse(path_to_dir) do |path_to_item|
         puts "=== UPLOADING #{path_to_item.gsub(@@ignore,"")}"
-        CloudFile.ingest(path_to_item, bucket, options)
+        CloudFileIngesterJob.perform_later(path_to_item, bucket, options)
       end
     end
 
