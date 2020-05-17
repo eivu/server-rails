@@ -59,8 +59,6 @@ class CloudFile < ApplicationRecord
   # after_create  :increment_counts
   after_destroy :delete_remote, :prune_release#, :decrement_counts
 
-
-
   # default_scope { includes(:bucket => :region) }
   default_scope { includes(:bucket => :region).where(:peepy => false) }
 
@@ -138,37 +136,6 @@ class CloudFile < ApplicationRecord
   end
 
 
-  # def progress
-  #   file = File.open(filepath, 'r', encoding: 'BINARY')
-  #   file_to_upload = "#{s3_dir}/#{filename}"
-  #   upload_progress = 0
-
-  #   opts = {
-  #     content_type: mime_type,
-  #     cache_control: 'max-age=31536000',
-  #     estimated_content_length: file.size,
-  #   }
-
-  #   part_size = self.compute_part_size(opts)
-
-  #   parts_number = (file.size.to_f / part_size).ceil.to_i
-  #   obj          = s3.objects[file_to_upload]
-
-  #   begin
-  #       obj.multipart_upload(opts) do |upload|
-  #         until file.eof? do
-  #           break if (abort_upload = upload.aborted?)
-
-  #           upload.add_part(file.read(part_size))
-  #           upload_progress += 1.0/parts_number
-
-  #           # Yields the Float progress and the String filepath from the
-  #           # current file that's being uploaded
-  #           yield(upload_progress, upload) if block_given?
-  #         end
-  #       end
-  #   end
-  # end
   ############################################################################
   private
   ############################################################################
