@@ -7,7 +7,7 @@ gem 'ancestry' # used to nest project_products by providing a parent_id and many
 gem 'attr_encrypted', '~> 3.1' # Generates attr_accessors that encrypt and decrypt attributes transparently
 gem 'aws-sdk', '~> 2.0.41'
 gem 'bitfields', '~> 0.6.0' # store multiple booleans in a single integer
-gem 'devise', '~> 4.7', '>= 4.7.1' # user authentication
+gem 'devise', '~> 4.8' # user authentication
 gem 'ensurance', '~> 0.1.19' # Add ability to "ensure" ActiveRecords are full records
 gem 'has_secure_token' # generate the 24-character unique token
 gem 'jb', '~> 0.4.1' # Faster and simpler Jbuilder alternative

@@ -369,7 +369,7 @@ DEPENDENCIES
   coffee-rails
   database_cleaner
   db-query-matchers
-  devise (~> 4.7, >= 4.7.1)
+  devise (~> 4.8)
   ensurance (~> 0.1.19)
   factory_bot_rails (~> 4.8.0)
   faker (~> 1.6, >= 1.6.6)
