@@ -48,20 +48,12 @@ class CloudFile < ApplicationRecord
   has_many :taggings, class_name: 'CloudFileTagging', dependent: :destroy
   has_many :tags, through: :taggings
 
-
   accepts_nested_attributes_for :metataggings
 
   validates_uniqueness_of :md5, scope: :bucket_id
   validates_presence_of :bucket_id
 
   attr_accessor :relative_path, :path_to_file
-
-  # used for file uploads?
-  # after_create  :increment_counts
-  # after_destroy :delete_remote, :prune_release#, :decrement_counts
-
-  # default_scope { includes(:bucket: :region) }
-  # default_scope { includes(bucket: :region).where(peepy: false) }
 
   def visit
     system "open #{self.url}"
@@ -84,10 +76,9 @@ class CloudFile < ApplicationRecord
       name = name.gsub(/[^a-zA-Z0-9\.\-\+_]/, "_")
       name = "_#{name}" if name =~ /\A\.+\z/
       name = 'unnamed' if name.size == 0
-      return name.mb_chars.to_s
+      name.mb_chars.to_s
     end
   end
-
 
   def smart_name
     self.name || self.asset
@@ -107,20 +98,18 @@ class CloudFile < ApplicationRecord
   end
 
   def delete_remote
-    self.user.s3_client.delete_object(
+    user.s3_client.delete_object(
       # required
-      :bucket => self.bucket.name,
+      bucket: bucket.name,
       # required
-      :key => self.path
+      key: path
     )
   end
 
   def media_type
-    if self.peepy?
-      "peepshow"
-    else
-      self.content_type.to_s.split("/").try("first")
-    end
+    type = content_type.to_s.split('/')&.first
+    type = "peepshow (#{type})" if peepy?
+    type
   end
 
   def tag_list=(tag_array)
@@ -133,7 +122,7 @@ class CloudFile < ApplicationRecord
   end
 
   def metadata_list=(info)
-    binding.pry    
+    binding.pry
   end
 
 
@@ -167,5 +156,4 @@ class CloudFile < ApplicationRecord
   def prune_release
     # release.destroy if self.release.cloud_files.blank?
   end
-
 end

@@ -16,7 +16,8 @@ class Metatagging < ApplicationRecord
 
   def value=(string)
     user = self.cloud_file.user
-    raise "Assignment impossible if cloud_file undefined" if user.blank?
-    self.metadatum = Metadatum.find_or_create_by!(:value => string)
+    raise 'Assignment impossible if cloud_file undefined' if user.blank?
+
+    self.metadatum = Metadatum.find_or_create_by!(value: string)
   end
 end
