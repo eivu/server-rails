@@ -30,37 +30,36 @@
 class CloudFile < ApplicationRecord
   include Reactable
 
-  belongs_to :folder, :counter_cache => true
-  belongs_to :bucket#, :inverse_of => :cloud_file
-  belongs_to :release, :counter_cache => true
-  has_one :user, :through => :bucket
-  has_many :artist_cloud_files, :dependent => :destroy
-  has_many :artists, :through => :artist_cloud_files
+  belongs_to :folder, counter_cache: true
+  belongs_to :bucket#, inverse_of: :cloud_file
+  belongs_to :release, counter_cache: true
+  has_one :user, through: :bucket
+  has_many :artist_cloud_files, dependent: :destroy
+  has_many :artists, through: :artist_cloud_files
 
-  has_many :metataggings, :dependent => :destroy
-  has_many :metadata, :through => :metataggings, :dependent => :destroy
+  has_many :metataggings, dependent: :destroy
+  has_many :metadata, through: :metataggings, dependent: :destroy
 
-  scope(:alpha, -> { order("name") })
+  scope(:alpha, -> { order('name') })
+  scope(:peepy, -> { where(peepy: true) })
 
-  # deprecated? below
-  has_many :taggings, :source => :cloud_file_tagging#, :dependent => :destroy
-  has_many :cloud_file_taggings#, :dependent => :destroy
-  has_many :tags, :through => :cloud_file_taggings
-  # deprecated? above
+  has_many :taggings, class_name: 'CloudFileTagging', dependent: :destroy
+  has_many :tags, through: :taggings
+
 
   accepts_nested_attributes_for :metataggings
 
-  validates_uniqueness_of :md5, :scope => :bucket_id
+  validates_uniqueness_of :md5, scope: :bucket_id
   validates_presence_of :bucket_id
 
   attr_accessor :relative_path, :path_to_file
 
   # used for file uploads?
   # after_create  :increment_counts
-  after_destroy :delete_remote, :prune_release#, :decrement_counts
+  # after_destroy :delete_remote, :prune_release#, :decrement_counts
 
-  # default_scope { includes(:bucket => :region) }
-  default_scope { includes(:bucket => :region).where(:peepy => false) }
+  # default_scope { includes(:bucket: :region) }
+  # default_scope { includes(bucket: :region).where(peepy: false) }
 
   def visit
     system "open #{self.url}"
@@ -70,19 +69,19 @@ class CloudFile < ApplicationRecord
     def online?(uri)
       url = URI.parse(uri)
       req = Net::HTTP.new(url.host, url.port)
-      req.request_head(url.path).code == "200"
+      req.request_head(url.path).code == '200'
     end
 
     def exists?(md5:, bucket:, folder:)
-      CloudFile.where(:md5 => md5, :bucket_id => bucket.id, :folder_id => folder.try(:id)).first.try(:id)
+      CloudFile.where(md5: md5, bucket_id: bucket.id, folder_id: folder.try(:id)).first.try(:id)
     end
 
     def sanitize(name)
-      name = name.tr("\\", "/") # work-around for IE
+      name = name.tr('\\', '/') # work-around for IE
       name = File.basename(name)
       name = name.gsub(/[^a-zA-Z0-9\.\-\+_]/, "_")
       name = "_#{name}" if name =~ /\A\.+\z/
-      name = "unnamed" if name.size == 0
+      name = 'unnamed' if name.size == 0
       return name.mb_chars.to_s
     end
   end
@@ -124,8 +123,8 @@ class CloudFile < ApplicationRecord
 
   def tag_list=(tag_array)
     tag_array.each do |value|
-      tag = Tag.find_or_create_by! :value => value, :user_id => self.user.id
-      self.cloud_file_taggings.find_or_initialize_by! :tag_id => tag.id
+      tag = Tag.find_or_create_by! value: value, user_id: self.user.id
+      self.cloud_file_taggings.find_or_initialize_by! tag_id: tag.id
     end
 
     binding.pry
@@ -156,7 +155,7 @@ class CloudFile < ApplicationRecord
         else
           ancestry_str = nil
         end
-        folder = Folder.find_or_create_by! :ancestry => ancestry_str, :bucket_id => self.bucket.id, :name => sub_dir
+        folder = Folder.find_or_create_by! ancestry: ancestry_str, bucket_id: self.bucket.id, name:sub_dir
         @manual_ancestry << folder.id
       end
       self.folder_id = @manual_ancestry.last

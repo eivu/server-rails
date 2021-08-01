@@ -13,23 +13,25 @@
 #  cloud_files_count :integer          default(0), not null
 #  subfolders_count  :integer          default(0), not null
 #
-#Folders are only metadata to preserve the same tree layout as found on the user's drive
+# Description: Folders are only metadata to preserve the same tree layout as found on the user's drive
 class Folder < ApplicationRecord
   include Reactable
   has_ancestry
 
   belongs_to :bucket
-  has_many :cloud_files, -> { order("release_pos" )}
+  has_many :cloud_files, -> { order('release_pos' )}
 
-  validates_uniqueness_of :name, :scope => :ancestry
+  validates_uniqueness_of :name, scope: :ancestry
 
   # scope :clean, where(:peepy => false)
-  scope(:clean, -> { where(:peepy => false) })
-  scope(:alpha, -> { order("name") })
-  scope(:has_files, -> { where("cloud_files_count > 0") })
-  scope(:has_subfolders, -> { where("subfolders_count > 0") })
+  scope(:alpha, -> { order('name') })
+  scope(:clean, -> { where(peepy: false) })
+  scope(:peepy, -> { where(peepy: true) })
+
+  scope(:has_files, -> { where('cloud_files_count > 0') })
+  scope(:has_subfolders, -> { where('subfolders_count > 0') })
   scope(:has_content, -> { where('subfolders_count > 0 OR cloud_files_count > 0') })
-  default_scope { where(:peepy => false) }
+  # default_scope { where(:peepy => false) }
 
   #for current version of app, everything is being saved to same bucket, as development proceeds this must be altered
   @@bucket = nil
