@@ -2,35 +2,35 @@ source 'https://rubygems.org'
 # ruby '2.5.1'
 
 # i/o
-gem 'ancestry' #used to nest project_products by providing a parent_id and many convenience methods
-gem 'attr_encrypted', '~> 3.1' #Generates attr_accessors that encrypt and decrypt attributes transparently
+gem 'ancestry' # used to nest project_products by providing a parent_id and many convenience methods
+gem 'attr_encrypted', '~> 3.1' # Generates attr_accessors that encrypt and decrypt attributes transparently
 gem 'aws-sdk', '~> 2.0.41'
-gem 'bitfields', '~> 0.6.0' #store multiple booleans in a single integer
-gem 'devise', '~> 4.7', '>= 4.7.1' #user authentication
-gem 'ensurance', '~> 0.1.19' #Add ability to "ensure" ActiveRecords are full records
-gem 'has_secure_token' #generate the 24-character unique token
+gem 'bitfields', '~> 0.6.0' # store multiple booleans in a single integer
+gem 'devise', '~> 4.7', '>= 4.7.1' # user authentication
+gem 'ensurance', '~> 0.1.19' # Add ability to "ensure" ActiveRecords are full records
+gem 'has_secure_token' # generate the 24-character unique token
 gem 'pg', '~> 1.2', '>= 1.2.3'
 gem 'mime-types'#, '~> 3.2.2'
-gem 'mimemagic', '~> 0.3.5' #determine mime type by magic
-gem 'mini_magick', '~> 4.5', '>= 4.5.1' #there's an issues with v3.7 https://github.com/carrierwaveuploader/carrierwave/issues/1282
-gem "oj" #faster json parsing
+gem 'mimemagic', '~> 0.3.5' # determine mime type by magic
+gem 'mini_magick', '~> 4.5', '>= 4.5.1' # there's an issues with v3.7 https://github.com/carrierwaveuploader/carrierwave/issues/1282
+gem "oj" # faster json parsing
 gem 'rails', '~> 6.1', '>= 6.1.3'
-gem 'sidekiq', '~> 4.1', '>= 4.1.2' #Simple, efficient background processing for Ruby.
-gem 'rest-client'#, '~> 1.8.0' #A simple HTTP and REST client for Ruby, inspired by the Sinatra microframework style of specifying actions
-gem 'webpacker', '>= 4.0.x' #Use Webpack to manage app-like JavaScript modules in Rails
+gem 'sidekiq', '~> 4.1', '>= 4.1.2' # Simple, efficient background processing for Ruby.
+gem 'rest-client'#, '~> 1.8.0' # A simple HTTP and REST client for Ruby, inspired by the Sinatra microframework style of specifying actions
+gem 'webpacker', '>= 4.0.x' # Use Webpack to manage app-like JavaScript modules in Rails
 
-gem 'foreman', '~> 0.87.1' #Manage Procfile-based applications http://ddollar.github.com/foreman
-# gem "rjson"  #templating for json (no version in gem because it doenst have any depenedencies)
+gem 'foreman', '~> 0.87.1' # Manage Procfile-based applications http://ddollar.github.com/foreman
+# gem "rjson"  # templating for json (no version in gem because it doenst have any depenedencies)
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
 
 # Backgound Processing
-gem 'activejob-traffic_control', '~> 0.1.3' #Traffic control for ActiveJob: Concurrency/enabling/throttling
+gem 'activejob-traffic_control', '~> 0.1.3' # Traffic control for ActiveJob: Concurrency/enabling/throttling
 
 # presentation
-gem 'bootstrap-sass', '~> 3.4.1' #twitter bootstrap stylings
+gem 'bootstrap-sass', '~> 3.4.1' # twitter bootstrap stylings
 # gem 'coffee-rails', '~> 4.1.0'
-gem 'jb', '~> 0.4.1' #Faster and simpler Jbuilder alternative
+gem 'jb', '~> 0.4.1' # Faster and simpler Jbuilder alternative
 gem 'jquery-rails' # Use jquery as the JavaScript library
 gem 'uglifier', '~> 4.2' # has to be outside of assets, to its present at boot. Use Uglifier as compressor for JavaScript assets
 gem 'sass-rails', '~> 5.0', '>= 5.0.4' # Use SCSS for stylesheets and useful for Sass-powered version of Bootstrap
@@ -61,7 +61,7 @@ group :development, :test, :cucumber do
   gem 'better_errors'
   gem 'binding_of_caller' # irb on better-errors error pages
   gem 'factory_bot_rails', '~> 4.8.0'
-  gem 'faker', '~> 1.6', '>= 1.6.6' #F aker, a port of Data::Faker from Perl, is used to easily generate fake data: names, addresses, phone numbers, etc.
+  gem 'faker', '~> 1.6', '>= 1.6.6' # Faker, a port of Data::Faker from Perl, is used to easily generate fake data: names, addresses, phone numbers, etc.
   gem 'pry-byebug' # replaces pry-debugger becasuse pry-debugger doesnt work with ruby 2
   gem 'pry-rails'
   gem 'rb-readline'
@@ -72,9 +72,9 @@ end
 group :assets do
 # # Use SCSS for stylesheets
   gem 'coffee-rails'
-#   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-#   # gem 'therubyracer', :platforms => :ruby
-#   # Use Uglifier as compressor for JavaScript assets
+#  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
+#  # gem 'therubyracer', :platforms => :ruby
+#  # Use Uglifier as compressor for JavaScript assets
 end
 
 group :test do

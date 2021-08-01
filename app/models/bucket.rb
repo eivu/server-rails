@@ -18,13 +18,12 @@ class Bucket < ApplicationRecord
     resource.bucket(self.name).object(path)
   end
 
-
   ############################################################################
   private
   ############################################################################
 
   def resource
-    @s3_resource ||= Aws::S3::Resource.new(
+    @resource ||= Aws::S3::Resource.new(
                       :credentials => self.user.s3_credentials,
                       :region => 'us-east-1'
                     )

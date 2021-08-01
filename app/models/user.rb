@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: users
@@ -42,8 +44,8 @@ class User < ApplicationRecord
   attr_encrypted :secret_access_key, :key => ATTR_ENCRYPTED_SECURITY_KEY
 
   has_many :buckets
-  has_many :cloud_files, :through => :buckets
-  has_many :folders, :through => :buckets
+  has_many :cloud_files, through: :buckets
+  has_many :folders, through: :buckets
 
 
   def s3_credentials

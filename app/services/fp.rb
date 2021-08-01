@@ -1,2 +1,0 @@
-class Fp #< Fingerprinter
-end

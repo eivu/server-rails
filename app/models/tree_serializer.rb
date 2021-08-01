@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TreeSerializer
 
   def self.build(object=nil, depth=2)

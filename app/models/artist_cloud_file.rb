@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: artist_cloud_files
@@ -17,14 +19,16 @@ class ArtistCloudFile < ApplicationRecord
   after_destroy :decrement_counts
 
   ################
+
   private
+
   ################
 
   def increment_counts
     sql = [
       "UPDATE artists SET cloud_files_count = cloud_files_count + 1 WHERE id = #{self.artist_id}",
       "UPDATE artists SET #{resource_count} = #{resource_count} + 1 WHERE id = #{self.artist_id}"
-    ].join(";")
+    ].join(';')
     ActiveRecord::Base.connection.execute(sql)
   end
 
@@ -32,7 +36,7 @@ class ArtistCloudFile < ApplicationRecord
     sql = [
       "UPDATE artists SET cloud_files_count = cloud_files_count - 1 WHERE id = #{self.artist_id}",
       "UPDATE artists SET #{resource_count} = #{resource_count} - 1 WHERE id = #{self.artist_id}"
-    ].join(";")
+    ].join(';')
     ActiveRecord::Base.connection.execute(sql)
   end
 
