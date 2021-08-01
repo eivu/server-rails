@@ -27,3 +27,7 @@ public/packs/
 yarn-debug.log*
 .yarn-integrity
 itunes_lib.csv
+
+/config/credentials/development.key
+
+/config/credentials/production.key
