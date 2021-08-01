@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.7.1'
+ruby '2.7.2'
 
 # i/o
 gem 'aasm', '~> 5.2' # AASM is a continuation of the acts-as-state-machine
@@ -76,9 +76,9 @@ group :test do
   gem 'db-query-matchers'
   gem 'graphql-client'
   gem 'rails-controller-testing'
-  gem 'rspec-json_expectations'
-  gem 'rspec-rails', '~> 4.0'
-  gem 'vcr', '~> 5'
+  gem 'rspec-json_expectations', '~> 2.2'
+  gem 'rspec-rails', '~> 5.0', '>= 5.0.1'
+  gem 'vcr', '~> 6.0'
 end
 
 # Use ActiveModel has_secure_password
