@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_11_001857) do
+ActiveRecord::Schema.define(version: 2021_08_02_032727) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -101,6 +101,7 @@ ActiveRecord::Schema.define(version: 2020_01_11_001857) do
     t.integer "release_pos"
     t.integer "user_id"
     t.integer "num_plays", default: 0, null: false
+    t.text "state"
     t.index ["bucket_id"], name: "index_cloud_files_on_bucket_id"
     t.index ["data_source_id"], name: "index_cloud_files_on_data_source_id"
     t.index ["duration"], name: "index_cloud_files_on_duration"
