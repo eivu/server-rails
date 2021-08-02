@@ -31,29 +31,46 @@
 #
 class CloudFile < ApplicationRecord
   include Reactable
+  include AASM
 
+  
   belongs_to :folder, counter_cache: true
   belongs_to :bucket#, inverse_of: :cloud_file
   belongs_to :release, counter_cache: true
   has_one :user, through: :bucket
   has_many :artist_cloud_files, dependent: :destroy
   has_many :artists, through: :artist_cloud_files
-
   has_many :metataggings, dependent: :destroy
   has_many :metadata, through: :metataggings, dependent: :destroy
+  has_many :taggings, class_name: 'CloudFileTagging', dependent: :destroy
+  has_many :tags, through: :taggings
 
   scope(:alpha, -> { order('name') })
   scope(:peepy, -> { where(peepy: true) })
-
-  has_many :taggings, class_name: 'CloudFileTagging', dependent: :destroy
-  has_many :tags, through: :taggings
 
   accepts_nested_attributes_for :metataggings
 
   validates_uniqueness_of :md5, scope: :bucket_id
   validates_presence_of :bucket_id
 
+
+  # ?????????????
   attr_accessor :relative_path, :path_to_file
+
+  aasm :state do # add locking
+    state :empty, initial: true,  before_enter: :foobar
+    state :reserved#, before_enter: :foobar
+
+    event :reserve do
+      transitions from: :empty, to: :reserved#, before_success: :foobar
+    end
+  end
+
+
+  def foobar
+    puts "111111"
+    binding.pry
+  end
 
   def visit
     system "open #{self.url}"
@@ -86,6 +103,7 @@ class CloudFile < ApplicationRecord
 
   def url
     raise "Region Not Defined for bucket: #{self.bucket.name}" if self.bucket.region_id.blank?
+
     @url ||= "http://#{self.bucket.name}.#{self.bucket.region.endpoint}/#{media_type}/#{md5.scan(/.{2}|.+/).join("/")}/#{self.asset}"
   end
 
