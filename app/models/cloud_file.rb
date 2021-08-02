@@ -58,8 +58,8 @@ class CloudFile < ApplicationRecord
   attr_accessor :relative_path, :path_to_file
 
   aasm :state do # add locking
-    state :empty, initial: true,  before_enter: :foobar
-    state :reserved#, before_enter: :foobar
+    state :empty, initial: true
+    state :reserved,  before_enter: :foobar
 
     event :reserve do
       transitions from: :empty, to: :reserved#, before_success: :foobar
@@ -67,7 +67,7 @@ class CloudFile < ApplicationRecord
   end
 
 
-  def foobar
+  def foobar(data=nil)
     puts "111111"
     binding.pry
   end
