@@ -33,7 +33,6 @@ class CloudFile < ApplicationRecord
   include Reactable
   include AASM
 
-  
   belongs_to :folder, counter_cache: true
   belongs_to :bucket#, inverse_of: :cloud_file
   belongs_to :release, counter_cache: true
@@ -52,22 +51,37 @@ class CloudFile < ApplicationRecord
 
   validates_uniqueness_of :md5, scope: :bucket_id
   validates_presence_of :bucket_id
+  validates_presence_of :md5
 
 
   # ?????????????
   attr_accessor :relative_path, :path_to_file
 
   aasm :state do # add locking
-    state :empty, initial: true
-    state :reserved,  before_enter: :foobar
+    state :empty,    initial: true
+    state :reserved, before_enter: :set_reservation
+    state :uploaded, before_enter: :set_upload_attributes
+    state :completed
 
     event :reserve do
-      transitions from: :empty, to: :reserved#, before_success: :foobar
+      transitions from: :empty, to: :reserved
+    end
+
+    event :upload do
+      transitions from: :reserved, to: :uploaded
+    end
+
+    event :tag do
+      transitions from: :uploaded, to: :completed
     end
   end
 
+  def set_reservation(data=nil)
+    puts "111111"
+    binding.pry
+  end
 
-  def foobar(data=nil)
+  def set_upload_attributes(data=nil)
     puts "111111"
     binding.pry
   end
