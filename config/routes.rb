@@ -13,17 +13,20 @@ Rails.application.routes.draw do
   resources :cloud_files, :regions
   resource :overview
 
-  get 'settings' => redirect("settings/account#show")
+  get 'settings' => redirect('settings/account#show')
   namespace :settings do
     resource :account
     resources :buckets
   end
 
-  namespace :api, :defaults => { :format => 'json' }  do
+  namespace :api, defaults: { format: 'json' }  do
     namespace :v1 do
       resources :folders
-      resources :cloud_files do 
+      resources :cloud_files do
         member do
+          post :reserve
+          post :upload
+          post :tag
           post :authorize
         end
       end
@@ -42,6 +45,5 @@ Rails.application.routes.draw do
 
   # trick pulled from http://stackoverflow.com/questions/3791096/devise-logged-in-root-route-rails-3
   # there might be a better way of doing this...
-  root'externals#homepage'#, :constraints => lambda {|r| r.env["warden"].authenticate? }
-
+  root 'externals#homepage' # , :constraints => lambda {|r| r.env["warden"].authenticate? }
 end
