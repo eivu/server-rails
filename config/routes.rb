@@ -21,6 +21,7 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: 'json' }  do
     namespace :v1 do
+      get :info, to: 'v1#info'
       resources :folders
       resources :cloud_files do
         member do
