@@ -16,12 +16,8 @@ module Api
         end
       end
 
-      def index
-        render text: :ok
-      end
-
       def reserve
-        binding.pry
+        render json: {a: :b}
       end
 
       def upload
