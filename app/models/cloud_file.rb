@@ -59,7 +59,7 @@ class CloudFile < ApplicationRecord
 
   aasm :state do # add locking
     state :empty,    initial: true
-    state :reserved, before_enter: :set_reservation
+    state :reserved#, before_enter: :set_reservation
     state :uploaded, before_enter: :set_upload_attributes
     state :completed
 
@@ -74,11 +74,6 @@ class CloudFile < ApplicationRecord
     event :tag do
       transitions from: :uploaded, to: :completed
     end
-  end
-
-  def set_reservation(data=nil)
-    puts "111111"
-    binding.pry
   end
 
   def set_upload_attributes(data=nil)
