@@ -58,17 +58,17 @@ class CloudFile < ApplicationRecord
   attr_accessor :relative_path, :path_to_file
 
   aasm :state do # add locking
-    state :empty,    initial: true
-    state :reserved#, before_enter: :set_reservation
-    state :uploaded, before_enter: :set_upload_attributes
+    state :empty, initial: true
+    state :reserved
+    state :transfered, before_enter: :set_upload_attributes
     state :completed
 
     event :reserve do
       transitions from: :empty, to: :reserved
     end
 
-    event :upload do
-      transitions from: :reserved, to: :uploaded
+    event :transfer do
+      transitions from: :reserved, to: :transfered
     end
 
     event :tag do
