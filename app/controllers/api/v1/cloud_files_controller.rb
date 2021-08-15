@@ -18,7 +18,7 @@ module Api
 
       def reserve
         cloud_file = CloudFile.new(reservation_params)
-        cloud_file.store!
+        cloud_file.reserve!
         render json: cloud_file.attributes
       rescue StandardError => e
         render json: { message: e.message }, status: 500
