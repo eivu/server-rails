@@ -24,8 +24,10 @@ module Api
         render json: { message: e.message }, status: 500
       end
 
-      def upload
-        binding.pry
+      def transfer
+        cloud_file = CloudFile.find_by_md5(params[:md5])
+        cloud_file.transfer!(load_params)
+        render json: cloud_file.attributes
       end
 
       def tag
@@ -42,6 +44,10 @@ module Api
 
       def reservation_params
         params.permit(:bucket_id, :md5)
+      end
+
+      def load_params
+        params.permit(:content_type, :asset, :filesize)
       end
     end
   end

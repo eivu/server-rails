@@ -11,7 +11,7 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
     context 'valid reservation attributes' do
       let(:headers) { { Authorization: "Token #{user.token}" } }
       let(:md5) { Faker::Crypto.md5 }
-      let(:bucket_id) { 17 }
+      let(:bucket_id) { rand(1..17) }
       let(:params) { { bucket_id: bucket_id } }
 
       scenario 'returns 200 OK' do
@@ -26,47 +26,42 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
 
       scenario 'files attributes matches params' do
         make_reservation
-        expect(response.body).to include_json(
-          id: be_an(Integer),
-          md5: md5,
-          bucket_id: bucket_id
-        )
+        expect(response.body).to include_json(params)
       end
     end
   end
 
-  # describe 'POST /load' do
-  #   subject(:load_data) { post "/api/v1/cloud_files/#{md5}/load/", params: params, headers: headers }
+  describe 'POST /transfer' do
+    subject(:transfer_data) { post "/api/v1/cloud_files/#{md5}/transfer/", params: params, headers: headers }
 
-  #   context 'valid reservation attributes' do
-  #     let!(:cloud_file) { create :cloud_file, :reserved }
-  #     let(:headers) { { Authorization: "Token #{user.token}" } }
-  #     let(:md5) { cloud_file.md5 }
-  #     let(:content_type) { Faker::File.mime_type }
-  #     let(:asset) { "#{Faker::Lorem.word.downcase}.#{content_type.split('/').last.gsub('+', '.')}" }
-  #     let(:filesize) { rand(100.kilobytes..2.gigabytes) }
-  #     let(:params) do
-  #       { content_type: content_type, asset: asset, filesize: filesize }
-  #     end
+    context 'valid reservation attributes' do
+      let!(:cloud_file) { create :cloud_file, :reserved }
+      let(:headers) { { Authorization: "Token #{user.token}" } }
+      let(:md5) { cloud_file.md5 }
+      let(:content_type) { Faker::File.mime_type }
+      let(:asset) { "#{Faker::Lorem.word.downcase}.#{content_type.split('/').last.gsub('+', '.')}" }
+      let(:filesize) { rand(100.kilobytes..2.gigabytes) }
+      let(:params) do
+        { content_type: content_type, asset: asset, filesize: filesize }
+      end
+      let(:attributes) do
+        params.merge(md5: cloud_file.md5, bucket_id: cloud_file.bucket_id)
+      end
 
-  #     scenario 'returns 200 OK' do
-  #       load_data
-  #       expect(response.status).to eq(200)
-  #     end
+      scenario 'returns 200 OK' do
+        transfer_data
+        expect(response.status).to eq(200)
+      end
 
-  #     scenario 'file is in loaded state' do
-  #       load_data
-  #       expect(response.body).to include_json(state: 'loaded')
-  #     end
+      scenario 'file is in transfered state' do
+        transfer_data
+        expect(response.body).to include_json(state: 'transfered')
+      end
 
-  #     scenario 'files attributes matches params' do
-  #       load_data
-  #       expect(response.body).to include_json(
-  #         id: be_an(Integer),
-  #         md5: md5,
-  #         bucket_id: bucket_id
-  #       )
-  #     end
-  #   end
-  # end
+      scenario 'files attributes matches params and existing data' do
+        transfer_data
+        expect(response.body).to include_json(attributes)
+      end
+    end
+  end
 end

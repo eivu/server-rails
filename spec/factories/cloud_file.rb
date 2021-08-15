@@ -8,12 +8,12 @@ FactoryBot.define do
       state { 'reserved' }
     end
 
-    trait :loaded do
+    trait :transfer do
       reserved
       content_type { Faker::File.mime_type }
       asset { "#{Faker::Lorem.word.downcase}.#{content_type.split('/').last.gsub('+','.')}" }
       filesize { rand(100.kilobytes..2.gigabytes) }
-      state { 'loaded' }
+      state { 'transfered' }
     end
   end
 end

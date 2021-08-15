@@ -60,7 +60,7 @@ class CloudFile < ApplicationRecord
   aasm :state do # add locking
     state :empty, initial: true
     state :reserved
-    state :transfered, before_enter: :set_upload_attributes
+    state :transfered, before_enter: :assign_xfer_attributes
     state :completed
 
     event :reserve do
@@ -76,9 +76,9 @@ class CloudFile < ApplicationRecord
     end
   end
 
-  def set_upload_attributes(data=nil)
-    puts "111111"
-    binding.pry
+  # assign parameters to object
+  def assign_xfer_attributes(data={})
+    assign_attributes data
   end
 
   def visit

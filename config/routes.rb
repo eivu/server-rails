@@ -28,8 +28,8 @@ Rails.application.routes.draw do
 
         member do
           post :reserve
-          post :upload
-          post :tag
+          post :transfer
+          post :complete
           post :authorize
         end
       end
