@@ -8,6 +8,7 @@ gem 'attr_encrypted', '~> 3.1' # Generates attr_accessors that encrypt and decry
 gem 'aws-sdk', '~> 2.0.41'
 gem 'bitfields', '~> 0.6.0' # store multiple booleans in a single integer
 gem 'devise', '~> 4.8' # user authentication
+gem 'eivu-fingerprinter-acoustid', path: '/Users/jinx/projects/eivu/eivu_acoustid'
 gem 'ensurance', '~> 0.1.19' # Add ability to "ensure" ActiveRecords are full records
 gem 'has_secure_token' # generate the 24-character unique token
 gem 'jb', '~> 0.4.1' # Faster and simpler Jbuilder alternative
@@ -58,8 +59,8 @@ group :development, :test, :cucumber do
   # gem 'spring' # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'better_errors'
   gem 'binding_of_caller' # irb on better-errors error pages
-  gem 'factory_bot_rails', '~> 4.8.0'
-  gem 'faker', '~> 1.6', '>= 1.6.6' # Faker, a port of Data::Faker from Perl, is used to easily generate fake data: names, addresses, phone numbers, etc.
+  gem 'factory_bot_rails', '~> 6.2'
+  gem 'faker', '~> 2.18' # Faker, a port of Data::Faker from Perl, is used to easily generate fake data: names, addresses, phone numbers, etc.
   gem 'pry-byebug' # replaces pry-debugger becasuse pry-debugger doesnt work with ruby 2
   gem 'pry-rails'
   gem 'rb-readline'
