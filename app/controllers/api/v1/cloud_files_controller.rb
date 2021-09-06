@@ -53,8 +53,7 @@ module Api
       end
 
       def complete_params
-
-        x= params.permit(:folder).merge(
+        params.permit(:folder).merge(
           user_id: current_user.id,
           tags: params.require(:tags).permit(:genre, :comment),
           cloud_file_attributes:
@@ -64,28 +63,7 @@ module Api
                   .permit(:id, :duration, :title,
                           releasegroups: [:title, :id])
         )
-                binding.pry
-                  # releasegroups: { :title, artist: %i[id name] }
-                  
-
-
-        # binding.pry
-        # params.permit(:cloud_file_attributes, :matched_recording, :tags).merge(user_id: current_user.id)
-
-
-
-          # : {
-          #   year: rand(1965..Time.current.year),
-          #   folder: Faker::File.dir,
-          #   rating: rand(1..5),
-          #   release_pos: rand(1..25)
-          # },
-          # : generate_recording_data,
-          # : {
-          #   genre: Faker::Music.genre,
-          #   comment: Faker::Hipster.sentence
-          # }
-
+        # , artist:  %i[id name] 
       end
     end
   end
