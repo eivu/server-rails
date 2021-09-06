@@ -8,6 +8,10 @@ RSpec.describe Folder, type: :model do
     context 'empty string' do
       let(:path) { '' }
 
+      it 'creates no new folders' do
+        expect { instance }.not_to change(Folder, :count)
+      end
+
       it 'returns nil' do
         expect(instance).to be nil
       end
@@ -16,6 +20,10 @@ RSpec.describe Folder, type: :model do
     context nil do
       let(:path) { nil }
 
+      it 'creates no new folders' do
+        expect { instance }.not_to change(Folder, :count)
+      end
+
       it 'returns nil' do
         expect(instance).to be nil
       end
@@ -23,6 +31,18 @@ RSpec.describe Folder, type: :model do
 
     context 'single folder' do
       let(:path) { 'folder_a' }
+
+      it 'creates a single folder' do
+        expect { instance }.to change(Folder, :count).by(1)
+      end
+
+      it 'creates a folder named folder_a' do
+        expect(instance.name).to eq(path)
+      end
+    end
+
+    context 'doubley nested folder' do
+      let(:path) { 'folder_a/folder' }
 
       it 'creates a single folder' do
         expect { instance }.to change(Folder, :count).by(1)
