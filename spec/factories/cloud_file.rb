@@ -11,9 +11,14 @@ FactoryBot.define do
     trait :transfer do
       reserved
       content_type { Faker::File.mime_type }
-      asset { "#{Faker::Lorem.word.downcase}.#{content_type.split('/').last.gsub('+','.')}" }
+      asset { "#{Faker::Lorem.word.downcase}.#{content_type.split('/').last.gsub('+', '.')}" }
       filesize { rand(100.kilobytes..2.gigabytes) }
       state { 'transfered' }
+    end
+
+    trait :audio do
+      content_type { 'audio/mpeg' }
+      asset { "#{Faker::Lorem.word.downcase}.mp3" }
     end
   end
 end
