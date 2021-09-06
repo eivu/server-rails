@@ -8,7 +8,7 @@ FactoryBot.define do
       state { 'reserved' }
     end
 
-    trait :transfer do
+    trait :transfered do
       reserved
       content_type { Faker::File.mime_type }
       asset { "#{Faker::Lorem.word.downcase}.#{content_type.split('/').last.gsub('+', '.')}" }
