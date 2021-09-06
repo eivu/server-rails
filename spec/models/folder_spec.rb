@@ -13,16 +13,24 @@ RSpec.describe Folder, type: :model do
       end
     end
 
-    # context 'single folder' do
-    #   let(:path) { 'folder_a' }
+    context nil do
+      let(:path) { nil }
 
-    #   it 'creates a single folder' do
-    #     expect { instance }.to change(Folder, :count).by(1)
-    #   end
+      it 'returns nil' do
+        expect(instance).to be nil
+      end
+    end
 
-    #   it 'creates a folder named folder_a' do
-    #     expec
-    #   end
-    # end
+    context 'single folder' do
+      let(:path) { 'folder_a' }
+
+      it 'creates a single folder' do
+        expect { instance }.to change(Folder, :count).by(1)
+      end
+
+      it 'creates a folder named folder_a' do
+        expect(instance.name).to eq(path)
+      end
+    end
   end
 end

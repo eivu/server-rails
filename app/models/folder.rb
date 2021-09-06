@@ -35,12 +35,12 @@ class Folder < ApplicationRecord
   scope(:has_content, -> { where('subfolders_count > 0 OR cloud_files_count > 0') })
   # default_scope { where(:peepy => false) }
 
-  def self.create_from_path(path_to_file, ignore: nil)
+  def self.create_from_path(folder_path)
     # save file in "root" of folder if ignore is blank
     # return nil if ignore.blank?
-    return if path_to_file.blank?
+    return if folder_path.blank?
 
-
+    Folder.find_or_create_by!(name: folder_path)
 
     # path_name = Pathname.new(path_to_file.gsub(ignore,""))   
     # path_name.dirname.to_s.split("/").each do |folder_name|
