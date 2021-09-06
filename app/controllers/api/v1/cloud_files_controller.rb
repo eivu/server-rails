@@ -26,28 +26,66 @@ module Api
 
       def transfer
         cloud_file = CloudFile.find_by_md5(params[:md5])
-        cloud_file.transfer!(load_params)
+        cloud_file.transfer!(transfer_params)
         render json: cloud_file.attributes
       end
 
-      def tag
-        binding.pry
+      def complete
+        cloud_file = CloudFile.find_by_md5(params[:md5])
+        cloud_file.complete!(complete_params)
+        render json: cloud_file.attributes
       end
 
       def authorize
         if current_user.cloud_files.where(md5: params[:id]).blank?
-          render json: { status_msg: :ok, message:  'proceed with upload' }
+          render json: { status_msg: :ok, message: 'proceed with upload' }
         else
           render json: { status_msg: :error, message: "file already exists w/ md5 #{params[:id]}" }, status:  401
         end
       end
 
       def reservation_params
-        params.permit(:bucket_id, :md5)
+        params.permit(:bucket_id, :md5).merge(user_id: current_user.id)
       end
 
-      def load_params
-        params.permit(:content_type, :asset, :filesize)
+      def transfer_params
+        params.permit(:content_type, :asset, :filesize).merge(user_id: current_user.id)
+      end
+
+      def complete_params
+        binding.pry
+        params.permit(:folder).merge(
+          user_id: current_user.id,
+          tags: params.require(:tags).permit(:genre, :comment),
+          cloud_file_attributes:
+            params.require(:cloud_file_attributes).permit(:year, :folder, :rating, :release),
+          matched_recording:
+            params.require(:matched_recording)
+                  .permit(:id, :duration, :title, artist: %i[id name]#,
+                          # releasegroups: { :title }
+                  )
+          )
+                  # releasegroups: { :title, artist: %i[id name] }
+                  
+
+
+        # binding.pry
+        # params.permit(:cloud_file_attributes, :matched_recording, :tags).merge(user_id: current_user.id)
+
+
+
+          # : {
+          #   year: rand(1965..Time.current.year),
+          #   folder: Faker::File.dir,
+          #   rating: rand(1..5),
+          #   release_pos: rand(1..25)
+          # },
+          # : generate_recording_data,
+          # : {
+          #   genre: Faker::Music.genre,
+          #   comment: Faker::Hipster.sentence
+          # }
+
       end
     end
   end
