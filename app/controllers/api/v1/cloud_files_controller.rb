@@ -53,18 +53,18 @@ module Api
       end
 
       def complete_params
-        binding.pry
-        params.permit(:folder).merge(
+
+        x= params.permit(:folder).merge(
           user_id: current_user.id,
           tags: params.require(:tags).permit(:genre, :comment),
           cloud_file_attributes:
             params.require(:cloud_file_attributes).permit(:year, :folder, :rating, :release),
           matched_recording:
             params.require(:matched_recording)
-                  .permit(:id, :duration, :title, artist: %i[id name]#,
-                          # releasegroups: { :title }
-                  )
-          )
+                  .permit(:id, :duration, :title,
+                          releasegroups: [:title, :id])
+        )
+                binding.pry
                   # releasegroups: { :title, artist: %i[id name] }
                   
 
