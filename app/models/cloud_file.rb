@@ -61,7 +61,7 @@ class CloudFile < ApplicationRecord
     state :empty, initial: true
     state :reserved
     state :transfered, before_enter: :assign_xfer_attributes
-    state :completed
+    state :completed, before_enter: :assign_metadata
 
     event :reserve do
       transitions from: :empty, to: :reserved
@@ -71,14 +71,18 @@ class CloudFile < ApplicationRecord
       transitions from: :reserved, to: :transfered
     end
 
-    event :tag do
-      transitions from: :uploaded, to: :completed
+    event :complete do
+      transitions from: :transfered, to: :completed
     end
   end
 
   # assign parameters to object
   def assign_xfer_attributes(data={})
     assign_attributes data
+  end
+
+  def assign_metadata(data={})
+    binding.pry
   end
 
   def visit
@@ -99,9 +103,9 @@ class CloudFile < ApplicationRecord
     def sanitize(name)
       name = name.tr('\\', '/') # work-around for IE
       name = File.basename(name)
-      name = name.gsub(/[^a-zA-Z0-9\.\-\+_]/, "_")
+      name = name.gsub(/[^a-zA-Z0-9\.\-\+_]/, '_')
       name = "_#{name}" if name =~ /\A\.+\z/
-      name = 'unnamed' if name.size == 0
+      name = 'unnamed' if name.size.zero?
       name.mb_chars.to_s
     end
   end
