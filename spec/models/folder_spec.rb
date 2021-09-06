@@ -37,19 +37,23 @@ RSpec.describe Folder, type: :model do
       end
 
       it 'creates a folder named folder_a' do
-        expect(instance.name).to eq(path)
+        expect(instance.name).to eq('folder_a')
       end
     end
 
     context 'doubley nested folder' do
-      let(:path) { 'folder_a/folder' }
+      let(:path) { 'folder_a/folder_b' }
 
-      it 'creates a single folder' do
-        expect { instance }.to change(Folder, :count).by(1)
+      it 'creates two folders' do
+        expect { instance }.to change(Folder, :count).by(2)
       end
 
-      it 'creates a folder named folder_a' do
-        expect(instance.name).to eq(path)
+      it 'creates a folder named folder_b' do
+        expect(instance.name).to eq('folder_b')
+      end
+
+      it 'has a parent named folder_a' do
+        expect(instance.parent.name).to eq('folder_a')
       end
     end
   end
