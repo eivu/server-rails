@@ -1,9 +1,34 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Folder, type: :model do
-
   describe '.create_from_path' do
-    subject(:instance) { described_class.create_from_path(path) }
+    subject(:instance) {
+      described_class.create_from_path(path_to_folder: path, bucket_id: bucket_id, peepy: peepy, nsfw: nsfw)
+    }
+
+    let(:bucket_id) { 17 }
+    let(:nsfw) { false }
+    let(:peepy) { false }
+
+    context 'nsfw and peey is true' do
+      let(:path) { 'other' }
+      let(:nsfw) { true }
+      let(:peepy) { true }
+
+      it 'creates a single folder' do
+        expect { instance }.to change(Folder, :count).by(1)
+      end
+
+      it 'creates a folder named other' do
+        expect(instance.name).to eq('other')
+      end
+
+      it 'creates a folder that is nsfw and peepy' do
+        expect(instance).to have_attributes(nsfw: true, peepy: true)
+      end
+    end
 
     context 'empty string' do
       let(:path) { '' }
@@ -59,7 +84,7 @@ RSpec.describe Folder, type: :model do
       end
 
       context 'folder_a does exist' do
-        let!(:parent) { Folder.create name: 'folder_a' }
+        let!(:parent) { Folder.create name: 'folder_a', bucket_id: bucket_id }
 
         it 'creates a single folder' do
           expect { instance }.to change(Folder, :count).by(1)

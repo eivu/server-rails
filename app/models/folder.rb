@@ -21,9 +21,10 @@ class Folder < ApplicationRecord
   has_ancestry
 
   belongs_to :bucket
-  has_many :cloud_files, -> { order('release_pos' )}
+  has_many :cloud_files, -> { order('release_pos') }
 
-  validates_uniqueness_of :name, scope: :ancestry
+  validates :bucket_id, presence: true
+  validates :name, uniqueness: { scope: :ancestry }
 
   # scope :clean, where(:peepy => false)
   scope(:alpha, -> { order('name') })
@@ -35,15 +36,17 @@ class Folder < ApplicationRecord
   scope(:has_content, -> { where('subfolders_count > 0 OR cloud_files_count > 0') })
   # default_scope { where(:peepy => false) }
 
-  def self.create_from_path(full_folder_path)
+  def self.create_from_path(path_to_folder:, bucket_id:, peepy: false, nsfw: false)
     # save file in "root" of folder if ignore is blank
     # return nil if ignore.blank?
-    return if full_folder_path.blank?
+    return if path_to_folder.blank?
 
     parent = nil
     folder = nil
-    full_folder_path.split('/').each do |folder_name|
-      folder = Folder.find_or_create_by!(name: folder_name, ancestry: parent.try(:path_ids).try(:join, '/'))
+    path_to_folder.split('/').each do |folder_name|
+      folder = Folder.find_or_create_by!(name: folder_name, ancestry: parent.try(:path_ids).try(:join, '/'), bucket_id: bucket_id)
+# binding.pry
+      folder.update(peepy: peepy, nsfw: nsfw)
       parent = folder
     end
 
