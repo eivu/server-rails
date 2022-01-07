@@ -32,7 +32,7 @@
 #  otp_secret_key                   :string
 #
 class User < ApplicationRecord
-  has_secure_token
+  # has_secure_token
   has_one_time_password
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
