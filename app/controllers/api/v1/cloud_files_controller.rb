@@ -3,7 +3,6 @@
 module Api
   module V1
     class CloudFilesController < Api::V1Controller
-
       # def create
       #   begin
       #     # just querying to make sure the user owns the bucket. if a user's bucket isn't found this will raise an error
@@ -53,17 +52,17 @@ module Api
       end
 
       def complete_params
-        params.permit(:folder).merge(
-          user_id: current_user.id,
+        {
+          user_id: current_user.id
+        }.merge(
+          folder: params.require(:folder).permit(:fullpath, :peepy, :nsfw, :bucket_id),
           tags: params.require(:tags).permit(:genre, :comment),
-          cloud_file_attributes:
-            params.require(:cloud_file_attributes).permit(:year, :folder, :rating, :release),
-          matched_recording:
-            params.require(:matched_recording)
-                  .permit(:id, :duration, :title,
-                          releasegroups: [:title, :id])
+          cloud_file_attributes: params.require(:cloud_file_attributes).permit(:year, :folder, :rating, :release),
+          matched_recording: params.require(:matched_recording)
+                                  .permit(:id, :duration, :title,
+                                          releasegroups: [:title, :id])
         )
-        # , artist:  %i[id name] 
+        # , artist:  %i[id name]
       end
     end
   end

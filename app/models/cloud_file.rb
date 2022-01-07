@@ -61,7 +61,7 @@ class CloudFile < ApplicationRecord
     state :empty, initial: true
     state :reserved
     state :transfered, before_enter: :assign_xfer_attributes
-    state :completed, before_enter: :assign_metadata
+    state :completed, before_enter: :complete_metadata_assigment
 
     event :reserve do
       transitions from: :empty, to: :reserved
@@ -77,12 +77,14 @@ class CloudFile < ApplicationRecord
   end
 
   # assign parameters to object
-  def assign_xfer_attributes(data={})
-    assign_attributes data
+  def assign_xfer_attributes(params = {})
+    assign_attributes(params)
   end
 
-  def assign_metadata(data={})
+  def complete_metadata_assigment(params = {})
     binding.pry
+    folder = Folder.create_from_path(params[:folder])
+    update! params[:cloud_file_attributes].merge(folder_id: folder.id)
   end
 
   def visit
