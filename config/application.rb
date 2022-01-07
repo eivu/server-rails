@@ -8,7 +8,6 @@ Bundler.require(*Rails.groups)
 
 module Eivu
   class Application < Rails::Application
-    config.autoloader = :zeitwerk # needed for rails 7
     #autoload everything in the app folder
     config.autoload_paths += %W(#{config.root}/app/**)
     config.autoload_paths << Rails.root.join('lib')
