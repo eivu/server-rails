@@ -48,7 +48,7 @@ gem 'rack-cors'
 gem 'rqrcode'
 
 group :doc do 
-  gem 'sdoc', '~> 0.4.0'
+  gem 'sdoc', '~> 2.3'
 end
 
 group :production do
