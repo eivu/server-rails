@@ -4,11 +4,10 @@ ruby '2.7.2'
 # i/o
 gem 'aasm', '~> 5.2' # AASM is a continuation of the acts-as-state-machine
 gem 'ancestry' # used to nest project_products by providing a parent_id and many convenience methods
-gem 'attr_encrypted', '~> 3.1' # Generates attr_accessors that encrypt and decrypt attributes transparently
 gem 'aws-sdk', '~> 2.0.41'
 gem 'bitfields', '~> 0.6.0' # store multiple booleans in a single integer
 gem 'devise', '~> 4.8' # user authentication
-gem 'eivu-fingerprinter-acoustid', path: '/Users/jinx/projects/eivu/eivu_acoustid'
+# gem 'eivu-fingerprinter-acoustid', path: '/Users/jinx/projects/eivu/eivu_acoustid'
 gem 'ensurance', '~> 0.1.19' # Add ability to "ensure" ActiveRecords are full records
 # gem 'has_secure_token' # generate the 24-character unique token
 gem 'jb', '~> 0.4.1' # Faster and simpler Jbuilder alternative
@@ -17,7 +16,7 @@ gem 'mime-types', '~> 3.3', '>= 3.3.1' # rovides a library and registry for info
 gem 'mini_magick', '~> 4.5', '>= 4.5.1' # there's an issues with v3.7 https://github.com/carrierwaveuploader/carrierwave/issues/1282
 gem 'oj' # faster json parsing
 gem 'pg', '~> 1.2', '>= 1.2.3'
-gem 'rails', '~> 6.1', '>= 6.1.3'
+gem 'rails', '~> 7.0', '>= 7.0.1'
 gem 'rest-client' #, '~> 1.8.0' # A simple HTTP and REST client for Ruby, inspired by the Sinatra microframework style of specifying actions
 gem 'sidekiq', '~> 4.1', '>= 4.1.2' # Simple, efficient background processing for Ruby.
 gem 'webpacker', '>= 4.0.x' # Use Webpack to manage app-like JavaScript modules in Rails
@@ -47,7 +46,7 @@ gem 'active_model_otp'
 gem 'rack-cors'
 gem 'rqrcode'
 
-group :doc do 
+group :doc do
   gem 'sdoc', '~> 2.3'
 end
 

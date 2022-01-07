@@ -39,9 +39,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  # uses attr_encrypted to encrypt data at rest access_key_id and secret_access_key
-  attr_encrypted :access_key_id, key: ATTR_ENCRYPTED_SECURITY_KEY
-  attr_encrypted :secret_access_key, key: ATTR_ENCRYPTED_SECURITY_KEY
+  # # uses attr_encrypted to encrypt data at rest access_key_id and secret_access_key
+  # attr_encrypted :access_key_id, key: ATTR_ENCRYPTED_SECURITY_KEY
+  # attr_encrypted :secret_access_key, key: ATTR_ENCRYPTED_SECURITY_KEY
 
   has_many :buckets
   has_many :cloud_files, through: :buckets
