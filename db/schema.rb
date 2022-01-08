@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_02_032727) do
+ActiveRecord::Schema.define(version: 2022_01_07_231348) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -214,14 +214,10 @@ ActiveRecord::Schema.define(version: 2021_08_02_032727) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
-    t.string "encrypted_access_key_id"
-    t.string "encrypted_access_key_id_salt"
-    t.string "encrypted_access_key_id_iv"
-    t.string "encrypted_secret_access_key"
-    t.string "encrypted_secret_access_key_salt"
-    t.string "encrypted_secret_access_key_iv"
     t.string "token"
     t.string "otp_secret_key"
+    t.string "access_key_id"
+    t.string "secret_access_key"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
