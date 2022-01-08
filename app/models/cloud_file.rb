@@ -82,8 +82,12 @@ class CloudFile < ApplicationRecord
   end
 
   def complete_metadata_assigment(params = {})
-    binding.pry
-    folder = Folder.create_from_path(params[:folder])
+    folder = Folder.create_from_path(
+              fullpath:  params[:folder][:fullpath],
+              bucket_id: params[:folder][:bucket_id],
+              peepy:     params[:folder][:peepy],
+              nsfw:      params[:folder][:nsfw]
+            )
     update! params[:cloud_file_attributes].merge(folder_id: folder.id)
   end
 

@@ -8,12 +8,12 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
   describe 'POST /reserve' do
     subject(:make_reservation) { post "/api/v1/cloud_files/#{md5}/reserve/", params: params, headers: headers }
 
-    context 'valid reservation attributes' do
-      let(:headers) { { Authorization: "Token #{user.token}" } }
-      let(:md5) { Faker::Crypto.md5 }
-      let(:bucket_id) { rand(1..17) }
-      let(:params) { { bucket_id: bucket_id } }
+    let(:headers) { { Authorization: "Token #{user.token}" } }
+    let(:md5) { Faker::Crypto.md5 }
+    let(:bucket_id) { rand(1..17) }
+    let(:params) { { bucket_id: bucket_id } }
 
+    context 'valid reservation attributes' do
       scenario 'returns 200 OK' do
         make_reservation
         expect(response.status).to eq(200)
@@ -32,6 +32,20 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
       scenario 'files attributes matches params' do
         make_reservation
         expect(response.body).to include_json(params)
+      end
+    end
+
+    context 'invalid reservation attributes' do
+      context 'md5 already exists' do
+        before do
+          CloudFile.create!(user_id: user.id, md5: md5, bucket_id: bucket_id, state: :reserved)
+        end
+
+        scenario 'returns 401 OK' do
+          raise 'fix me'
+          make_reservation
+          expect(response.status).to eq(401)
+        end
       end
     end
   end
@@ -89,13 +103,15 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
         {
           folder: {
             fullpath: Faker::File.dir,
+            bucket_id: rand(1..17),
             peepy: false,
             nsfw: true
           },
           cloud_file_attributes: {
             year: rand(1965..Time.current.year),
             rating: rand(1..5),
-            release_pos: rand(1..25)
+            release_pos: rand(1..25),
+            content_type: content_type
           },
           matched_recording: generate_recording_data,
           tags: {
@@ -114,19 +130,34 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
         raise 'artists are not included in release groups'
       end
 
-      scenario 'file is in transfered state' do
+      scenario 'file is in completed state' do
         complete_transfer
-        expect(response.body).to include_json(state: 'transfered')
+        expect(response.body).to include_json(state: 'completed')
       end
 
-      scenario 'file is owned by the current user' do
+      scenario 'cloud file has correct attributes' do
         complete_transfer
-        expect(response.body).to include_json(user_id: user.id)
+        expect(response.body).to include_json(state: 'completed')
       end
 
-      scenario 'files attributes matches params and existing data' do
+      scenario 'tags have been saved properly' do
         complete_transfer
-        expect(response.body).to include_json(attributes)
+        raise 'fix me'
+      end
+
+      scenario 'folder has correct attributes' do
+        complete_transfer
+        raise 'fix me'
+      end
+
+      scenario 'md5 did not change' do
+        complete_transfer
+        raise 'fix me'
+      end
+
+      scenario 'user_id did not change' do
+        complete_transfer
+        raise 'fix me'
       end
     end
   end
