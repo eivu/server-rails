@@ -1,10 +1,13 @@
+# frozen_string_literal: true
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
-ruby '2.7.2'
+ruby '3.0.2'
 
 # i/o
 gem 'aasm', '~> 5.2' # AASM is a continuation of the acts-as-state-machine
 gem 'ancestry' # used to nest project_products by providing a parent_id and many convenience methods
-gem 'aws-sdk', '~> 2.0.41'
+gem 'aws-sdk-s3', '~> 1'
 gem 'bitfields', '~> 0.6.0' # store multiple booleans in a single integer
 gem 'devise', '~> 4.8' # user authentication
 # gem 'eivu-fingerprinter-acoustid', path: '/Users/jinx/projects/eivu/eivu_acoustid'
