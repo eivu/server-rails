@@ -172,13 +172,11 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
       end
 
       scenario 'md5 did not change' do
-        complete_transfer
-        raise 'fix me'
+        expect { complete_transfer }.not_to change(cloud_file, :md5)
       end
 
       scenario 'user_id did not change' do
-        complete_transfer
-        raise 'fix me'
+        expect { complete_transfer }.not_to change(cloud_file, :user_id)
       end
     end
   end
