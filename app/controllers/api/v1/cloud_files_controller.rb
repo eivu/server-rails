@@ -42,21 +42,17 @@ module Api
         end
       end
 
-      def folder_params
-        params.require(:folder).permit(:fullpath, :peepy, :nsfw, :bucket_id)
-      end
-
       def folder
         Folder.find_or_create_from_path(
-          fullpath:  folder_params[:fullpath],
-          bucket_id: folder_params[:bucket_id],
-          peepy:     folder_params[:peepy],
-          nsfw:      folder_params[:nsfw]
+          fullpath: params[:fullpath],
+          bucket_id: params[:bucket_id],
+          peepy: params[:peepy],
+          nsfw: params[:nsfw]
         )
       end
 
       def reservation_params
-        params.permit(:bucket_id, :md5).merge(user_id: current_user.id, folder: folder)
+        params.permit(:bucket_id, :md5, :peepy, :nsfw).merge(user_id: current_user.id, folder: folder)
       end
 
       def transfer_params

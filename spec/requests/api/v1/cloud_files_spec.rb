@@ -11,17 +11,14 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
     let(:headers) { { Authorization: "Token #{user.token}" } }
     let(:md5) { Faker::Crypto.md5 }
     let(:bucket) { create(:bucket, user_id: user.id) }
-    let(:params) {
+    let(:params) do
       {
         bucket_id: bucket.id,
-        folder: {
-          fullpath: Faker::File.dir,
-          bucket_id: rand(1..17),
-          peepy: false,
-          nsfw: true
-        }
+        peepy: false,
+        nsfw: true,
+        fullpath: Faker::File.dir
       }
-    }
+    end
 
     context 'valid reservation attributes' do
       scenario 'returns 200 OK' do
