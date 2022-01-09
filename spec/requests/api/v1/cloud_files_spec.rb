@@ -45,7 +45,13 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
 
       scenario 'folder has correct attributes' do
         make_reservation
-        raise 'fix me'
+
+        structured_data = Oj.load(response.body)
+        folder = Folder.find(structured_data['folder_id'])
+        aggregate_failures do
+          expect(folder.peepy).to be(false)
+          expect(folder.nsfw).to be(true)
+        end
       end
 
       scenario 'correct number of folders were created in db' do
