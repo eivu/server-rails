@@ -85,7 +85,7 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
   describe 'POST /transfer' do
     subject(:transfer_data) { post "/api/v1/cloud_files/#{md5}/transfer/", params: params, headers: headers }
 
-    context 'valid reservation attributes' do
+    context 'valid transfer attributes' do
       let!(:cloud_file) { create :cloud_file, :reserved }
       let(:headers) { { Authorization: "Token #{user.token}" } }
       let(:md5) { cloud_file.md5 }
@@ -127,6 +127,18 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
         expect { transfer_data }.not_to change(cloud_file, :user_id)
       end
     end
+
+    context 'invalid transfer attributes' do
+      context 'file is owned by another user' do
+        let(:bucket) { create(:bucket) }
+
+        scenario 'returns 401 unauthorized' do
+          transfer_data
+          raise('fix me')
+          expect(response.status).to eq(401)
+        end
+      end
+    end
   end
 
   describe 'POST /complete' do
@@ -143,7 +155,7 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
         {
           cloud_file_attributes: {
             year: rand(1965..Time.current.year),
-            rating: rand(1..5),
+            rating: rand(1.0..5.0).round(2),
             release_pos: rand(1..25),
             content_type: content_type
           },
@@ -171,7 +183,12 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
 
       scenario 'cloud file has correct attributes' do
         complete_transfer
-        expect(response.body).to include_json(state: 'completed')
+        binding.pry
+        expect(cloud_file.reload).to have_attributes(params[:cloud_file_attributes])
+      end
+
+      scenario 'cloud file stores all data from acoustid' do
+        raise('fix me: store data in matched_recording')
       end
 
       scenario 'tags have been saved properly' do
