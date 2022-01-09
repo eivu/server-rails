@@ -49,7 +49,7 @@ class CloudFile < ApplicationRecord
 
   accepts_nested_attributes_for :metataggings
 
-  validates_uniqueness_of :md5, scope: :bucket_id
+  validates_uniqueness_of :md5, scope: :folder_id
   validates_presence_of :bucket_id
   validates_presence_of :md5
 
