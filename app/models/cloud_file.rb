@@ -102,10 +102,6 @@ class CloudFile < ApplicationRecord
       req.request_head(url.path).code == '200'
     end
 
-    def exists?(md5:, bucket:, folder:)
-      CloudFile.where(md5: md5, bucket_id: bucket.id, folder_id: folder.try(:id)).first.try(:id)
-    end
-
     def sanitize(name)
       name = name.tr('\\', '/') # work-around for IE
       name = File.basename(name)
