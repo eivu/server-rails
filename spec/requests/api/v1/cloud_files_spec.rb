@@ -11,12 +11,14 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
     let(:headers) { { Authorization: "Token #{user.token}" } }
     let(:md5) { Faker::Crypto.md5 }
     let(:bucket) { create(:bucket, user_id: user.id) }
+    let(:fullpath) { Faker::File.dir }
+    let(:num_of_folders_in_path) { fullpath.count('/') + 1}
     let(:params) do
       {
         bucket_id: bucket.id,
         peepy: false,
         nsfw: true,
-        fullpath: Faker::File.dir
+        fullpath: fullpath
       }
     end
 
@@ -38,7 +40,7 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
 
       scenario 'files attributes matches params' do
         make_reservation
-        expect(response.body).to include_json(params)
+        expect(response.body).to include_json(peepy: false, nsfw: true)
       end
 
       scenario 'folder has correct attributes' do
@@ -47,8 +49,7 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
       end
 
       scenario 'correct number of folders were created in db' do
-        make_reservation
-        raise 'fix me'
+        expect { make_reservation }.to change(Folder, :count).by(num_of_folders_in_path)
       end
     end
 
