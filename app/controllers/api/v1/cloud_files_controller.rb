@@ -3,22 +3,17 @@
 module Api
   module V1
     class CloudFilesController < Api::V1Controller
-      # def create
-      #   begin
-      #     # just querying to make sure the user owns the bucket. if a user's bucket isn't found this will raise an error
-      #     current_user.buckets.find(params[:cloud_file][:bucket_id])
-      #     params[:cloud_file][:relative_path] = nil if params[:preserve_tree].blank?
-      #     cloud_file = CloudFile.create! params.require(:cloud_file).permit(:name, :asset, :md5, :content_type, :filesize, :description, :rating, :nsfw, :bucket_id, :folder_id, :info_url, :tag_list, :metadata_list, :relative_path)
-      #     render(json: { status:  200, status_msg: :ok, message:  "#{cloud_file.asset} has been uploaded to #{cloud_file.url}" })
-      #   rescue Exception =>  error
-      #     render(json: { status:  401, message:  error.message }, status:  :unauthorized)
-      #   end
-      # end
-
       def reserve
+        raise SecurityError unless Bucket.exists?(user_id: current_user.id, id: reservation_params[:bucket_id])
+        raise IndexError if CloudFile.exists?(md5: reservation_params[:md5], folder_id: reservation_params[:folder_id])
+
         cloud_file = CloudFile.new(reservation_params)
         cloud_file.reserve!
         render json: cloud_file.attributes
+      rescue SecurityError
+        render json: { message: 'bucket is not owned by user' }, status: 401
+      rescue IndexError
+        render json: { message: 'md5 already exists in this folder' }, status: 422
       rescue StandardError => e
         render json: { message: e.message }, status: 500
       end
@@ -35,6 +30,10 @@ module Api
         render json: cloud_file.attributes
       end
 
+      ############################################################################
+      private
+      ############################################################################
+
       def authorize
         if current_user.cloud_files.where(md5: params[:id]).blank?
           render json: { status_msg: :ok, message: 'proceed with upload' }
@@ -43,8 +42,21 @@ module Api
         end
       end
 
+      def folder_params
+        params.require(:folder).permit(:fullpath, :peepy, :nsfw, :bucket_id)
+      end
+
+      def folder
+        Folder.find_or_create_from_path(
+          fullpath:  folder_params[:fullpath],
+          bucket_id: folder_params[:bucket_id],
+          peepy:     folder_params[:peepy],
+          nsfw:      folder_params[:nsfw]
+        )
+      end
+
       def reservation_params
-        params.permit(:bucket_id, :md5).merge(user_id: current_user.id)
+        params.permit(:bucket_id, :md5).merge(user_id: current_user.id, folder: folder)
       end
 
       def transfer_params
@@ -55,7 +67,6 @@ module Api
         {
           user_id: current_user.id
         }.merge(
-          folder: params.require(:folder).permit(:fullpath, :peepy, :nsfw, :bucket_id),
           tags: params.require(:tags).permit(:genre, :comment),
           cloud_file_attributes: params.require(:cloud_file_attributes).permit(:year, :folder, :rating, :release),
           matched_recording: params.require(:matched_recording)

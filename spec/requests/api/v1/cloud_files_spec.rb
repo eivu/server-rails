@@ -10,8 +10,18 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
 
     let(:headers) { { Authorization: "Token #{user.token}" } }
     let(:md5) { Faker::Crypto.md5 }
-    let(:bucket_id) { rand(1..17) }
-    let(:params) { { bucket_id: bucket_id } }
+    let(:bucket) { create(:bucket, user_id: user.id) }
+    let(:params) {
+      {
+        bucket_id: bucket.id,
+        folder: {
+          fullpath: Faker::File.dir,
+          bucket_id: rand(1..17),
+          peepy: false,
+          nsfw: true
+        }
+      }
+    }
 
     context 'valid reservation attributes' do
       scenario 'returns 200 OK' do
@@ -33,16 +43,34 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
         make_reservation
         expect(response.body).to include_json(params)
       end
+
+      scenario 'folder has correct attributes' do
+        make_reservation
+        raise 'fix me'
+      end
+
+      scenario 'correct number of folders were created in db' do
+        make_reservation
+        raise 'fix me'
+      end
     end
 
     context 'invalid reservation attributes' do
       context 'md5 already exists' do
         before do
-          CloudFile.create!(user_id: user.id, md5: md5, bucket_id: bucket_id, state: :reserved)
+          CloudFile.create!(user_id: user.id, md5: md5, bucket_id: bucket.id, state: :reserved)
         end
 
-        scenario 'returns 401 OK' do
-          raise 'fix me'
+        scenario 'returns 422 unprocessable entity' do
+          make_reservation
+          expect(response.status).to eq(422)
+        end
+      end
+
+      context 'bucket is owned by another user' do
+        let(:bucket) { create(:bucket) }
+
+        scenario 'returns 401 unauthorized' do
           make_reservation
           expect(response.status).to eq(401)
         end
@@ -101,12 +129,6 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
       let(:filesize) { rand(100.kilobytes..2.gigabytes) }
       let(:params) do
         {
-          folder: {
-            fullpath: Faker::File.dir,
-            bucket_id: rand(1..17),
-            peepy: false,
-            nsfw: true
-          },
           cloud_file_attributes: {
             year: rand(1965..Time.current.year),
             rating: rand(1..5),
@@ -141,11 +163,6 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
       end
 
       scenario 'tags have been saved properly' do
-        complete_transfer
-        raise 'fix me'
-      end
-
-      scenario 'folder has correct attributes' do
         complete_transfer
         raise 'fix me'
       end

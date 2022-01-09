@@ -76,19 +76,12 @@ class CloudFile < ApplicationRecord
     end
   end
 
-  # assign parameters to object
   def assign_xfer_attributes(params = {})
     assign_attributes(params)
   end
 
   def complete_metadata_assigment(params = {})
-    folder = Folder.create_from_path(
-              fullpath:  params[:folder][:fullpath],
-              bucket_id: params[:folder][:bucket_id],
-              peepy:     params[:folder][:peepy],
-              nsfw:      params[:folder][:nsfw]
-            )
-    update! params[:cloud_file_attributes].merge(folder_id: folder.id)
+    update! params[:cloud_file_attributes]
   end
 
   def visit
@@ -163,28 +156,29 @@ class CloudFile < ApplicationRecord
   private
   ############################################################################
 
-  #relative path is used to construct the folder tree
-  def parse_relative_path
-    if self.relative_path.blank?
-      self.folder_id = nil
-    else
-      @manual_ancestry= []
-      #convert the file path into an array
-      folder_array = self.relative_path.split("/").reject { |x| x.empty? }
-      #remove the last element because it will always be the last element
-      folder_array.pop
-      folder_array.each do |sub_dir|
-        if @manual_ancestry.present?
-          ancestry_str = @manual_ancestry.join("/")
-        else
-          ancestry_str = nil
-        end
-        folder = Folder.find_or_create_by! ancestry: ancestry_str, bucket_id: self.bucket.id, name:sub_dir
-        @manual_ancestry << folder.id
-      end
-      self.folder_id = @manual_ancestry.last
-    end
-  end
+  # remove me
+  # #relative path is used to construct the folder tree
+  # def parse_relative_path
+  #   if self.relative_path.blank?
+  #     self.folder_id = nil
+  #   else
+  #     @manual_ancestry= []
+  #     #convert the file path into an array
+  #     folder_array = self.relative_path.split("/").reject { |x| x.empty? }
+  #     #remove the last element because it will always be the last element
+  #     folder_array.pop
+  #     folder_array.each do |sub_dir|
+  #       if @manual_ancestry.present?
+  #         ancestry_str = @manual_ancestry.join("/")
+  #       else
+  #         ancestry_str = nil
+  #       end
+  #       folder = Folder.find_or_create_by! ancestry: ancestry_str, bucket_id: self.bucket.id, name:sub_dir
+  #       @manual_ancestry << folder.id
+  #     end
+  #     self.folder_id = @manual_ancestry.last
+  #   end
+  # end
 
   def prune_release
     # release.destroy if self.release.cloud_files.blank?
