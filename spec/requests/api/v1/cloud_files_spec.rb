@@ -118,6 +118,14 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
         transfer_data
         expect(response.body).to include_json(attributes)
       end
+
+      scenario 'md5 did not change' do
+        expect { transfer_data }.not_to change(cloud_file, :md5)
+      end
+
+      scenario 'user_id did not change' do
+        expect { transfer_data }.not_to change(cloud_file, :user_id)
+      end
     end
   end
 
