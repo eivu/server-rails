@@ -68,10 +68,10 @@ module Api
       def complete_params
         {
           tags: params.require(:tags).permit(:genre, :comment),
-          cloud_file_attributes: params.require(:cloud_file_attributes).permit(:year, :folder, :rating, :release),
+          cloud_file_attributes: params.require(:cloud_file_attributes).permit(:year, :folder, :rating, :release_pos),
           matched_recording: params.require(:matched_recording)
-                                  .permit(:id, :duration, :title,
-                                          releasegroups: [:title, :id])
+                                   .permit(:id, :duration, :title,
+                                           releasegroups: [:title, :id])
         }
         # , artist:  %i[id name]
       end

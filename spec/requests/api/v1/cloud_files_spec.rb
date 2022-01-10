@@ -94,9 +94,7 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
     context 'valid transfer attributes' do
       let!(:cloud_file) { create :cloud_file, :reserved, user: user }
       let(:headers) { { Authorization: "Token #{user.token}" } }
-      let(:attributes) do
-        params.merge(md5: cloud_file.md5, bucket_id: cloud_file.bucket_id)
-      end
+      let(:attributes) { params.merge(md5: cloud_file.md5, bucket_id: cloud_file.bucket_id) }
 
       scenario 'returns 200 OK' do
         transfer_data
@@ -131,7 +129,7 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
       context 'file is owned by another user' do
         let!(:cloud_file) { create :cloud_file, :reserved }
         let(:bucket) { create(:bucket) }
-        
+
         scenario 'returns 401 unauthorized' do
           transfer_data
           expect(response.status).to eq(401)
@@ -147,16 +145,12 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
       let!(:cloud_file) { create :cloud_file, :transfered, user: user }
       let(:headers) { { Authorization: "Token #{user.token}" } }
       let(:md5) { cloud_file.md5 }
-      let(:content_type) { Faker::File.mime_type }
-      let(:asset) { "#{Faker::Lorem.word.downcase}.#{content_type.split('/').last.gsub('+', '.')}" }
-      let(:filesize) { rand(100.kilobytes..2.gigabytes) }
       let(:params) do
         {
           cloud_file_attributes: {
             year: rand(1965..Time.current.year),
             rating: rand(1.0..5.0).round(2),
-            release_pos: rand(1..25),
-            content_type: content_type
+            release_pos: rand(1..25)
           },
           matched_recording: generate_recording_data,
           tags: {
@@ -182,7 +176,6 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
 
       scenario 'cloud file has correct attributes' do
         complete_transfer
-        binding.pry
         expect(cloud_file.reload).to have_attributes(params[:cloud_file_attributes])
       end
 
