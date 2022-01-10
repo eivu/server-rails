@@ -85,16 +85,15 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
   describe 'POST /transfer' do
     subject(:transfer_data) { post "/api/v1/cloud_files/#{md5}/transfer/", params: params, headers: headers }
 
+    let(:md5) { cloud_file.md5 }
+    let(:params) { Hash.new(content_type: content_type, asset: asset, filesize: filesize) }
+    let(:content_type) { Faker::File.mime_type }
+    let(:asset) { "#{Faker::Lorem.word.downcase}.#{content_type.split('/').last.gsub('+', '.')}" }
+    let(:filesize) { rand(100.kilobytes..2.gigabytes) }
+
     context 'valid transfer attributes' do
       let!(:cloud_file) { create :cloud_file, :reserved, user: user }
       let(:headers) { { Authorization: "Token #{user.token}" } }
-      let(:md5) { cloud_file.md5 }
-      let(:content_type) { Faker::File.mime_type }
-      let(:asset) { "#{Faker::Lorem.word.downcase}.#{content_type.split('/').last.gsub('+', '.')}" }
-      let(:filesize) { rand(100.kilobytes..2.gigabytes) }
-      let(:params) do
-        { content_type: content_type, asset: asset, filesize: filesize }
-      end
       let(:attributes) do
         params.merge(md5: cloud_file.md5, bucket_id: cloud_file.bucket_id)
       end
@@ -130,8 +129,9 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
 
     context 'invalid transfer attributes' do
       context 'file is owned by another user' do
+        let!(:cloud_file) { create :cloud_file, :reserved }
         let(:bucket) { create(:bucket) }
-
+        
         scenario 'returns 401 unauthorized' do
           transfer_data
           expect(response.status).to eq(401)
