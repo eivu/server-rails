@@ -12,15 +12,23 @@ RSpec.describe CloudFile, type: :model do
       #   expect { tagging }.to not_change { Metadatum.count }.and(not_change { Metatagging.count })
       # end
 
-      it 'should return an array of metadatum records' do
-        expect(tagging).to all(be_a(Metadatum))
-      end
+      # it 'should return an array of metadatum records' do
+      #   expect(tagging).to all(be_a(Metadatum))
+      # end
 
       it 'should build the proper data' do
         tagging
         expect(cloud_file.metadata).to contain_exactly(
-          an_object_having_attributes(value: 'jazz', user_id: cloud_file.user_id),
-          an_object_having_attributes(value: 'great', user_id: cloud_file.user_id),
+          an_object_having_attributes(
+            value: 'jazz',
+            user_id: cloud_file.user_id,
+            metadata_type: an_object_having_attributes(value: 'genre')
+          ),
+          an_object_having_attributes(
+            value: 'great',
+            user_id: cloud_file.user_id,
+            metadata_type: an_object_having_attributes(value: 'tag')
+          )
         )
       end
     end
