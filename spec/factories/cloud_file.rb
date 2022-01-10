@@ -18,6 +18,11 @@ FactoryBot.define do
       state { 'transfered' }
     end
 
+    trait :completed do
+      transfered
+      state { 'completed' }
+    end
+
     trait :audio do
       content_type { 'audio/mpeg' }
       filesize { rand(750.kilobytes..10.megabytes) }
