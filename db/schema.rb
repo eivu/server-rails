@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_09_191140) do
+ActiveRecord::Schema.define(version: 2022_01_10_040659) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,15 +66,6 @@ ActiveRecord::Schema.define(version: 2022_01_09_191140) do
     t.datetime "updated_at"
     t.index ["region_id"], name: "index_buckets_on_region_id"
     t.index ["user_id"], name: "index_buckets_on_user_id"
-  end
-
-  create_table "cloud_file_taggings", id: :serial, force: :cascade do |t|
-    t.integer "cloud_file_id"
-    t.integer "tag_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.index ["cloud_file_id"], name: "index_cloud_file_taggings_on_cloud_file_id"
-    t.index ["tag_id"], name: "index_cloud_file_taggings_on_tag_id"
   end
 
   create_table "cloud_files", id: :serial, force: :cascade do |t|
@@ -186,15 +177,6 @@ ActiveRecord::Schema.define(version: 2022_01_09_191140) do
     t.index ["ext_id", "data_source_id"], name: "index_releases_on_ext_id_and_data_source_id"
     t.index ["ext_id"], name: "index_releases_on_ext_id"
     t.index ["release_type_id"], name: "index_releases_on_release_type_id"
-  end
-
-  create_table "tags", id: :serial, force: :cascade do |t|
-    t.string "value"
-    t.integer "user_id"
-    t.boolean "private"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.index ["user_id"], name: "index_tags_on_user_id"
   end
 
   create_table "users", id: :serial, force: :cascade do |t|

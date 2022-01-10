@@ -41,8 +41,6 @@ class CloudFile < ApplicationRecord
   has_many :artists, through: :artist_cloud_files
   has_many :metataggings, dependent: :destroy
   has_many :metadata, through: :metataggings, dependent: :destroy
-  has_many :taggings, class_name: 'CloudFileTagging', dependent: :destroy
-  has_many :tags, through: :taggings
 
   scope(:alpha, -> { order('name') })
   scope(:peepy, -> { where(peepy: true) })
