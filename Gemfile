@@ -18,7 +18,7 @@ gem 'oj' # faster json parsing
 gem 'pg', '~> 1.2', '>= 1.2.3'
 gem 'rails', '~> 7.0', '>= 7.0.1'
 gem 'rest-client' #, '~> 1.8.0' # A simple HTTP and REST client for Ruby, inspired by the Sinatra microframework style of specifying actions
-gem 'sidekiq', '~> 4.1', '>= 4.1.2' # Simple, efficient background processing for Ruby.
+gem 'sidekiq', '~> 5.2' # Simple, efficient background processing for Ruby.
 gem 'webpacker', '>= 4.0.x' # Use Webpack to manage app-like JavaScript modules in Rails
 
 gem 'foreman', '~> 0.87.1' # Manage Procfile-based applications http://ddollar.github.com/foreman
