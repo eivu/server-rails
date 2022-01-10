@@ -39,8 +39,8 @@ class CloudFile < ApplicationRecord
   belongs_to :user
   has_many :artist_cloud_files, dependent: :destroy
   has_many :artists, through: :artist_cloud_files
-  has_many :metataggings, dependent: :destroy
-  has_many :metadata, through: :metataggings, dependent: :destroy
+  has_many :metataggings, dependent: :destroy, autosave: true
+  has_many :metadata, through: :metataggings, dependent: :destroy, autosave: true
 
   scope(:alpha, -> { order('name') })
   scope(:peepy, -> { where(peepy: true) })
@@ -135,17 +135,14 @@ class CloudFile < ApplicationRecord
     type
   end
 
-  def tag_list=(tag_array)
-    tag_array.each do |value|
-      tag = Tag.find_or_create_by! value: value, user_id: self.user.id
-      self.cloud_file_taggings.find_or_initialize_by! tag_id: tag.id
+  def metadata_list=(list)
+    list.collect do |key, value|
+      type = MetadataType.find_or_create_by!(value: key)
+      metadata << Metadatum.find_or_create_by!(value: value, user_id: user_id, metadata_type_id: type.id).tap do |obj|
+        obj.peepy = peepy
+        obj.nsfw  = nsfw
+      end
     end
-
-    binding.pry
-  end
-
-  def metadata_list=(info)
-    binding.pry
   end
 
 
