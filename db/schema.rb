@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_10_040659) do
+ActiveRecord::Schema.define(version: 2022_01_10_042250) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -127,6 +127,8 @@ ActiveRecord::Schema.define(version: 2022_01_10_040659) do
     t.integer "metadata_type_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean "peepy", default: false
+    t.boolean "nsfw", default: false
     t.index ["metadata_type_id"], name: "index_metadata_on_metadata_type_id"
     t.index ["user_id"], name: "index_metadata_on_user_id"
   end
