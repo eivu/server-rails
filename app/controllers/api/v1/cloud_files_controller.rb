@@ -19,9 +19,15 @@ module Api
       end
 
       def transfer
+        raise SecurityError unless CloudFile.exists?(user_id: current_user.id, md5: params[:md5])
+
         cloud_file = CloudFile.find_by_md5(params[:md5])
         cloud_file.transfer!(transfer_params)
         render json: cloud_file.attributes
+      rescue SecurityError
+        render json: { message: 'bucket is not owned by user' }, status: 401
+      rescue StandardError => e
+        render json: { message: e.message }, status: 500
       end
 
       def complete
@@ -56,19 +62,17 @@ module Api
       end
 
       def transfer_params
-        params.permit(:content_type, :asset, :filesize).merge(user_id: current_user.id)
+        params.permit(:content_type, :asset, :filesize)
       end
 
       def complete_params
         {
-          user_id: current_user.id
-        }.merge(
           tags: params.require(:tags).permit(:genre, :comment),
           cloud_file_attributes: params.require(:cloud_file_attributes).permit(:year, :folder, :rating, :release),
           matched_recording: params.require(:matched_recording)
                                   .permit(:id, :duration, :title,
                                           releasegroups: [:title, :id])
-        )
+        }
         # , artist:  %i[id name]
       end
     end

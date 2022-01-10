@@ -9,10 +9,10 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
     subject(:make_reservation) { post "/api/v1/cloud_files/#{md5}/reserve/", params: params, headers: headers }
 
     let(:headers) { { Authorization: "Token #{user.token}" } }
-    let(:md5) { Faker::Crypto.md5 }
     let(:bucket) { create(:bucket, user_id: user.id) }
     let(:fullpath) { Faker::File.dir }
-    let(:num_of_folders_in_path) { fullpath.count('/') + 1}
+    let(:md5) { Faker::Crypto.md5 }
+    let(:num_of_folders_in_path) { fullpath.count('/') + 1 }
     let(:params) do
       {
         bucket_id: bucket.id,
@@ -86,7 +86,7 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
     subject(:transfer_data) { post "/api/v1/cloud_files/#{md5}/transfer/", params: params, headers: headers }
 
     context 'valid transfer attributes' do
-      let!(:cloud_file) { create :cloud_file, :reserved }
+      let!(:cloud_file) { create :cloud_file, :reserved, user: user }
       let(:headers) { { Authorization: "Token #{user.token}" } }
       let(:md5) { cloud_file.md5 }
       let(:content_type) { Faker::File.mime_type }
@@ -134,7 +134,6 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
 
         scenario 'returns 401 unauthorized' do
           transfer_data
-          raise('fix me')
           expect(response.status).to eq(401)
         end
       end
@@ -145,7 +144,7 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
     subject(:complete_transfer) { post "/api/v1/cloud_files/#{md5}/complete/", params: params, headers: headers }
 
     context 'valid completion attributes' do
-      let!(:cloud_file) { create :cloud_file, :transfered }
+      let!(:cloud_file) { create :cloud_file, :transfered, user: user }
       let(:headers) { { Authorization: "Token #{user.token}" } }
       let(:md5) { cloud_file.md5 }
       let(:content_type) { Faker::File.mime_type }

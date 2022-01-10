@@ -36,7 +36,7 @@ class CloudFile < ApplicationRecord
   belongs_to :folder, counter_cache: true
   belongs_to :bucket#, inverse_of: :cloud_file
   belongs_to :release, counter_cache: true
-  has_one :user, through: :bucket
+  belongs_to :user
   has_many :artist_cloud_files, dependent: :destroy
   has_many :artists, through: :artist_cloud_files
   has_many :metataggings, dependent: :destroy
@@ -53,9 +53,8 @@ class CloudFile < ApplicationRecord
   validates_presence_of :bucket_id
   validates_presence_of :md5
 
-
-  # ?????????????
-  attr_accessor :relative_path, :path_to_file
+  # ?????? used by CloudFileIngesterJob
+  attr_accessor :path_to_file
 
   aasm :state do # add locking
     state :empty, initial: true
@@ -84,8 +83,8 @@ class CloudFile < ApplicationRecord
     update! params[:cloud_file_attributes]
   end
 
-  def visit
-    system "open #{self.url}"
+  def dev_test
+    system "open #{url}"
   end
 
   class << self
@@ -106,17 +105,17 @@ class CloudFile < ApplicationRecord
   end
 
   def smart_name
-    self.name || self.asset
+    name || asset
   end
 
   def url
-    raise "Region Not Defined for bucket: #{self.bucket.name}" if self.bucket.region_id.blank?
+    raise "Region Not Defined for bucket: #{bucket.name}" if bucket.region_id.blank?
 
     @url ||= "http://#{self.bucket.name}.#{self.bucket.region.endpoint}/#{media_type}/#{md5.scan(/.{2}|.+/).join("/")}/#{self.asset}"
   end
 
   def filename
-    self.asset
+    asset
   end
 
   def path
@@ -155,30 +154,6 @@ class CloudFile < ApplicationRecord
   ############################################################################
   private
   ############################################################################
-
-  # remove me
-  # #relative path is used to construct the folder tree
-  # def parse_relative_path
-  #   if self.relative_path.blank?
-  #     self.folder_id = nil
-  #   else
-  #     @manual_ancestry= []
-  #     #convert the file path into an array
-  #     folder_array = self.relative_path.split("/").reject { |x| x.empty? }
-  #     #remove the last element because it will always be the last element
-  #     folder_array.pop
-  #     folder_array.each do |sub_dir|
-  #       if @manual_ancestry.present?
-  #         ancestry_str = @manual_ancestry.join("/")
-  #       else
-  #         ancestry_str = nil
-  #       end
-  #       folder = Folder.find_or_create_by! ancestry: ancestry_str, bucket_id: self.bucket.id, name:sub_dir
-  #       @manual_ancestry << folder.id
-  #     end
-  #     self.folder_id = @manual_ancestry.last
-  #   end
-  # end
 
   def prune_release
     # release.destroy if self.release.cloud_files.blank?
