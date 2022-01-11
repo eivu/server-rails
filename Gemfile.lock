@@ -377,7 +377,7 @@ DEPENDENCIES
   activejob-traffic_control (~> 0.1.3)
   ancestry
   annotate
-  aws-sdk-s3 (~> 1)
+  aws-sdk-s3 (~> 1.111, >= 1.111.1)
   better_errors
   binding_of_caller
   bitfields (~> 0.6.0)
