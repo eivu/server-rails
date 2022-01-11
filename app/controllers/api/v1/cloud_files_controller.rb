@@ -32,7 +32,7 @@ module Api
 
       def complete
         cloud_file = CloudFile.find_by_md5(params[:md5])
-        cloud_file.complete!(complete_params)
+        cloud_file.complete!(complete_params[:cloud_file_attributes])
         render json: cloud_file.attributes
       end
 
@@ -67,12 +67,10 @@ module Api
 
       def complete_params
         {
-           # forcing rubocop error to show as a flaw in the code in the line below
-          metadata_list: params[:metadata_list], # BAD!!!!  does not follow strong params
-          cloud_file_attributes: params.require(:cloud_file_attributes).permit(:year, :folder, :rating, :release_pos),
+          cloud_file_attributes: params.permit(:year, :folder, :rating, :release_pos, metadata_list: {}),
           matched_recording: params.require(:matched_recording)
                                    .permit(:id, :duration, :title,
-                                           releasegroups: [:title, :id])
+                                           releasegroups: %i[title id])
         }
         # , artist:  %i[id name]
       end

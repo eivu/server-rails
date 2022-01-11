@@ -147,16 +147,14 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
       let(:md5) { cloud_file.md5 }
       let(:params) do
         {
-          cloud_file_attributes: {
-            year: rand(1965..Time.current.year),
-            rating: rand(1.0..5.0).round(2),
-            release_pos: rand(1..25)
+          year: rand(1965..Time.current.year),
+          rating: rand(1.0..5.0).round(2),
+          release_pos: rand(1..25),
+          metadata_list: {
+            genre: 'rock',
+            comment: 'best ever'
           },
-          matched_recording: generate_recording_data,
-          metadata: {
-            genre: Faker::Music.genre,
-            comment: Faker::Hipster.sentence
-          }
+          matched_recording: generate_recording_data
         }
       end
 
@@ -176,7 +174,7 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
 
       scenario 'cloud file has correct attributes' do
         complete_transfer
-        expect(cloud_file.reload).to have_attributes(params[:cloud_file_attributes])
+        expect(cloud_file.reload).to have_attributes(params.slice(:year, :rating, :release_pos))
       end
 
       scenario 'cloud file stores all data from acoustid' do
@@ -185,7 +183,20 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
 
       scenario 'tags have been saved properly' do
         complete_transfer
-        raise 'fix me'
+        expect(cloud_file.reload.metadata).to contain_exactly(
+          an_object_having_attributes(
+            value: 'rock',
+            peepy: false,
+            nsfw: false,
+            user_id: cloud_file.user_id,
+            metadata_type: an_object_having_attributes(value: 'genre')
+          ),
+          an_object_having_attributes(
+            value: 'best ever',
+            user_id: cloud_file.user_id,
+            metadata_type: an_object_having_attributes(value: 'comment')
+          )
+        )
       end
 
       scenario 'md5 did not change' do

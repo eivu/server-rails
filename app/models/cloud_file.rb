@@ -78,7 +78,7 @@ class CloudFile < ApplicationRecord
   end
 
   def complete_metadata_assigment(params = {})
-    update! params[:cloud_file_attributes]
+    update! params
   end
 
   def dev_test
