@@ -1,26 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe CloudFile, type: :model do
-  let(:cloud_file) { create(:cloud_file, :transfered) }
-  let(:list) { { genre: 'jazz', tag: 'great' } }
-
   describe '#metadata_list=' do
-    context 'when building a new CloudFile' do
-      subject(:tagging) { cloud_file.metadata_list = list  }
+    subject(:tagging) { cloud_file.metadata_list = list }
 
-      # it 'should not save metadata records, only build them' do
-      #   expect { tagging }.to not_change { Metadatum.count }.and(not_change { Metatagging.count })
-      # end
+    context 'when working with a plain cloud file' do
+      let(:cloud_file) { create(:cloud_file, :transfered) }
+      let(:list) { { genre: 'jazz', tag: 'great' } }
 
-      # it 'should return an array of metadatum records' do
-      #   expect(tagging).to all(be_a(Metadatum))
-      # end
-
-      it 'should build the proper data' do
+      it 'should save the data' do
         tagging
         expect(cloud_file.metadata).to contain_exactly(
           an_object_having_attributes(
             value: 'jazz',
+            peepy: false,
+            nsfw: false,
             user_id: cloud_file.user_id,
             metadata_type: an_object_having_attributes(value: 'genre')
           ),
@@ -28,6 +22,60 @@ RSpec.describe CloudFile, type: :model do
             value: 'great',
             user_id: cloud_file.user_id,
             metadata_type: an_object_having_attributes(value: 'tag')
+          )
+        )
+      end
+    end
+
+    context 'when working with a peepy cloud file' do
+      let(:cloud_file) { create(:cloud_file, :transfered, :peepy) }
+      let(:list) { { dirty: 'bird' } }
+
+      it 'should save the data' do
+        tagging
+        expect(cloud_file.metadata).to contain_exactly(
+          an_object_having_attributes(
+            value: 'bird',
+            user_id: cloud_file.user_id,
+            peepy: true,
+            nsfw: false,
+            metadata_type: an_object_having_attributes(value: 'dirty')
+          )
+        )
+      end
+    end
+
+    context 'when working with a nsfw cloud file' do
+      let(:cloud_file) { create(:cloud_file, :transfered, :nsfw) }
+      let(:list) { { loud: 'rap' } }
+
+      it 'should save the data' do
+        tagging
+        expect(cloud_file.metadata).to contain_exactly(
+          an_object_having_attributes(
+            value: 'rap',
+            user_id: cloud_file.user_id,
+            peepy: false,
+            nsfw: true,
+            metadata_type: an_object_having_attributes(value: 'loud')
+          )
+        )
+      end
+    end
+
+    context 'when working with a nsfw and peepy cloud file' do
+      let(:cloud_file) { create(:cloud_file, :transfered, :nsfw, :peepy) }
+      let(:list) { { naughty: 'bits' } }
+
+      it 'should save the data' do
+        tagging
+        expect(cloud_file.metadata).to contain_exactly(
+          an_object_having_attributes(
+            value: 'bits',
+            user_id: cloud_file.user_id,
+            nsfw: true,
+            peepy: true,
+            metadata_type: an_object_having_attributes(value: 'naughty')
           )
         )
       end

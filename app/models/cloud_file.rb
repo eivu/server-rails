@@ -136,7 +136,7 @@ class CloudFile < ApplicationRecord
   end
 
   def metadata_list=(list)
-    list.collect do |key, value|
+    list.each do |key, value|
       type = MetadataType.find_or_create_by!(value: key)
       metadata << Metadatum.find_or_create_by!(value: value, user_id: user_id, metadata_type_id: type.id).tap do |obj|
         obj.peepy = peepy

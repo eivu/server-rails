@@ -4,6 +4,14 @@ FactoryBot.define do
   factory :cloud_file do
     user { create :user }
 
+    trait :peepy do
+      peepy { true }
+    end
+
+    trait :nsfw do
+      nsfw { true }
+    end
+
     trait :reserved do
       md5 { Faker::Crypto.md5 }
       bucket_id { rand(1..10) }
