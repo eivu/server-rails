@@ -67,7 +67,8 @@ module Api
 
       def complete_params
         {
-          tags: params.require(:tags).permit(:genre, :comment),
+           # forcing rubocop error to show as a flaw in the code in the line below
+          metadata_list: params[:metadata_list], # BAD!!!!  does not follow strong params
           cloud_file_attributes: params.require(:cloud_file_attributes).permit(:year, :folder, :rating, :release_pos),
           matched_recording: params.require(:matched_recording)
                                    .permit(:id, :duration, :title,

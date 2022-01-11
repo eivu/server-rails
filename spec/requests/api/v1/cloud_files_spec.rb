@@ -153,7 +153,7 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
             release_pos: rand(1..25)
           },
           matched_recording: generate_recording_data,
-          tags: {
+          metadata: {
             genre: Faker::Music.genre,
             comment: Faker::Hipster.sentence
           }
@@ -180,7 +180,7 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
       end
 
       scenario 'cloud file stores all data from acoustid' do
-        raise('fix me: store data in matched_recording')
+        raise('fix me: support eivu acoustid client by storing data in matched_recording')
       end
 
       scenario 'tags have been saved properly' do
