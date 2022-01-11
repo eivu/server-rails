@@ -1,4 +1,4 @@
 class ApplicationRecord < ActiveRecord::Base
-  self.abstract_class = true
-  include Ensurance
+  primary_abstract_class
+  # include Ensurance
 end

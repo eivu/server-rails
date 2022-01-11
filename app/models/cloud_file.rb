@@ -36,26 +36,23 @@ class CloudFile < ApplicationRecord
   belongs_to :folder, counter_cache: true
   belongs_to :bucket#, inverse_of: :cloud_file
   belongs_to :release, counter_cache: true
-  has_one :user, through: :bucket
+  belongs_to :user
   has_many :artist_cloud_files, dependent: :destroy
   has_many :artists, through: :artist_cloud_files
-  has_many :metataggings, dependent: :destroy
-  has_many :metadata, through: :metataggings, dependent: :destroy
-  has_many :taggings, class_name: 'CloudFileTagging', dependent: :destroy
-  has_many :tags, through: :taggings
+  has_many :metataggings, dependent: :destroy, autosave: true
+  has_many :metadata, through: :metataggings, dependent: :destroy, autosave: true
 
   scope(:alpha, -> { order('name') })
   scope(:peepy, -> { where(peepy: true) })
 
   accepts_nested_attributes_for :metataggings
 
-  validates_uniqueness_of :md5, scope: :bucket_id
+  validates_uniqueness_of :md5, scope: :folder_id
   validates_presence_of :bucket_id
   validates_presence_of :md5
 
-
-  # ?????????????
-  attr_accessor :relative_path, :path_to_file
+  # ?????? used by CloudFileIngesterJob
+  attr_accessor :path_to_file
 
   aasm :state do # add locking
     state :empty, initial: true
@@ -76,19 +73,16 @@ class CloudFile < ApplicationRecord
     end
   end
 
-  # assign parameters to object
   def assign_xfer_attributes(params = {})
     assign_attributes(params)
   end
 
   def complete_metadata_assigment(params = {})
-    binding.pry
-    folder = Folder.create_from_path(params[:folder])
-    update! params[:cloud_file_attributes].merge(folder_id: folder.id)
+    update! params
   end
 
-  def visit
-    system "open #{self.url}"
+  def dev_test
+    system "open #{url}"
   end
 
   class << self
@@ -96,10 +90,6 @@ class CloudFile < ApplicationRecord
       url = URI.parse(uri)
       req = Net::HTTP.new(url.host, url.port)
       req.request_head(url.path).code == '200'
-    end
-
-    def exists?(md5:, bucket:, folder:)
-      CloudFile.where(md5: md5, bucket_id: bucket.id, folder_id: folder.try(:id)).first.try(:id)
     end
 
     def sanitize(name)
@@ -113,17 +103,17 @@ class CloudFile < ApplicationRecord
   end
 
   def smart_name
-    self.name || self.asset
+    name || asset
   end
 
   def url
-    raise "Region Not Defined for bucket: #{self.bucket.name}" if self.bucket.region_id.blank?
+    raise "Region Not Defined for bucket: #{bucket.name}" if bucket.region_id.blank?
 
     @url ||= "http://#{self.bucket.name}.#{self.bucket.region.endpoint}/#{media_type}/#{md5.scan(/.{2}|.+/).join("/")}/#{self.asset}"
   end
 
   def filename
-    self.asset
+    asset
   end
 
   def path
@@ -145,46 +135,20 @@ class CloudFile < ApplicationRecord
     type
   end
 
-  def tag_list=(tag_array)
-    tag_array.each do |value|
-      tag = Tag.find_or_create_by! value: value, user_id: self.user.id
-      self.cloud_file_taggings.find_or_initialize_by! tag_id: tag.id
+  def metadata_list=(list)
+    list.each do |key, value|
+      type = MetadataType.find_or_create_by!(value: key)
+      metadata << Metadatum.find_or_create_by!(value: value, user_id: user_id, metadata_type_id: type.id).tap do |obj|
+        obj.peepy = peepy
+        obj.nsfw  = nsfw
+      end
     end
-
-    binding.pry
-  end
-
-  def metadata_list=(info)
-    binding.pry
   end
 
 
   ############################################################################
   private
   ############################################################################
-
-  #relative path is used to construct the folder tree
-  def parse_relative_path
-    if self.relative_path.blank?
-      self.folder_id = nil
-    else
-      @manual_ancestry= []
-      #convert the file path into an array
-      folder_array = self.relative_path.split("/").reject { |x| x.empty? }
-      #remove the last element because it will always be the last element
-      folder_array.pop
-      folder_array.each do |sub_dir|
-        if @manual_ancestry.present?
-          ancestry_str = @manual_ancestry.join("/")
-        else
-          ancestry_str = nil
-        end
-        folder = Folder.find_or_create_by! ancestry: ancestry_str, bucket_id: self.bucket.id, name:sub_dir
-        @manual_ancestry << folder.id
-      end
-      self.folder_id = @manual_ancestry.last
-    end
-  end
 
   def prune_release
     # release.destroy if self.release.cloud_files.blank?

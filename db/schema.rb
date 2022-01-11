@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_02_032727) do
+ActiveRecord::Schema.define(version: 2022_01_10_042250) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,15 +68,6 @@ ActiveRecord::Schema.define(version: 2021_08_02_032727) do
     t.index ["user_id"], name: "index_buckets_on_user_id"
   end
 
-  create_table "cloud_file_taggings", id: :serial, force: :cascade do |t|
-    t.integer "cloud_file_id"
-    t.integer "tag_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.index ["cloud_file_id"], name: "index_cloud_file_taggings_on_cloud_file_id"
-    t.index ["tag_id"], name: "index_cloud_file_taggings_on_tag_id"
-  end
-
   create_table "cloud_files", id: :serial, force: :cascade do |t|
     t.string "name"
     t.string "asset"
@@ -108,6 +99,7 @@ ActiveRecord::Schema.define(version: 2021_08_02_032727) do
     t.index ["ext_id", "data_source_id"], name: "index_cloud_files_on_ext_id_and_data_source_id"
     t.index ["ext_id"], name: "index_cloud_files_on_ext_id"
     t.index ["folder_id"], name: "index_cloud_files_on_folder_id"
+    t.index ["md5", "folder_id"], name: "index_cloud_files_on_md5_and_folder_id", unique: true
     t.index ["release_id"], name: "index_cloud_files_on_release_id"
     t.index ["user_id"], name: "index_cloud_files_on_user_id"
     t.index ["year"], name: "index_cloud_files_on_year"
@@ -135,6 +127,8 @@ ActiveRecord::Schema.define(version: 2021_08_02_032727) do
     t.integer "metadata_type_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean "peepy", default: false
+    t.boolean "nsfw", default: false
     t.index ["metadata_type_id"], name: "index_metadata_on_metadata_type_id"
     t.index ["user_id"], name: "index_metadata_on_user_id"
   end
@@ -187,15 +181,6 @@ ActiveRecord::Schema.define(version: 2021_08_02_032727) do
     t.index ["release_type_id"], name: "index_releases_on_release_type_id"
   end
 
-  create_table "tags", id: :serial, force: :cascade do |t|
-    t.string "value"
-    t.integer "user_id"
-    t.boolean "private"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.index ["user_id"], name: "index_tags_on_user_id"
-  end
-
   create_table "users", id: :serial, force: :cascade do |t|
     t.string "username"
     t.datetime "created_at"
@@ -214,14 +199,10 @@ ActiveRecord::Schema.define(version: 2021_08_02_032727) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
-    t.string "encrypted_access_key_id"
-    t.string "encrypted_access_key_id_salt"
-    t.string "encrypted_access_key_id_iv"
-    t.string "encrypted_secret_access_key"
-    t.string "encrypted_secret_access_key_salt"
-    t.string "encrypted_secret_access_key_iv"
     t.string "token"
     t.string "otp_secret_key"
+    t.string "access_key_id"
+    t.string "secret_access_key"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

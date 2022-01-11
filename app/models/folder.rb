@@ -26,7 +26,6 @@ class Folder < ApplicationRecord
   validates :bucket_id, presence: true
   validates :name, uniqueness: { scope: :ancestry }
 
-  # scope :clean, where(:peepy => false)
   scope(:alpha, -> { order('name') })
   scope(:clean, -> { where(peepy: false) })
   scope(:peepy, -> { where(peepy: true) })
@@ -36,19 +35,21 @@ class Folder < ApplicationRecord
   scope(:has_content, -> { where('subfolders_count > 0 OR cloud_files_count > 0') })
   # default_scope { where(:peepy => false) }
 
-  def self.create_from_path(fullpath:, bucket_id:, peepy: false, nsfw: false)
-    # save file in "root" of folder if ignore is blank
-    # return nil if ignore.blank?
-    return if fullpath.blank?
+  class << self
+    def find_or_create_from_path(fullpath:, bucket_id:, peepy: false, nsfw: false)
+      # save file in "root" of folder if ignore is blank
+      # return nil if ignore.blank?
+      return if fullpath.blank?
 
-    parent = nil
-    folder = nil
-    fullpath.split('/').each do |folder_name|
-      folder = Folder.find_or_create_by!(name: folder_name, ancestry: parent.try(:path_ids).try(:join, '/'), bucket_id: bucket_id)
-      folder.update(peepy: peepy, nsfw: nsfw)
-      parent = folder
+      parent = nil
+      folder = nil
+      fullpath.split('/').each do |folder_name|
+        folder = Folder.find_or_create_by!(name: folder_name, ancestry: parent.try(:path_ids).try(:join, '/'), bucket_id: bucket_id)
+        folder.update(peepy: peepy, nsfw: nsfw)
+        parent = folder
+      end
+
+      folder
     end
-
-    folder
   end
 end

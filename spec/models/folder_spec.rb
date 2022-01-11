@@ -3,9 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe Folder, type: :model do
-  describe '.create_from_path' do
+  describe '.find_or_create_from_path' do
     subject(:instance) {
-      described_class.create_from_path(fullpath: path, bucket_id: bucket_id, peepy: peepy, nsfw: nsfw)
+      described_class.find_or_create_from_path(fullpath: path, bucket_id: bucket_id, peepy: peepy, nsfw: nsfw)
     }
 
     let(:bucket_id) { 17 }
