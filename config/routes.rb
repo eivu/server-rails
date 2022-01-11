@@ -24,8 +24,6 @@ Rails.application.routes.draw do
       get :info, to: 'v1#info'
       resources :folders
       resources :cloud_files, param: :md5 do
-        # post '/:md5/reserve', to: 'cloud_files#reserve'
-
         member do
           post :reserve
           post :transfer
