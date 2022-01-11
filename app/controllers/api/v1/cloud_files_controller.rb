@@ -72,7 +72,6 @@ module Api
                                    .permit(:id, :duration, :title,
                                            releasegroups: %i[title id])
         }
-        # , artist:  %i[id name]
       end
     end
   end
