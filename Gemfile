@@ -7,26 +7,27 @@ ruby '3.0.2'
 gem 'aasm', '~> 5.2' # AASM is a continuation of the acts-as-state-machine
 gem 'ancestry' # used to nest project_products by providing a parent_id and many convenience methods
 gem 'aws-sdk-s3', '~> 1.111', '>= 1.111.1'
-gem 'bitfields', '~> 0.6.0' # store multiple booleans in a single integer
+# unused? gem 'bitfields', '~> 0.6.0' # store multiple booleans in a single integer
 gem 'devise', '~> 4.8' # user authentication
 # gem 'eivu-fingerprinter-acoustid', path: '/Users/jinx/projects/eivu/eivu_acoustid'
-# unused? gem 'ensurance', '~> 0.1.19' # Add ability to "ensure" ActiveRecords are full records
-# gem 'has_secure_token' # generate the 24-character unique token
+# unused? gem 'ensurance', '~> 0.1.19' # Add ability to 'ensure' ActiveRecords are full records
+# unused? gem 'has_secure_token' # generate the 24-character unique token
 gem 'hotwire-rails', '~> 0.1.3' # html over the wire
+gem 'importmap-rails', '~> 1.0', '>= 1.0.1' # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem 'jb', '~> 0.4.1' # Faster and simpler Jbuilder alternative
-gem 'mimemagic', '~> 0.3.5' # determine mime type by magic
-gem 'mime-types', '~> 3.3', '>= 3.3.1' # rovides a library and registry for information about MIME content type definitions
+gem 'jbuilder' # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem 'mini_magick', '~> 4.5', '>= 4.5.1' # there's an issues with v3.7 https://github.com/carrierwaveuploader/carrierwave/issues/1282
 gem 'oj' # faster json parsing
 gem 'pg', '~> 1.2', '>= 1.2.3'
 gem 'rails', '~> 7.0', '>= 7.0.1'
-gem 'rest-client' #, '~> 1.8.0' # A simple HTTP and REST client for Ruby, inspired by the Sinatra microframework style of specifying actions
+gem 'rest-client', '~> 2.1' # A simple HTTP and REST client for Ruby, inspired by the Sinatra microframework style of specifying actions
 gem 'sidekiq', '~> 5.2' # Simple, efficient background processing for Ruby.
+gem 'stimulus-rails', '~> 1.0', '>= 1.0.2' # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem 'strong_migrations', '~> 0.7.9'
-gem 'webpacker', '>= 4.0.x' # Use Webpack to manage app-like JavaScript modules in Rails
+gem 'turbo-rails', '~> 1.0' # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
+
 
 gem 'foreman', '~> 0.87.1' # Manage Procfile-based applications http://ddollar.github.com/foreman
-# gem "rjson"  # templating for json (no version in gem because it doenst have any depenedencies)
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
 
@@ -37,8 +38,8 @@ gem 'activejob-traffic_control', '~> 0.1.3' # Traffic control for ActiveJob: Con
 gem 'bootstrap-sass', '~> 3.4.1' # twitter bootstrap stylings
 # gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails' # Use jquery as the JavaScript library
-gem 'sass-rails', '~> 5.0', '>= 5.0.4' # Use SCSS for stylesheets and useful for Sass-powered version of Bootstrap
-gem 'uglifier', '~> 4.2' # has to be outside of assets, to its present at boot. Use Uglifier as compressor for JavaScript assets
+gem 'sass-rails', '~> 6.0' # Use SCSS for stylesheets and useful for Sass-powered version of Bootstrap
+gem 'uglifier', '~> 4.2' # has to be outside of assets, to be present at boot. Use Uglifier as compressor for JavaScript assets
 # gem 'turbolinks' # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 
 # API
