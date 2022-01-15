@@ -10,8 +10,9 @@ gem 'aws-sdk-s3', '~> 1.111', '>= 1.111.1'
 gem 'bitfields', '~> 0.6.0' # store multiple booleans in a single integer
 gem 'devise', '~> 4.8' # user authentication
 # gem 'eivu-fingerprinter-acoustid', path: '/Users/jinx/projects/eivu/eivu_acoustid'
-gem 'ensurance', '~> 0.1.19' # Add ability to "ensure" ActiveRecords are full records
+# unused? gem 'ensurance', '~> 0.1.19' # Add ability to "ensure" ActiveRecords are full records
 # gem 'has_secure_token' # generate the 24-character unique token
+gem 'hotwire-rails', '~> 0.1.3' # html over the wire
 gem 'jb', '~> 0.4.1' # Faster and simpler Jbuilder alternative
 gem 'mimemagic', '~> 0.3.5' # determine mime type by magic
 gem 'mime-types', '~> 3.3', '>= 3.3.1' # rovides a library and registry for information about MIME content type definitions
