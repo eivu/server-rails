@@ -402,6 +402,7 @@ DEPENDENCIES
   rails-controller-testing
   rails_12factor
   rb-readline
+  redis (~> 4.0)
   rest-client (~> 2.1)
   rqrcode
   rspec-json_expectations (~> 2.2)

@@ -7,6 +7,8 @@ ruby '3.0.2'
 gem 'aasm', '~> 5.2' # AASM is a continuation of the acts-as-state-machine
 gem 'ancestry' # used to nest project_products by providing a parent_id and many convenience methods
 gem 'aws-sdk-s3', '~> 1.111', '>= 1.111.1'
+# Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
+# gem "bcrypt", "~> 3.1.7"
 # unused? gem 'bitfields', '~> 0.6.0' # store multiple booleans in a single integer
 gem 'devise', '~> 4.8' # user authentication
 # gem 'eivu-fingerprinter-acoustid', path: '/Users/jinx/projects/eivu/eivu_acoustid'
@@ -20,11 +22,13 @@ gem 'mini_magick', '~> 4.5', '>= 4.5.1' # there's an issues with v3.7 https://gi
 gem 'oj' # faster json parsing
 gem 'pg', '~> 1.2', '>= 1.2.3'
 gem 'rails', '~> 7.0', '>= 7.0.1'
+gem 'redis', '~> 4.0' # Use Redis adapter to run Action Cable in production
 gem 'rest-client', '~> 2.1' # A simple HTTP and REST client for Ruby, inspired by the Sinatra microframework style of specifying actions
 gem 'sidekiq', '~> 5.2' # Simple, efficient background processing for Ruby.
 gem 'stimulus-rails', '~> 1.0', '>= 1.0.2' # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem 'strong_migrations', '~> 0.7.9'
 gem 'turbo-rails', '~> 1.0' # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
+
 
 
 gem 'foreman', '~> 0.87.1' # Manage Procfile-based applications http://ddollar.github.com/foreman
@@ -40,7 +44,6 @@ gem 'bootstrap-sass', '~> 3.4.1' # twitter bootstrap stylings
 gem 'jquery-rails' # Use jquery as the JavaScript library
 gem 'sass-rails', '~> 6.0' # Use SCSS for stylesheets and useful for Sass-powered version of Bootstrap
 gem 'uglifier', '~> 4.2' # has to be outside of assets, to be present at boot. Use Uglifier as compressor for JavaScript assets
-# gem 'turbolinks' # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 
 # API
 gem 'graphql', '~> 1.9', '>= 1.9.16'
@@ -86,8 +89,6 @@ group :test do
   gem 'vcr', '~> 6.0'
 end
 
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
 
 # Use unicorn as the app server
 # gem 'unicorn'
