@@ -51,9 +51,6 @@ class CloudFile < ApplicationRecord
   validates_presence_of :bucket_id
   validates_presence_of :md5
 
-  # ?????? used by CloudFileIngesterJob
-  attr_accessor :path_to_file
-
   aasm :state do # add locking
     state :empty, initial: true
     state :reserved
@@ -79,10 +76,6 @@ class CloudFile < ApplicationRecord
 
   def complete_metadata_assigment(params = {})
     update! params
-  end
-
-  def dev_test
-    system "open #{url}"
   end
 
   class << self

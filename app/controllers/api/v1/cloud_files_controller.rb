@@ -3,6 +3,14 @@
 module Api
   module V1
     class CloudFilesController < Api::V1Controller
+
+      def show
+        cloud_file = current_user.cloud_files.find_by(md5: params[:md5])
+        render json: cloud_file.attributes
+      rescue StandardError => e
+        render json: { message: e.message }, status: 500
+      end
+
       def reserve
         raise SecurityError unless Bucket.exists?(user_id: current_user.id, id: reservation_params[:bucket_id])
         raise IndexError if CloudFile.exists?(md5: reservation_params[:md5], folder_id: reservation_params[:folder_id])
@@ -32,7 +40,7 @@ module Api
 
       def complete
         cloud_file = CloudFile.find_by_md5(params[:md5])
-        cloud_file.complete!(complete_params[:cloud_file_attributes])
+        cloud_file.complete!(complete_params)
         render json: cloud_file.attributes
       end
 
@@ -66,12 +74,10 @@ module Api
       end
 
       def complete_params
-        {
-          cloud_file_attributes: params.permit(:year, :folder, :rating, :release_pos, metadata_list: {}),
-          matched_recording: params.require(:matched_recording)
-                                   .permit(:id, :duration, :title,
-                                           releasegroups: %i[title id])
-        }
+        params.permit(:year, :rating, :release_pos, metadata_list: {})
+                      # matched_recording: params.require(:matched_recording)
+                      #                         .permit(:id, :duration, :title,
+                      #                                 releasegroups: %i[title id])
       end
     end
   end
