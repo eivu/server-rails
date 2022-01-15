@@ -5,9 +5,9 @@ Rails.application.routes.draw do
   post '/statistics', to: 'graphql#statistics', format: 'json'
 
   if Rails.env.development?
-    mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
+    mount GraphiQL::Rails::Engine, at: '/graphiql', graphql_path: '/graphql'
   end
-  post "/graphql", to: "graphql#execute"
+  post '/graphql', to: 'graphql#execute'
 
   devise_for :users
   resources :cloud_files, :regions
@@ -19,11 +19,11 @@ Rails.application.routes.draw do
     resources :buckets
   end
 
-  namespace :api, defaults: { format: 'json' }  do
+  namespace :api, defaults: { format: 'json' } do
     namespace :v1 do
       get :info, to: 'v1#info'
       resources :folders
-      resources :cloud_files, param: :md5 do
+      resources :cloud_files, only: :show, param: :md5 do
         member do
           post :reserve
           post :transfer
@@ -46,5 +46,5 @@ Rails.application.routes.draw do
 
   # trick pulled from http://stackoverflow.com/questions/3791096/devise-logged-in-root-route-rails-3
   # there might be a better way of doing this...
-  root 'externals#homepage' # , :constraints => lambda {|r| r.env["warden"].authenticate? }
+  root 'externals#homepage' # , :constraints => lambda {|r| r.env['warden'].authenticate? }
 end
