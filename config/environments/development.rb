@@ -12,6 +12,8 @@ Rails.application.configure do
   # Do not eager load code on boot.
   config.eager_load = false
 
+  # allow ngrok to receive requests in dev environment
+  config.hosts << ENV['NGROK_HOST'] if ENV['NGROK_HOST'].present?
   # config.assets.js_compressor = Uglifier.new(harmony: true)
 
   # Show full error reports and disable caching.
