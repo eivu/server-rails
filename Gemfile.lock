@@ -103,6 +103,7 @@ GEM
       coderay (>= 1.0.0)
       erubi (>= 1.0.0)
       rack (>= 0.9.0)
+    bindex (0.8.1)
     binding_of_caller (1.0.0)
       debug_inspector (>= 0.0.1)
     bootstrap-sass (3.4.1)
@@ -350,14 +351,17 @@ GEM
       railties (>= 6.0.0)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
-    uglifier (4.2.0)
-      execjs (>= 0.3.0, < 3)
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.8)
     vcr (6.0.0)
     warden (1.2.9)
       rack (>= 2.0.9)
+    web-console (4.2.0)
+      actionview (>= 6.0.0)
+      activemodel (>= 6.0.0)
+      bindex (>= 0.4.0)
+      railties (>= 6.0.0)
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -413,8 +417,8 @@ DEPENDENCIES
   stimulus-rails (~> 1.0, >= 1.0.2)
   strong_migrations (~> 0.7.9)
   turbo-rails (~> 1.0)
-  uglifier (~> 4.2)
   vcr (~> 6.0)
+  web-console (>= 4.1.0)
 
 RUBY VERSION
    ruby 3.0.2p107

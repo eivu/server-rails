@@ -43,7 +43,7 @@ gem 'bootstrap-sass', '~> 3.4.1' # twitter bootstrap stylings
 # gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails' # Use jquery as the JavaScript library
 gem 'sass-rails', '~> 6.0' # Use SCSS for stylesheets and useful for Sass-powered version of Bootstrap
-gem 'uglifier', '~> 4.2' # has to be outside of assets, to be present at boot. Use Uglifier as compressor for JavaScript assets
+# gem 'uglifier', '~> 4.2' # has to be outside of assets, to be present at boot. Use Uglifier as compressor for JavaScript assets
 
 # API
 gem 'graphql', '~> 1.9', '>= 1.9.16'
@@ -103,4 +103,5 @@ group :development do
   gem 'annotate', require: false
   gem 'graphiql-rails'
   gem 'puma', '~> 5.4'
+  gem 'web-console', '>= 4.1.0'
 end
