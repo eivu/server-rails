@@ -18,6 +18,7 @@ database.yml
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+config/master.key
 config/fog.yml
 config/aws.yml
 /public/uploads/tmp/public/packs
