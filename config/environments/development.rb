@@ -12,7 +12,7 @@ Rails.application.configure do
   # Do not eager load code on boot.
   config.eager_load = false
 
-  config.assets.js_compressor = Uglifier.new(harmony: true)
+  # config.assets.js_compressor = Uglifier.new(harmony: true)
 
   # Show full error reports and disable caching.
   config.consider_all_requests_local       = true

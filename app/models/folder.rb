@@ -17,6 +17,11 @@
 #
 # Description: Folders are only metadata to preserve the same tree layout as found on the user's drive
 class Folder < ApplicationRecord
+
+  broadcasts_to -> { "folder_#{id}" }
+  after_update_commit { broadcast_replace_to 'folders' }
+
+  # broadcasts_to -> (folders) { 'folders'}, target: :folders
   include Reactable
   has_ancestry
 
