@@ -17,12 +17,8 @@
 #
 # Description: Folders are only metadata to preserve the same tree layout as found on the user's drive
 class Folder < ApplicationRecord
-  broadcasts#_to :folder
-
-  # after_update_commit { broadcast_replace_to 'folders' }
-
-  # broadcasts_to -> (folders) { 'folders'}, target: :folders
   include Reactable
+  broadcasts
   has_ancestry
 
   belongs_to :bucket
@@ -30,6 +26,8 @@ class Folder < ApplicationRecord
 
   validates :bucket_id, presence: true
   validates :name, uniqueness: { scope: :ancestry }
+
+  attr_accessor :expanded
 
   scope(:alpha, -> { order('name') })
   scope(:clean, -> { where(peepy: false) })
