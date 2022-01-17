@@ -4,9 +4,7 @@ Rails.application.routes.draw do
   post '/graphql',    to: 'graphql#execute', format: 'json'
   post '/statistics', to: 'graphql#statistics', format: 'json'
 
-  if Rails.env.development?
-    mount GraphiQL::Rails::Engine, at: '/graphiql', graphql_path: '/graphql'
-  end
+
   post '/graphql', to: 'graphql#execute'
 
   devise_for :users
