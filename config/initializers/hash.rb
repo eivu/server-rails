@@ -25,7 +25,7 @@ class Hash
     end
   end
 
-  #turns all keys to symbols, that are lowerased and have spaces replaced with _
+  # turns all keys to symbols, that are lowerased and have spaces replaced with _
   def simplify
     Hash[self.to_hash.map { |k, v| [k.to_s.strip.downcase.gsub(" ","_").to_sym, v.to_s] }].compact
   end
@@ -33,8 +33,8 @@ class Hash
   def flatten_nested
     flat_map{|k, v| [k, *v.flatten_nested]}
   end
-  
-  def compact(opts={})
+
+  def remove_empty(opts={})
     inject({}) do |new_hash, (k,v)|
       if !v.blank?
         new_hash[k] = opts[:recurse] && v.class == Hash ? v.compact(opts) : v
@@ -43,7 +43,7 @@ class Hash
     end
   end
   
-  def compact_r(opts={})
+  def remove_empty_r(opts={})
     inject({}) do |new_hash, (k,v)|
       if !v.nil?
         new_hash[k] = opts[:recurse] && v.class == Hash ? v.compact_r(opts) : v
@@ -52,7 +52,7 @@ class Hash
     end
   end
 
-  def compact_blank_r(opts={})
+  def remove_blank_r_v2(opts={})
     inject({}) do |new_hash, (k,v)|
       if !v.blank?
         new_hash[k] = opts[:recurse] && v.class == Hash ? v.compact_blank_r(opts) : v
