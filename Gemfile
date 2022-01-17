@@ -67,6 +67,7 @@ group :development, :test, :cucumber do
   gem 'pry-rails'
   gem 'rack-mini-profiler' # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   gem 'rb-readline'
+  gem 'web-console', '>= 4.1.0'
 end
 
 # Gems used only for assets and not required
