@@ -1,11 +1,14 @@
+# frozen_string_literal: true
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
+  mount Sidekiq::Web => '/sidekiq'
+
   ##### GraphQL #####
   get  '/graphql',    to: 'graphql#inform', format: 'json'
   post '/graphql',    to: 'graphql#execute', format: 'json'
+  post '/graphql',    to: 'graphql#execute'
   post '/statistics', to: 'graphql#statistics', format: 'json'
-
-
-  post '/graphql', to: 'graphql#execute'
 
   devise_for :users
   resources :cloud_files, :regions
@@ -36,10 +39,6 @@ Rails.application.routes.draw do
     collection do
       :homepage
     end
-  end
-
-  namespace :admin do
-    resources :regions
   end
 
   # trick pulled from http://stackoverflow.com/questions/3791096/devise-logged-in-root-route-rails-3
