@@ -1,3 +1,5 @@
 <%= turbo_frame_tag dom_id(folder) do %>
-  <%= folder.name %>: <%= folder.updated_at %>
+  <div>
+    <%= folder.name %>: <%= folder.updated_at %>
+  </div>
 <% end %>
