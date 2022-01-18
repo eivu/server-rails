@@ -1,36 +1,5 @@
-<%#= turbo_stream_from @folder %>
-<%#= render @folder %>
-
-
-<hr />
 <%= turbo_stream_from 'folders' %>
 
 <%= turbo_frame_tag :folders do %>
   <%= render @folders %>
 <% end %>
-
-
-
-
-<%#= turbo_stream_from @folders %>
-
-<%#= turbo_stream_from @folders %>
-
-<%#= turbo_stream_from :folders %>
-
-
-<%#= turbo_frame_tag :folders do %>
-  <%#= render @folders %>
-<%# end %>
-
-
-<%##########%>
-<%#= turbo_stream_from :time_trackers %>
-
-<%#= render 'form', time_tracker: @time_tracker %>
-
-<%# <hr> %>
-
-<%#= turbo_frame_tag :time_trackers do %>
-  <%#= render @time_trackers %>
-<%# end %>
