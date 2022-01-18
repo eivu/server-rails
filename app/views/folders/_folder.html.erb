@@ -1,7 +1,9 @@
 <%= turbo_frame_tag dom_id(folder) do %>
   <div>
-    <%= folder.name %>:
+    <%= folder.name %> (<%= folder.id %>)
     <div>expanded: <%= folder.expanded %></div>
     <div>updated_at: <%= folder.updated_at %></div>
+    <div>cache: <%= Redis.new.get("folder_#{folder.id}") %></div>
   </div>
+  <br />
 <% end %>

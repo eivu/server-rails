@@ -1,20 +1,27 @@
-<%= turbo_stream_from @folder %>
-<%= render @folder %>
+<%#= turbo_stream_from @folder %>
+<%#= render @folder %>
 
 
 <hr />
-
-
-<%#= turbo_stream_from @folders %>
-
-<%#= turbo_stream_from @folders %>
-
-<%= turbo_stream_from :folders %>
-
+<%= turbo_stream_from 'folders' %>
 
 <%= turbo_frame_tag :folders do %>
   <%= render @folders %>
 <% end %>
+
+
+
+
+<%#= turbo_stream_from @folders %>
+
+<%#= turbo_stream_from @folders %>
+
+<%#= turbo_stream_from :folders %>
+
+
+<%#= turbo_frame_tag :folders do %>
+  <%#= render @folders %>
+<%# end %>
 
 
 <%##########%>
