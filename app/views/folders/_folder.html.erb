@@ -1,12 +1,20 @@
-<%= turbo_frame_tag dom_id(folder) do %>
-  <div>
-    <div>updated_at: <%= folder.updated_at %></div>
-    <div>expanded: <%= folder.expanded? %></div>
-    <%= form_with model: folder do |form| %>
-      <%= form.submit "#{folder.expanded? ? '-' : '+'}" %>
-      <%= folder.name %>
-      (<%= folder.id %>)
-    <% end %>
-  </div>
-  <br />
-<% end %>
+<li>
+  <%= turbo_frame_tag dom_id(folder) do %>
+    <div>
+      <%= form_with model: folder do |form| %>
+        <%= form.submit "#{folder.expanded? ? '-' : '+'}" %>
+        <%= folder.name %>
+        (<%= folder.id %>)
+      <% end %>
+      <ul>
+        <% if folder.expanded? %>
+          <%= render folder.children %>
+          <% folder.cloud_files.each do |cf| %>
+            <p><%= "#{cf.name} (#{cf.id})"%></p>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+    <br />
+  <% end %>
+</li>

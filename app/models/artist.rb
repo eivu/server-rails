@@ -19,7 +19,7 @@
 #
 class Artist < ApplicationRecord
   include Reactable
-  include ConfigureAndSavable
+  # include ConfigureAndSavable
   has_many :artist_releases, dependent: :destroy
   has_many :releases, through: :artist_releases
 

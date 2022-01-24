@@ -56,6 +56,6 @@ class Folder < ApplicationRecord
   end
 
   def toggle_expansion
-    update expanded: !expanded
+    update! expanded: !expanded
   end
 end

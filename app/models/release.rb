@@ -15,7 +15,7 @@
 #  updated_at        :datetime         not null
 #
 class Release < ApplicationRecord
-  include ConfigureAndSavable
+  # include ConfigureAndSavable
   include Reactable
 
   belongs_to :release_type
