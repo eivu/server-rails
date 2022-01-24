@@ -56,4 +56,18 @@ class Folder < ApplicationRecord
       folder
     end
   end
+
+  def toggle_expansion
+    value = expanded? ? 0 : 1
+    redis.set("folder_#{id}", value)
+  end
+
+  def expanded?
+    redis.get("folder_#{id}") == '1'
+  end
+
+  def redis
+    @redis ||= Redis.new
+  end
+
 end

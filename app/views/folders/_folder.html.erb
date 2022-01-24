@@ -3,7 +3,11 @@
     <%= folder.name %> (<%= folder.id %>)
     <div>expanded: <%= folder.expanded %></div>
     <div>updated_at: <%= folder.updated_at %></div>
-    <div>cache: <%= Redis.new.get("folder_#{folder.id}") %></div>
+    <div>expanded: <%= folder.expanded? %></div>
+    <%= form_with model: folder do |form| %>
+      <%= form.submit %>
+    <%end %>
+
   </div>
   <br />
 <% end %>
