@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_10_042250) do
+ActiveRecord::Schema.define(version: 2022_01_24_044717) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,6 +91,7 @@ ActiveRecord::Schema.define(version: 2022_01_10_042250) do
     t.boolean "nsfw", default: false, null: false
     t.integer "cloud_files_count", default: 0, null: false
     t.integer "subfolders_count", default: 0, null: false
+    t.boolean "expanded", default: false
   end
 
   create_table "metadata", id: :serial, force: :cascade do |t|

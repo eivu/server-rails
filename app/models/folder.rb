@@ -28,8 +28,6 @@ class Folder < ApplicationRecord
   validates :bucket_id, presence: true
   validates :name, uniqueness: { scope: :ancestry }
 
-  attr_accessor :expanded
-
   scope(:alpha, -> { order('name') })
   scope(:clean, -> { where(peepy: false) })
   scope(:peepy, -> { where(peepy: true) })
@@ -58,16 +56,6 @@ class Folder < ApplicationRecord
   end
 
   def toggle_expansion
-    value = expanded? ? 0 : 1
-    redis.set("folder_#{id}", value)
+    update expanded: !expanded
   end
-
-  def expanded?
-    redis.get("folder_#{id}") == '1'
-  end
-
-  def redis
-    @redis ||= Redis.new
-  end
-
 end

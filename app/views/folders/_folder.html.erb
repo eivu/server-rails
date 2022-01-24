@@ -1,13 +1,12 @@
 <%= turbo_frame_tag dom_id(folder) do %>
   <div>
-    <%= folder.name %> (<%= folder.id %>)
-    <div>expanded: <%= folder.expanded %></div>
     <div>updated_at: <%= folder.updated_at %></div>
     <div>expanded: <%= folder.expanded? %></div>
     <%= form_with model: folder do |form| %>
-      <%= form.submit %>
-    <%end %>
-
+      <%= form.submit "#{folder.expanded? ? '-' : '+'}" %>
+      <%= folder.name %>
+      (<%= folder.id %>)
+    <% end %>
   </div>
   <br />
 <% end %>
