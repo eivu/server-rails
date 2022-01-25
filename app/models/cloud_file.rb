@@ -110,7 +110,7 @@ class CloudFile < ApplicationRecord
   def url
     raise "Region Not Defined for bucket: #{bucket.name}" if bucket.region_id.blank?
 
-    @url ||= "http://#{self.bucket.name}.#{self.bucket.region.endpoint}/#{media_type}/#{md5.scan(/.{2}|.+/).join("/")}/#{self.asset}"
+    @url ||= "http://#{self.bucket.name}.#{self.bucket.region.endpoint}/#{s3_folder}/#{md5.scan(/.{2}|.+/).join("/")}/#{self.asset}"
   end
 
   def filename
@@ -132,6 +132,14 @@ class CloudFile < ApplicationRecord
 
   def media_type
     content_type.to_s.split('/')&.first
+  end
+
+  def s3_folder
+    if self.peepy?
+      'peepshow'
+    else
+      media_type
+    end
   end
 
   def display_type
