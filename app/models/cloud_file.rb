@@ -79,6 +79,10 @@ class CloudFile < ApplicationRecord
   end
 
   class << self
+    def seek(value)
+      CloudFile.where('id = ? OR md5 = ?', value.to_i, value.to_s).take
+    end
+
     def online?(uri)
       url = URI.parse(uri)
       req = Net::HTTP.new(url.host, url.port)
@@ -93,6 +97,10 @@ class CloudFile < ApplicationRecord
       name = 'unnamed' if name.size.zero?
       name.mb_chars.to_s
     end
+  end
+
+  def online?
+    CloudFile.online?(url)
   end
 
   def smart_name
@@ -123,6 +131,10 @@ class CloudFile < ApplicationRecord
   end
 
   def media_type
+    content_type.to_s.split('/')&.first
+  end
+
+  def display_type
     type = content_type.to_s.split('/')&.first
     type = "peepshow (#{type})" if peepy?
     type
