@@ -8,9 +8,9 @@
       <% end %>
       <ul>
         <% if folder.expanded? %>
-          <%= render folder.children %>
-          <% folder.cloud_files.each do |cf| %>
-            <p><%= "#{cf.name} (#{cf.id})"%></p>
+          <%= render folder.children.alpha %>
+          <% folder.cloud_files.alpha.each do |cf| %>
+            <p><%= "#{cf.smart_name} (#{cf.id})"%></p>
           <% end %>
         <% end %>
       </ul>
