@@ -1,6 +1,6 @@
 class CloudFilesController < ApplicationController
 
-  def edit
-    @cloud_file = CloudFile.find(params[:id])
+  def show
+    @cloud_file = CloudFile.seek(params[:id])
   end
 end

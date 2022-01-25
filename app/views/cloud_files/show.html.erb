@@ -1,0 +1,17 @@
+<video id="player" playsinline controls>
+  <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" type="video/mp4" />
+</video>
+
+
+<div>
+  <%= link_to(@cloud_file.url, @cloud_file.url) %>
+</div>
+
+<%= view_content(@cloud_file) %>
+
+<%# https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4 %>
+
+<%# <audio id="player" controls>
+  <source src="http://eivutest.s3.amazonaws.com/audio/A4/FF/A6/21/BC/83/34/B4/C7/F0/58/16/1B/DB/AB/BF/Piano_brokencrash-Brandondorf-1164520478.mp3" type="audio/mp3" />
+</audio> %>
+
