@@ -1,6 +1,12 @@
+<% content_for :head do %>
+  <script src="https://cdn.plyr.io/3.6.12/plyr.js"></script>
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.6.12/plyr.css" />
+<% end %>
+
 <video id="player" playsinline controls data-poster="/path/to/poster.jpg">
   <source src="<%= @cloud_file.url %>" type="<%= @cloud_file.content_type %>" />
 </video>
+
 <script>
   const player = new Plyr('#player');
 </script>

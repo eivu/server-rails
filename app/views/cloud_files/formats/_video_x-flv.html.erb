@@ -1,0 +1,12 @@
+<% content_for :head do %>
+  <script src="https://cdnout.com/flv.js"></script>
+<% end %>
+
+
+<video id="player" playsinline controls>
+  <source src="<%= @cloud_file.url %>" type="<%= @cloud_file.content_type %>" />
+</video>
+
+<script>
+  const player = new Plyr('#player');
+</script>

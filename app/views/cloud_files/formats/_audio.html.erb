@@ -1,6 +1,12 @@
+<% content_for :head do %>
+  <script src="https://cdn.plyr.io/3.6.12/plyr.js"></script>
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.6.12/plyr.css" />
+<% end %>
+
 <audio id="player" controls>
   <source src="<%= @cloud_file.url %>" type="<%= @cloud_file.content_type %>" />
 </audio>
+
 <script>
   const player = new Plyr('#player');
 </script>
