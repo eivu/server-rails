@@ -30,6 +30,7 @@
 #  num_plays      :integer          default(0), not null
 #
 class CloudFile < ApplicationRecord
+  include UuidSeekable
   include Reactable
   include AASM
 
@@ -79,10 +80,6 @@ class CloudFile < ApplicationRecord
   end
 
   class << self
-    def seek(value)
-      CloudFile.where('id = ? OR md5 = ?', value.to_i, value.to_s).take
-    end
-
     def online?(uri)
       url = URI.parse(uri)
       req = Net::HTTP.new(url.host, url.port)
