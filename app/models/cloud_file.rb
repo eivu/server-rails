@@ -30,9 +30,10 @@
 #  num_plays      :integer          default(0), not null
 #
 class CloudFile < ApplicationRecord
-  include UuidSeekable
   include Reactable
   include AASM
+  include UuidSeekable
+  uuid_key :md5
 
   belongs_to :folder, counter_cache: true
   belongs_to :bucket#, inverse_of: :cloud_file
