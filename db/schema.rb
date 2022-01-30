@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_24_044717) do
+ActiveRecord::Schema.define(version: 2022_01_30_034649) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,16 +19,16 @@ ActiveRecord::Schema.define(version: 2022_01_24_044717) do
     t.integer "artist_id"
     t.integer "cloud_file_id"
     t.integer "relationship_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "artist_releases", id: :serial, force: :cascade do |t|
     t.integer "artist_id"
     t.integer "release_id"
     t.integer "relationship_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "artists", id: :serial, force: :cascade do |t|
@@ -41,16 +41,18 @@ ActiveRecord::Schema.define(version: 2022_01_24_044717) do
     t.integer "audio_files_count", default: 0, null: false
     t.integer "peep_files_count", default: 0, null: false
     t.integer "misc_files_count", default: 0, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "buckets", id: :serial, force: :cascade do |t|
     t.string "name"
     t.integer "user_id"
     t.integer "region_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: 6
+    t.datetime "updated_at", precision: 6
+    t.string "uuid"
+    t.index ["uuid"], name: "index_buckets_on_uuid", unique: true
   end
 
   create_table "cloud_files", id: :serial, force: :cascade do |t|
@@ -63,8 +65,8 @@ ActiveRecord::Schema.define(version: 2022_01_24_044717) do
     t.float "rating"
     t.boolean "nsfw", default: false
     t.boolean "peepy", default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: 6
+    t.datetime "updated_at", precision: 6
     t.integer "folder_id"
     t.string "info_url"
     t.integer "bucket_id"
@@ -83,8 +85,8 @@ ActiveRecord::Schema.define(version: 2022_01_24_044717) do
 
   create_table "folders", id: :serial, force: :cascade do |t|
     t.string "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: 6
+    t.datetime "updated_at", precision: 6
     t.string "ancestry"
     t.integer "bucket_id"
     t.boolean "peepy", default: false, null: false
@@ -98,23 +100,23 @@ ActiveRecord::Schema.define(version: 2022_01_24_044717) do
     t.string "value"
     t.integer "user_id"
     t.integer "metadata_type_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: 6
+    t.datetime "updated_at", precision: 6
     t.boolean "peepy", default: false
     t.boolean "nsfw", default: false
   end
 
   create_table "metadata_types", id: :serial, force: :cascade do |t|
     t.string "value"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: 6
+    t.datetime "updated_at", precision: 6
   end
 
   create_table "metataggings", id: :serial, force: :cascade do |t|
     t.integer "cloud_file_id"
     t.integer "metadatum_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "regions", id: :serial, force: :cascade do |t|
@@ -122,14 +124,14 @@ ActiveRecord::Schema.define(version: 2022_01_24_044717) do
     t.string "name", null: false
     t.string "endpoint", null: false
     t.string "location"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: 6
+    t.datetime "updated_at", precision: 6
   end
 
   create_table "release_types", id: :serial, force: :cascade do |t|
     t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "releases", id: :serial, force: :cascade do |t|
@@ -141,27 +143,27 @@ ActiveRecord::Schema.define(version: 2022_01_24_044717) do
     t.integer "bundle_pos", default: 1
     t.boolean "peepy", default: false
     t.boolean "nsfw", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", id: :serial, force: :cascade do |t|
     t.string "username"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: 6
+    t.datetime "updated_at", precision: 6
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
+    t.datetime "reset_password_sent_at", precision: 6
+    t.datetime "remember_created_at", precision: 6
     t.integer "sign_in_count", default: 0, null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
+    t.datetime "current_sign_in_at", precision: 6
+    t.datetime "last_sign_in_at", precision: 6
     t.inet "current_sign_in_ip"
     t.inet "last_sign_in_ip"
     t.string "confirmation_token"
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
+    t.datetime "confirmed_at", precision: 6
+    t.datetime "confirmation_sent_at", precision: 6
     t.string "unconfirmed_email"
     t.string "token"
     t.string "otp_secret_key"
