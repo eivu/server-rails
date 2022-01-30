@@ -4,10 +4,12 @@ module Api
   module V1
     class CloudFilesController < Api::V1Controller
       def show
-        cloud_file = current_user.cloud_files.find_by(md5: params[:md5])
+        cloud_file = current_user.cloud_files.includes(:bucket).find_by(md5: params[:md5])
         raise ActiveRecord::RecordNotFound if cloud_file.blank?
 
-        render json: cloud_file.attributes.except('id', 'settings', 'user_id')
+        attributes = cloud_file.attributes.except('id', 'settings', 'user_id', 'bucket_id')
+                               .merge(bucket_uuid: cloud_file.bucket.uuid)
+        render json: attributes
       end
 
       def reserve
