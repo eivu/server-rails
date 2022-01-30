@@ -10,9 +10,12 @@
 #  updated_at :datetime
 #
 class Bucket < ApplicationRecord
+  include UuidSeekable
   belongs_to :user#, :inverse_of => :bucket
   belongs_to :region
   has_many :cloud_files
+
+  validates :uuid, presence: true, uniqueness: true
 
   def create_object(path)
     resource.bucket(self.name).object(path)

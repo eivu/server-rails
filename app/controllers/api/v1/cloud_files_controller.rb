@@ -7,14 +7,14 @@ module Api
         cloud_file = current_user.cloud_files.includes(:bucket).find_by(md5: params[:md5])
         raise ActiveRecord::RecordNotFound if cloud_file.blank?
 
-        attributes = cloud_file.attributes.except('id', 'settings', 'user_id', 'bucket_id')
+        attributes = cloud_file.attributes.except('id', 'settings', 'user_id')
                                .merge(bucket_uuid: cloud_file.bucket.uuid)
         render json: attributes
       end
 
       def reserve
         raise SecurityError unless Bucket.exists?(user_id: current_user.id, id: reservation_params[:bucket_id])
-        raise IndexError if CloudFile.exists?(md5: reservation_params[:md5], folder_id: reservation_params[:folder_id])
+        raise IndexError if CloudFile.exists?(md5: reservation_params[:md5], bucket_id: reservation_params[:bucket_id])
 
         cloud_file = CloudFile.new(reservation_params)
         cloud_file.reserve!
