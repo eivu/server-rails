@@ -4,12 +4,7 @@ module Api
   class V1Controller < ApplicationController
     skip_before_action :verify_authenticity_token, :authenticate_user!
     before_action :authenticate_by_token
-rescue_from ActiveRecord::RecordNotFound, with: :render404
-    # rescue_from ActiveRecord::RecordNotFound, with: :render404
-    # rescue_from StandardError do |e|
-    #   render json: { message: e.message }, status: 500
-    # end
-
+    rescue_from ActiveRecord::RecordNotFound, with: :render404
 
     def info
       render json: { version: '0.2.3' }
