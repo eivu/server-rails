@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_30_034649) do
+ActiveRecord::Schema.define(version: 2022_01_30_041055) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(version: 2022_01_30_034649) do
     t.datetime "updated_at", precision: 6
     t.string "uuid"
     t.index ["uuid"], name: "index_buckets_on_uuid", unique: true
+    t.check_constraint "uuid IS NOT NULL", name: "buckets_uuid_null"
   end
 
   create_table "cloud_files", id: :serial, force: :cascade do |t|
