@@ -3,12 +3,21 @@
 module Api
   module V1
     class CloudFilesController < Api::V1Controller
+      # rescue_from ActiveRecord::RecordNotFound do |e|
+      #   render json: { message: 'object not found' }, status: 404
+      # end
+#, with: :render404
+      rescue_from StandardError do |e|
+        render json: { message: e.message }, status: 500
+      end
 
       def show
         cloud_file = current_user.cloud_files.find_by(md5: params[:md5])
-        render json: cloud_file.attributes
-      rescue StandardError => e
-        render json: { message: e.message }, status: 500
+        raise ActiveRecord::RecordNotFound if cloud_file.blank?
+
+        render json: cloud_file.attributes.except('id', 'settings', 'user_id')
+      rescue ActiveRecord::RecordNotFound
+        render json: { message: 'object not found' }, status: 404
       end
 
       def reserve
@@ -47,6 +56,11 @@ module Api
       ############################################################################
       private
       ############################################################################
+
+      def render404
+        render json: { message: 'no cloud file exists with that md5' }, status: 404
+      end
+
 
       def authorize
         if current_user.cloud_files.where(md5: params[:id]).blank?
