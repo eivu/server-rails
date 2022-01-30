@@ -3,7 +3,6 @@
 module Api
   module V1
     class CloudFilesController < Api::V1Controller
-      rescue_from ActiveRecord::RecordNotFound, with: :render404
       # rescue_from StandardError do |e|
       #   render json: { message: e.message }, status: 500
       # end
@@ -53,10 +52,6 @@ module Api
       ############################################################################
       private
       ############################################################################
-
-      def render404
-        render json: { message: 'no cloud file exists with that md5' }, status: 404
-      end
 
 
       def authorize

@@ -4,7 +4,7 @@ module Api
   class V1Controller < ApplicationController
     skip_before_action :verify_authenticity_token, :authenticate_user!
     before_action :authenticate_by_token
-
+rescue_from ActiveRecord::RecordNotFound, with: :render404
     # rescue_from ActiveRecord::RecordNotFound, with: :render404
     # rescue_from StandardError do |e|
     #   render json: { message: e.message }, status: 500
@@ -19,9 +19,9 @@ module Api
     private
     ############################################################################
 
-    # def render404
-    #   render json: { message: 'no cloud file exists with that md5' }, status: 404
-    # end
+    def render404
+      render json: { message: 'no cloud file exists with that md5' }, status: 404
+    end
 
     def authenticate_by_token
       authenticate_or_request_with_http_token do |token, options|
