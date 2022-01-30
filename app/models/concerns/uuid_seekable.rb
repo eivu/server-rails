@@ -9,9 +9,9 @@ module UuidSeekable
       if id_as_string.to_s.is_i?
         find_by(id: id)
       elsif id_as_string.to_s.valid_uuid?
-        where("#{uuid_key_column} = ?",  id_as_string).take
+        where("#{uuid} = ?",  id_as_string).take
       else
-        where("#{uuid_key_column}::text like '#{id_as_string}%'").take
+        where("#{uuid}::text like '#{id_as_string}%'").take
       end
     end
 
@@ -20,12 +20,12 @@ module UuidSeekable
       raise ActiveRecord::RecordNotFound if obj.blank?
     end
 
-    def uuid_key(key)
+    def has_uuid(key)
       @uuid_key = key
     end
 
-    def uuid_key_column
-      @uuid_key_column = @uuid_key || :uuid
+    def uuid
+      @uuid ||= (@uuid_key || :uuid)
     end
   end
 end

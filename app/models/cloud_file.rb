@@ -33,7 +33,7 @@ class CloudFile < ApplicationRecord
   include Reactable
   include AASM
   include UuidSeekable
-  uuid_key :md5
+  has_uuid :md5
 
   belongs_to :folder, counter_cache: true
   belongs_to :bucket#, inverse_of: :cloud_file
