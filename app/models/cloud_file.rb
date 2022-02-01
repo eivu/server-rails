@@ -86,19 +86,10 @@ class CloudFile < ApplicationRecord
       req = Net::HTTP.new(url.host, url.port)
       req.request_head(url.path).code == '200'
     end
-
-    def sanitize(name)
-      name = name.tr('\\', '/') # work-around for IE
-      name = File.basename(name)
-      name = name.gsub(/[^a-zA-Z0-9\.\-\+_]/, '_')
-      name = "_#{name}" if name =~ /\A\.+\z/
-      name = 'unnamed' if name.size.zero?
-      name.mb_chars.to_s
-    end
   end
 
   def online?
-    CloudFile.online?(url)
+    @online ||= CloudFile.online?(url)
   end
 
   def smart_name
@@ -147,11 +138,13 @@ class CloudFile < ApplicationRecord
   end
 
   def metadata_list=(list)
-    list.each do |key, value|
-      type = MetadataType.find_or_create_by!(value: key)
-      metadata << Metadatum.find_or_create_by!(value: value, user_id: user_id, metadata_type_id: type.id).tap do |obj|
-        obj.peepy = peepy
-        obj.nsfw  = nsfw
+    list.each.each do |hash|
+      hash.each do |key, value|
+        type = MetadataType.find_or_create_by!(value: key)
+        metadata << Metadatum.find_or_create_by!(value: value, user_id: user_id, metadata_type_id: type.id).tap do |obj|
+          obj.peepy = peepy
+          obj.nsfw  = nsfw
+        end
       end
     end
   end
