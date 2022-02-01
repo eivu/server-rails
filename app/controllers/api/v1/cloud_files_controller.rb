@@ -16,7 +16,7 @@ module Api
         raise SecurityError unless Bucket.exists?(user_id: current_user.id, id: reservation_params[:bucket_id])
         raise IndexError if CloudFile.exists?(md5: reservation_params[:md5], bucket_id: reservation_params[:bucket_id])
 
-        cloud_file = CloudFile.new(reservation_params)
+        cloud_file = current_user.cloud_files.new(reservation_params)
         cloud_file.reserve!
         render json: cloud_file.attributes
       rescue SecurityError
@@ -26,7 +26,7 @@ module Api
       end
 
       def transfer
-        cloud_file = CloudFile.find_by_md5(params[:md5])
+        cloud_file = current_user.cloud_files.find_by_md5(params[:md5])
         raise IndexError unless cloud_file.reserved?
 
         cloud_file.transfer!(transfer_params)
@@ -36,9 +36,18 @@ module Api
       end
 
       def complete
-        cloud_file = CloudFile.find_by_md5(params[:md5])
+        cloud_file = current_user.cloud_files.find_by_md5(params[:md5])
         cloud_file.complete!(complete_params)
         render json: cloud_file.attributes
+      end
+
+      def online
+        cloud_file = current_user.cloud_files.find_by_md5(params[:md5])
+        if cloud_file.online?
+          render json: { message: 'file is online', online: cloud_file.online? }
+        else
+          render json: { message: 'file is offline', online: cloud_file.online? }, status: 404
+        end
       end
 
       ############################################################################
@@ -72,10 +81,11 @@ module Api
       end
 
       def complete_params
-        params.permit(:year, :rating, :release_pos, metadata_list: {})
-                      # matched_recording: params.require(:matched_recording)
-                      #                         .permit(:id, :duration, :title,
-                      #                                 releasegroups: %i[title id])
+        params.permit!.slice(:year, :rating, :release_pos, :metadata_list, :matched_recording)
+        # params.permit(:year, :rating, :release_pos, metadata_list: [{}])
+        #               # matched_recording: params.require(:matched_recording)
+        #               #                         .permit(:id, :duration, :title,
+        #               #                                 releasegroups: %i[title id])
       end
     end
   end
