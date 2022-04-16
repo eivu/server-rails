@@ -82,7 +82,7 @@ group :test do
   gem 'graphql-client'
   gem 'rails-controller-testing'
   gem 'rspec-json_expectations', '~> 2.2'
-  gem 'rspec-rails', '~> 5.0', '>= 5.0.1'
+  gem 'rspec-rails', '~> 5.0.2'
   gem 'vcr', '~> 6.0'
   # gem 'capybara'
   # gem 'selenium-webdriver'
