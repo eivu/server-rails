@@ -7,9 +7,7 @@ module Api
         cloud_file = current_user.cloud_files.includes(:bucket).find_by(md5: params[:md5])
         raise ActiveRecord::RecordNotFound if cloud_file.blank?
 
-        attributes = cloud_file.attributes.except('id', 'settings', 'user_id')
-                               .merge(bucket_uuid: cloud_file.bucket.uuid)
-        render json: attributes
+        render json: cloud_file
       end
 
       def reserve
@@ -82,10 +80,6 @@ module Api
 
       def complete_params
         params.permit!.slice(:year, :rating, :release_pos, :metadata_list, :matched_recording)
-        # params.permit(:year, :rating, :release_pos, metadata_list: [{}])
-        #               # matched_recording: params.require(:matched_recording)
-        #               #                         .permit(:id, :duration, :title,
-        #               #                                 releasegroups: %i[title id])
       end
     end
   end
