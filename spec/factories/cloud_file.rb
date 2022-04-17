@@ -14,7 +14,7 @@ FactoryBot.define do
 
     trait :reserved do
       md5 { Faker::Crypto.md5 }
-      bucket_id { rand(1..10) }
+      bucket { create :bucket, user: user }
       state { 'reserved' }
     end
 

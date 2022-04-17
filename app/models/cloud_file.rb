@@ -124,7 +124,7 @@ class CloudFile < ApplicationRecord
   end
 
   def s3_folder
-    if self.peepy?
+    if peepy?
       'peepshow'
     else
       media_type
@@ -147,6 +147,11 @@ class CloudFile < ApplicationRecord
         end
       end
     end
+  end
+
+  def matched_recording=(recording)
+    # TODO: implement assignment of data from fingerprint
+    recording
   end
 
   def as_json(options = {})
