@@ -18,7 +18,7 @@
 # Description: Folders are only metadata to preserve the same tree layout as found on the user's drive
 class Folder < ApplicationRecord
   include Reactable
-  # broadcasts
+  # Hotwire Implementation
   broadcasts_to ->(_) { 'folders' }
   has_ancestry
 
