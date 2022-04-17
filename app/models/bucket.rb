@@ -16,14 +16,19 @@ class Bucket < ApplicationRecord
   has_many :cloud_files
 
   validates :uuid, presence: true, uniqueness: true
+  after_initialize :set_uuid
 
   def create_object(path)
-    resource.bucket(self.name).object(path)
+    resource.bucket(name).object(path)
   end
 
   ############################################################################
   private
   ############################################################################
+
+  def set_uuid
+    self.uuid ||= SecureRandom.uuid
+  end
 
   def resource
     @resource ||= Aws::S3::Resource.new(

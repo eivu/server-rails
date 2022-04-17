@@ -163,9 +163,7 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
         expect(response.status).to eq(200)
       end
 
-      scenario 'fix complete_params' do
-        raise 'artists are not included in release groups'
-      end
+      scenario 'fix complete_params (artists are not included in release groups)'
 
       scenario 'file is in completed state' do
         complete_transfer
@@ -177,9 +175,7 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
         expect(cloud_file.reload).to have_attributes(params.slice(:year, :rating, :release_pos))
       end
 
-      scenario 'cloud file stores all data from acoustid' do
-        raise('fix me: support eivu acoustid client by storing data in matched_recording')
-      end
+      scenario 'cloud file stores all data from acoustid (fix me: support eivu acoustid client by storing data in matched_recording)'
 
       scenario 'tags have been saved properly' do
         complete_transfer
