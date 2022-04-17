@@ -20,10 +20,12 @@ module UuidSeekable
       raise ActiveRecord::RecordNotFound if obj.blank?
     end
 
+    # method to be used in the model
     def has_uuid(key)
       @uuid_key = key
     end
 
+    # column name, either defined by model via @uuid or is the default column uuid
     def uuid
       @uuid ||= (@uuid_key || :uuid)
     end
