@@ -150,10 +150,10 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
           year: rand(1965..Time.current.year),
           rating: rand(1.0..5.0).round(2),
           release_pos: rand(1..25),
-          metadata_list: {
-            genre: 'rock',
-            comment: 'best ever'
-          },
+          metadata_list: [
+            { genre: 'rock' },
+            { comment: 'best ever' }
+          ],
           matched_recording: generate_recording_data
         }
       end

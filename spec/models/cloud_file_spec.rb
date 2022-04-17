@@ -6,7 +6,7 @@ RSpec.describe CloudFile, type: :model do
 
     context 'when working with a plain cloud file' do
       let(:cloud_file) { create(:cloud_file, :transfered) }
-      let(:list) { { genre: 'jazz', tag: 'great' } }
+      let(:list) { [ { genre: 'jazz'}, { tag: 'great' } ] }
 
       it 'should save the data' do
         tagging
@@ -29,7 +29,7 @@ RSpec.describe CloudFile, type: :model do
 
     context 'when working with a peepy cloud file' do
       let(:cloud_file) { create(:cloud_file, :transfered, :peepy) }
-      let(:list) { { dirty: 'bird' } }
+      let(:list) { [ { dirty: 'bird' } ] }
 
       it 'should save the data' do
         tagging
@@ -47,7 +47,7 @@ RSpec.describe CloudFile, type: :model do
 
     context 'when working with a nsfw cloud file' do
       let(:cloud_file) { create(:cloud_file, :transfered, :nsfw) }
-      let(:list) { { loud: 'rap' } }
+      let(:list) { [ { loud: 'rap' } ] }
 
       it 'should save the data' do
         tagging
@@ -65,7 +65,7 @@ RSpec.describe CloudFile, type: :model do
 
     context 'when working with a nsfw and peepy cloud file' do
       let(:cloud_file) { create(:cloud_file, :transfered, :nsfw, :peepy) }
-      let(:list) { { naughty: 'bits' } }
+      let(:list) { [ { naughty: 'bits' } ] }
 
       it 'should save the data' do
         tagging
