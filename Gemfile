@@ -19,7 +19,7 @@ gem 'hotwire-rails', '~> 0.1.3' # html over the wire
 gem 'importmap-rails', '~> 1.0', '>= 1.0.1' # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem 'oj' # faster json parsing
 gem 'pg', '~> 1.2', '>= 1.2.3' # Use postgresql as the database for Active Record
-gem 'puma', '~> 5.0' # Use the Puma web server [https://github.com/puma/puma]
+gem 'puma', '~> 5.6' # Use the Puma web server [https://github.com/puma/puma]
 gem 'rails', '~> 7.0.1'
 gem 'redis', '~> 4.0' # Use Redis adapter to run Action Cable in production
 gem 'sprockets-rails' # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
