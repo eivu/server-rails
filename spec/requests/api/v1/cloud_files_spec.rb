@@ -15,7 +15,7 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
     let(:num_of_folders_in_path) { fullpath.count('/') + 1 }
     let(:params) do
       {
-        bucket_id: bucket.id,
+        bucket_uuid: bucket.uuid,
         peepy: false,
         nsfw: true,
         fullpath: fullpath
@@ -94,7 +94,7 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
     context 'valid transfer attributes' do
       let!(:cloud_file) { create :cloud_file, :reserved, user: user }
       let(:headers) { { Authorization: "Token #{user.token}" } }
-      let(:attributes) { params.merge(md5: cloud_file.md5, bucket_id: cloud_file.bucket_id) }
+      let(:attributes) { params.merge(md5: cloud_file.md5, bucket_uuid: cloud_file.bucket.uuid) }
 
       scenario 'returns 200 OK' do
         transfer_data

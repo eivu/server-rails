@@ -155,8 +155,9 @@ class CloudFile < ApplicationRecord
   end
 
   def as_json(options = {})
-    json = attributes.except('id', 'settings', 'user_id')
+    json = attributes.except('id', 'settings', 'user_id', 'bucket_id')
                      .merge(bucket_uuid: bucket.uuid).symbolize_keys
+
     json[:metadata] = metadata.map do |metadatum|
       { metadatum.metadata_type.value.to_sym => metadatum.value }
     end

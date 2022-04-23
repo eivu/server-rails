@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_30_041055) do
+ActiveRecord::Schema.define(version: 2022_04_23_235431) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,6 +95,8 @@ ActiveRecord::Schema.define(version: 2022_01_30_041055) do
     t.integer "cloud_files_count", default: 0, null: false
     t.integer "subfolders_count", default: 0, null: false
     t.boolean "expanded", default: false
+    t.string "uuid", null: false
+    t.index ["uuid"], name: "index_folders_on_uuid", unique: true
   end
 
   create_table "metadata", id: :serial, force: :cascade do |t|
@@ -170,6 +172,9 @@ ActiveRecord::Schema.define(version: 2022_01_30_041055) do
     t.string "otp_secret_key"
     t.string "access_key_id"
     t.string "secret_access_key"
+    t.string "uuid"
+    t.index ["uuid"], name: "index_users_on_uuid", unique: true
+    t.check_constraint "uuid IS NOT NULL", name: "users_uuid_null"
   end
 
   add_foreign_key "artist_cloud_files", "artists", name: "artist_cloud_files_artist_id_fkey"
