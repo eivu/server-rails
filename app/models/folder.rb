@@ -18,9 +18,12 @@
 # Description: Folders are only metadata to preserve the same tree layout as found on the user's drive
 class Folder < ApplicationRecord
   include Reactable
+  include UuidSeekable
   # Hotwire Implementation
   broadcasts_to ->(_) { 'folders' }
   has_ancestry
+  has_uuid
+  after_initialize :set_uuid
 
   belongs_to :bucket
   has_many :cloud_files, -> { order('release_pos') }

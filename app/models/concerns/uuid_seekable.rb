@@ -21,13 +21,23 @@ module UuidSeekable
     end
 
     # method to be used in the model
-    def has_uuid(key)
-      @uuid_key = key
+    def has_uuid(key=:uuid)
+      class_variable_set(:@@uuid_key, key)
     end
 
-    # column name, either defined by model via @uuid or is the default column uuid
-    def uuid
-      @uuid ||= (@uuid_key || :uuid)
+    # column name, either defined by model via @@uuid_key or is the default column uuid
+    def uuid_key
+      class_variable_get(:@@uuid_key)
     end
+  end
+
+  def uuid_key
+    self.class.uuid_key
+  end
+
+  def set_uuid
+    return unless send(uuid_key).blank?
+
+    send("#{uuid_key}=", SecureRandom.uuid)
   end
 end
