@@ -15,7 +15,7 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
     let(:num_of_folders_in_path) { fullpath.count('/') + 1 }
     let(:params) do
       {
-        bucket_name: bucket.name,
+        bucket_name: bucket&.name,
         peepy: false,
         nsfw: true,
         fullpath: fullpath
@@ -77,6 +77,15 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
         scenario 'returns 401 unauthorized' do
           make_reservation
           expect(response.status).to eq(401)
+        end
+      end
+
+      context 'bucket is owned by another user' do
+        let(:bucket) { nil }
+
+        scenario 'returns 400 bad_request' do
+          make_reservation
+          expect(response.status).to eq(400)
         end
       end
     end

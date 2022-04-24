@@ -11,14 +11,17 @@ module Api
       end
 
       def reserve
-        raise SecurityError unless Bucket.exists?(user_id: current_user.id, id: reservation_params[:bucket_id])
+        raise ArgumentError if bucket.blank?
+        raise SecurityError unless bucket.user_id == current_user.id
         raise IndexError if CloudFile.exists?(md5: reservation_params[:md5], bucket_id: bucket.id)
 
         cloud_file = current_user.cloud_files.new(reservation_params)
         cloud_file.reserve!
         render json: cloud_file
+      rescue ArgumentError
+        render json: { message: 'bucket does exist' }, status: 400
       rescue SecurityError
-        render json: { message: 'bucket is not owned by user' }, status: 401
+        render json: { message: 'bucket does is not owned by user' }, status: 401
       rescue IndexError
         render json: { message: 'md5 already exists in this folder' }, status: 422
       end
@@ -51,7 +54,6 @@ module Api
       ############################################################################
       private
       ############################################################################
-
 
       def authorize
         if current_user.cloud_files.where(md5: params[:id]).blank?
