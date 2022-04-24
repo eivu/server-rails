@@ -9,9 +9,9 @@ module UuidSeekable
       if id_as_string.to_s.is_i?
         find_by(id: id)
       elsif id_as_string.to_s.valid_uuid?
-        where("#{uuid} = ?",  id_as_string).take
+        where("#{uuid_key} = ?",  id_as_string).take
       else
-        where("#{uuid}::text like '#{id_as_string}%'").take
+        where("#{uuid_key}::text like '#{id_as_string}%'").take
       end
     end
 
