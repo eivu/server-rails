@@ -62,7 +62,7 @@ module Api
       end
 
       def bucket
-        @bucket ||= Bucket.seek(params[:bucket_uuid])
+        @bucket ||= Bucket.find_by(name: params[:bucket_name])
       end
 
       def folder

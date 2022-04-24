@@ -15,7 +15,7 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
     let(:num_of_folders_in_path) { fullpath.count('/') + 1 }
     let(:params) do
       {
-        bucket_uuid: bucket.uuid,
+        bucket_name: bucket.name,
         peepy: false,
         nsfw: true,
         fullpath: fullpath

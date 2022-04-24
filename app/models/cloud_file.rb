@@ -158,6 +158,7 @@ class CloudFile < ApplicationRecord
     json = attributes.except('id', 'settings', 'user_id', 'bucket_id', 'folder_id')
                      .merge(
                       bucket_uuid: bucket.uuid,
+                      bucket_name: bucket.name,
                       user_uuid: user.uuid,
                       folder_uuid: folder&.uuid
                      ).symbolize_keys
