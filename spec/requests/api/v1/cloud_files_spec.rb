@@ -35,7 +35,7 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
 
       scenario 'file is owned by the current user' do
         make_reservation
-        expect(response.body).to include_json(user_id: user.id)
+        expect(response.body).to include_json(user_uuid: user.uuid)
       end
 
       scenario 'files attributes matches params' do
@@ -47,7 +47,7 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
         make_reservation
 
         structured_data = Oj.load(response.body)
-        folder = Folder.find(structured_data['folder_id'])
+        folder = Folder.seek(structured_data['folder_uuid'])
         aggregate_failures do
           expect(folder.peepy).to be(false)
           expect(folder.nsfw).to be(true)
@@ -103,7 +103,7 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
 
       scenario 'file is owned by the current user' do
         transfer_data
-        expect(response.body).to include_json(user_id: user.id)
+        expect(response.body).to include_json(user_uuid: user.uuid)
       end
 
       scenario 'file is in transfered state' do

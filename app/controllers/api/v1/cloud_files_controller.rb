@@ -11,7 +11,7 @@ module Api
       end
 
       def reserve
-        raise SecurityError unless Bucket.exists?(user_id: current_user.id, uuid: reservation_params[:bucket_uuid])
+        raise SecurityError unless Bucket.exists?(user_id: current_user.id, id: reservation_params[:bucket_id])
         raise IndexError if CloudFile.exists?(md5: reservation_params[:md5], bucket_id: bucket.id)
 
         cloud_file = current_user.cloud_files.new(reservation_params)
@@ -62,7 +62,7 @@ module Api
       end
 
       def bucket
-        @bucket ||= current_user.buckets.seek(params[:bucket_uuid])
+        @bucket ||= Bucket.seek(params[:bucket_uuid])
       end
 
       def folder
