@@ -386,7 +386,7 @@ DEPENDENCIES
   redis (~> 4.0)
   rqrcode
   rspec-json_expectations (~> 2.2)
-  rspec-rails (~> 5.0, >= 5.0.1)
+  rspec-rails (~> 5.0.2)
   sass-rails (~> 6.0)
   sdoc (~> 2.3)
   sidekiq (~> 5.2)

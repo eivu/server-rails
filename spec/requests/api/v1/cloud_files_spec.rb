@@ -15,7 +15,7 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
     let(:num_of_folders_in_path) { fullpath.count('/') + 1 }
     let(:params) do
       {
-        bucket_id: bucket.id,
+        bucket_uuid: bucket.uuid,
         peepy: false,
         nsfw: true,
         fullpath: fullpath
@@ -35,7 +35,7 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
 
       scenario 'file is owned by the current user' do
         make_reservation
-        expect(response.body).to include_json(user_id: user.id)
+        expect(response.body).to include_json(user_uuid: user.uuid)
       end
 
       scenario 'files attributes matches params' do
@@ -47,7 +47,7 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
         make_reservation
 
         structured_data = Oj.load(response.body)
-        folder = Folder.find(structured_data['folder_id'])
+        folder = Folder.seek(structured_data['folder_uuid'])
         aggregate_failures do
           expect(folder.peepy).to be(false)
           expect(folder.nsfw).to be(true)
@@ -94,7 +94,7 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
     context 'valid transfer attributes' do
       let!(:cloud_file) { create :cloud_file, :reserved, user: user }
       let(:headers) { { Authorization: "Token #{user.token}" } }
-      let(:attributes) { params.merge(md5: cloud_file.md5, bucket_id: cloud_file.bucket_id) }
+      let(:attributes) { params.merge(md5: cloud_file.md5, bucket_uuid: cloud_file.bucket.uuid) }
 
       scenario 'returns 200 OK' do
         transfer_data
@@ -103,7 +103,7 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
 
       scenario 'file is owned by the current user' do
         transfer_data
-        expect(response.body).to include_json(user_id: user.id)
+        expect(response.body).to include_json(user_uuid: user.uuid)
       end
 
       scenario 'file is in transfered state' do
@@ -150,10 +150,10 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
           year: rand(1965..Time.current.year),
           rating: rand(1.0..5.0).round(2),
           release_pos: rand(1..25),
-          metadata_list: {
-            genre: 'rock',
-            comment: 'best ever'
-          },
+          metadata_list: [
+            { genre: 'rock' },
+            { comment: 'best ever' }
+          ],
           matched_recording: generate_recording_data
         }
       end
@@ -163,9 +163,7 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
         expect(response.status).to eq(200)
       end
 
-      scenario 'fix complete_params' do
-        raise 'artists are not included in release groups'
-      end
+      scenario 'fix complete_params (artists are not included in release groups)'
 
       scenario 'file is in completed state' do
         complete_transfer
@@ -177,9 +175,7 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
         expect(cloud_file.reload).to have_attributes(params.slice(:year, :rating, :release_pos))
       end
 
-      scenario 'cloud file stores all data from acoustid' do
-        raise('fix me: support eivu acoustid client by storing data in matched_recording')
-      end
+      scenario 'cloud file stores all data from acoustid (fix me: support eivu acoustid client by storing data in matched_recording)'
 
       scenario 'tags have been saved properly' do
         complete_transfer

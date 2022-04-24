@@ -57,17 +57,20 @@ group :production do
   gem 'rails_12factor'
 end
 
-group :development, :test, :cucumber do
+group :development do
   # gem 'spring' # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'better_errors'
   gem 'binding_of_caller' # irb on better-errors error pages
+  gem 'rack-mini-profiler' # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
+  gem 'web-console', '>= 4.1.0'
+end
+
+group :development, :test, :cucumber do
   gem 'factory_bot_rails', '~> 6.2'
   gem 'faker', '~> 2.18' # Faker, a port of Data::Faker from Perl, is used to easily generate fake data: names, addresses, phone numbers, etc.
   gem 'pry-byebug' # replaces pry-debugger becasuse pry-debugger doesnt work with ruby 2
   gem 'pry-rails'
-  gem 'rack-mini-profiler' # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   gem 'rb-readline'
-  gem 'web-console', '>= 4.1.0'
 end
 
 # Gems used only for assets and not required
@@ -82,7 +85,7 @@ group :test do
   gem 'graphql-client'
   gem 'rails-controller-testing'
   gem 'rspec-json_expectations', '~> 2.2'
-  gem 'rspec-rails', '~> 5.0', '>= 5.0.1'
+  gem 'rspec-rails', '~> 5.0.2'
   gem 'vcr', '~> 6.0'
   # gem 'capybara'
   # gem 'selenium-webdriver'

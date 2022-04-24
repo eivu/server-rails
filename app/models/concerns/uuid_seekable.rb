@@ -9,9 +9,9 @@ module UuidSeekable
       if id_as_string.to_s.is_i?
         find_by(id: id)
       elsif id_as_string.to_s.valid_uuid?
-        where("#{uuid} = ?",  id_as_string).take
+        where("#{uuid_key} = ?",  id_as_string).take
       else
-        where("#{uuid}::text like '#{id_as_string}%'").take
+        where("#{uuid_key}::text like '#{id_as_string}%'").take
       end
     end
 
@@ -20,12 +20,24 @@ module UuidSeekable
       raise ActiveRecord::RecordNotFound if obj.blank?
     end
 
-    def has_uuid(key)
-      @uuid_key = key
+    # method to be used in the model
+    def has_uuid(key=:uuid)
+      class_variable_set(:@@uuid_key, key)
     end
 
-    def uuid
-      @uuid ||= (@uuid_key || :uuid)
+    # column name, either defined by model via @@uuid_key or is the default column uuid
+    def uuid_key
+      class_variable_get(:@@uuid_key)
     end
+  end
+
+  def uuid_key
+    self.class.uuid_key
+  end
+
+  def set_uuid
+    return unless send(uuid_key).blank?
+
+    send("#{uuid_key}=", SecureRandom.uuid)
   end
 end

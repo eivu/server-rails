@@ -5,6 +5,7 @@ class FoldersController < ApplicationController
     folder.toggle_expansion
 
     respond_to do |format|
+      # Hotwire Implenation
       format.turbo_stream  { render turbo_stream: turbo_stream.update(folder) }
       format.html #{ redirect_to messages_url }
     end

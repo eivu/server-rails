@@ -4,19 +4,19 @@ module Api
   module V1
     class CloudFilesController < Api::V1Controller
       def show
-        cloud_file = current_user.cloud_files.find_by(md5: params[:md5])
+        cloud_file = current_user.cloud_files.includes(:bucket).find_by(md5: params[:md5])
         raise ActiveRecord::RecordNotFound if cloud_file.blank?
 
-        render json: cloud_file.attributes.except('id', 'settings', 'user_id')
+        render json: cloud_file
       end
 
       def reserve
         raise SecurityError unless Bucket.exists?(user_id: current_user.id, id: reservation_params[:bucket_id])
-        raise IndexError if CloudFile.exists?(md5: reservation_params[:md5], folder_id: reservation_params[:folder_id])
+        raise IndexError if CloudFile.exists?(md5: reservation_params[:md5], bucket_id: bucket.id)
 
-        cloud_file = CloudFile.new(reservation_params)
+        cloud_file = current_user.cloud_files.new(reservation_params)
         cloud_file.reserve!
-        render json: cloud_file.attributes
+        render json: cloud_file
       rescue SecurityError
         render json: { message: 'bucket is not owned by user' }, status: 401
       rescue IndexError
@@ -24,21 +24,28 @@ module Api
       end
 
       def transfer
-        raise SecurityError unless CloudFile.exists?(user_id: current_user.id, md5: params[:md5])
+        cloud_file = current_user.cloud_files.find_by_md5(params[:md5])
+        raise IndexError unless cloud_file.reserved?
 
-        cloud_file = CloudFile.find_by_md5(params[:md5])
         cloud_file.transfer!(transfer_params)
-        render json: cloud_file.attributes
-      rescue SecurityError
-        render json: { message: 'bucket is not owned by user' }, status: 401
-      rescue StandardError => e
-        render json: { message: e.message }, status: 500
+        render json: cloud_file
+      rescue IndexError
+        render json: { message: 'md5 is not for a reserved file' }, status: 422
       end
 
       def complete
-        cloud_file = CloudFile.find_by_md5(params[:md5])
+        cloud_file = current_user.cloud_files.find_by_md5(params[:md5])
         cloud_file.complete!(complete_params)
-        render json: cloud_file.attributes
+        render json: cloud_file
+      end
+
+      def online
+        cloud_file = current_user.cloud_files.find_by_md5(params[:md5])
+        if cloud_file.online?
+          render json: { message: 'file is online', online: cloud_file.online? }
+        else
+          render json: { message: 'file is offline', online: cloud_file.online? }, status: 404
+        end
       end
 
       ############################################################################
@@ -54,17 +61,21 @@ module Api
         end
       end
 
+      def bucket
+        @bucket ||= Bucket.seek(params[:bucket_uuid])
+      end
+
       def folder
         Folder.find_or_create_from_path(
           fullpath: params[:fullpath],
-          bucket_id: params[:bucket_id],
+          bucket_id: bucket.id,
           peepy: params[:peepy],
           nsfw: params[:nsfw]
         )
       end
 
       def reservation_params
-        params.permit(:bucket_id, :md5, :peepy, :nsfw).merge(user_id: current_user.id, folder: folder)
+        params.permit(:md5, :peepy, :nsfw).merge(user_id: current_user.id, folder: folder, bucket_id: bucket.id)
       end
 
       def transfer_params
@@ -72,10 +83,7 @@ module Api
       end
 
       def complete_params
-        params.permit(:year, :rating, :release_pos, metadata_list: {})
-                      # matched_recording: params.require(:matched_recording)
-                      #                         .permit(:id, :duration, :title,
-                      #                                 releasegroups: %i[title id])
+        params.permit!.slice(:year, :rating, :release_pos, :metadata_list, :matched_recording)
       end
     end
   end
