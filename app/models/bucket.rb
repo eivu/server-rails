@@ -14,9 +14,10 @@ class Bucket < ApplicationRecord
   belongs_to :user#, :inverse_of => :bucket
   belongs_to :region
   has_many :cloud_files
+  has_uuid
+  after_initialize :set_uuid
 
   validates :uuid, presence: true, uniqueness: true
-  after_initialize :set_uuid
 
   def create_object(path)
     resource.bucket(name).object(path)
@@ -25,18 +26,10 @@ class Bucket < ApplicationRecord
   ############################################################################
   private
   ############################################################################
-
-  def set_uuid
-    self.uuid ||= SecureRandom.uuid
-  end
-
   def resource
     @resource ||= Aws::S3::Resource.new(
                       :credentials => self.user.s3_credentials,
                       :region => 'us-east-1'
                     )
   end
-
-
-
 end
