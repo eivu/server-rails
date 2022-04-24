@@ -19,8 +19,7 @@
 class Folder < ApplicationRecord
   include Reactable
   include UuidSeekable
-  # Hotwire Implementation
-  broadcasts_to ->(_) { 'folders' }
+  broadcasts_to ->(_) { 'folders' } # Hotwire Implementation
   has_ancestry
   has_uuid
   after_initialize :set_uuid
