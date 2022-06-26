@@ -19,7 +19,7 @@ module Api
         cloud_file.reserve!
         render json: cloud_file
       rescue ArgumentError
-        render json: { message: 'bucket does exist' }, status: 400
+        render json: { message: 'bucket does not exist' }, status: 400
       rescue SecurityError
         render json: { message: 'bucket does is not owned by user' }, status: 401
       rescue IndexError
