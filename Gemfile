@@ -86,6 +86,7 @@ group :test do
   gem 'rails-controller-testing'
   gem 'rspec-json_expectations', '~> 2.2'
   gem 'rspec-rails', '~> 5.0.2'
+  gem 'table_print'
   gem 'vcr', '~> 6.0'
   # gem 'capybara'
   # gem 'selenium-webdriver'

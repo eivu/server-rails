@@ -335,6 +335,7 @@ GEM
       dalli
       msgpack
       redis
+    table_print (1.5.7)
     thor (1.2.1)
     tilt (2.0.10)
     timeout (0.3.0)
@@ -405,6 +406,7 @@ DEPENDENCIES
   sprockets-rails
   stimulus-rails (~> 1.0, >= 1.0.2)
   strong_migrations (~> 0.7.9)
+  table_print
   turbo-rails (~> 1.0)
   tzinfo-data
   vcr (~> 6.0)

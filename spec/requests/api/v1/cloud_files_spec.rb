@@ -186,22 +186,63 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
 
       scenario 'cloud file stores all data from acoustid (fix me: support eivu acoustid client by storing data in matched_recording)'
 
-      scenario 'tags have been saved properly' do
-        complete_transfer
-        expect(cloud_file.reload.metadata).to contain_exactly(
-          an_object_having_attributes(
-            value: 'rock',
-            peepy: false,
-            nsfw: false,
-            user_id: cloud_file.user_id,
-            metadata_type: an_object_having_attributes(value: 'genre')
-          ),
-          an_object_having_attributes(
-            value: 'best ever',
-            user_id: cloud_file.user_id,
-            metadata_type: an_object_having_attributes(value: 'comment')
-          )
-        )
+      context 'saving metadata' do
+        context 'tags do not contain duplicates' do
+          scenario 'tags have been saved properly' do
+            complete_transfer
+            expect(cloud_file.reload.metadata).to contain_exactly(
+              an_object_having_attributes(
+                value: 'rock',
+                peepy: false,
+                nsfw: false,
+                user_id: cloud_file.user_id,
+                metadata_type: an_object_having_attributes(value: 'genre')
+              ),
+              an_object_having_attributes(
+                value: 'best ever',
+                user_id: cloud_file.user_id,
+                metadata_type: an_object_having_attributes(value: 'comment')
+              )
+            )
+          end
+        end
+
+        context 'tags do contain duplicates' do
+          let(:params) do
+            {
+              year: rand(1965..Time.current.year),
+              rating: rand(1.0..5.0).round(2),
+              release_pos: rand(1..25),
+              metadata_list: [
+                { genre: 'rock' },
+                { genre: 'rock' },
+                { genre: 'rock' },
+                { comment: 'best ever' },
+                { comment: 'best ever' }
+              ],
+              matched_recording: generate_recording_data
+            }
+          end
+
+
+          scenario 'tags have been saved properly' do
+            complete_transfer
+            expect(cloud_file.reload.metadata).to contain_exactly(
+              an_object_having_attributes(
+                value: 'rock',
+                peepy: false,
+                nsfw: false,
+                user_id: cloud_file.user_id,
+                metadata_type: an_object_having_attributes(value: 'genre')
+              ),
+              an_object_having_attributes(
+                value: 'best ever',
+                user_id: cloud_file.user_id,
+                metadata_type: an_object_having_attributes(value: 'comment')
+              )
+            )
+          end
+        end
       end
 
       scenario 'md5 did not change' do
