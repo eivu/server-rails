@@ -30,6 +30,7 @@ Rails.application.routes.draw do
           post :transfer
           post :complete
           post :authorize
+          post :update_metadata
         end
       end
     end

@@ -143,11 +143,9 @@ class CloudFile < ApplicationRecord
       hash.each do |key, value|
         type = MetadataType.find_or_create_by!(value: key)
         temp_metadata << Metadatum.find_or_create_by!(value: value, user_id: user_id, metadata_type_id: type.id).tap do |obj|
-        # metadatum = Metadatum.find_or_create_by!(value: value, user_id: user_id, metadata_type_id: type.id).tap do |obj|
           obj.peepy = peepy
           obj.nsfw  = nsfw
         end
-        # metataggings.find_or_create_by! metadatum_id: 379
       end
     end
     metadata << temp_metadata.uniq

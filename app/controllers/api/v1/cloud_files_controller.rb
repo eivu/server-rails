@@ -42,12 +42,22 @@ module Api
         render json: cloud_file
       end
 
+      def update_metadata
+        cloud_file = current_user.cloud_files.find_by_md5(params[:md5])
+        raise IndexError unless cloud_file.completed?
+
+        cloud_file.update!(complete_params)
+        render json: cloud_file
+      rescue IndexError
+        render json: { message: 'only completed resources can have their metadata updated' }, status: 422
+      end
+
       def online
         cloud_file = current_user.cloud_files.find_by_md5(params[:md5])
         if cloud_file.online?
-          render json: { message: 'file is online', online: cloud_file.online? }
+          render json: { message: 'file is online', online: true }
         else
-          render json: { message: 'file is offline', online: cloud_file.online? }, status: 404
+          render json: { message: 'file is offline', online: false }, status: 404
         end
       end
 

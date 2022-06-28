@@ -224,7 +224,6 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
             }
           end
 
-
           scenario 'tags have been saved properly' do
             complete_transfer
             expect(cloud_file.reload.metadata).to contain_exactly(
@@ -251,6 +250,58 @@ RSpec.describe 'Api::V1::CloudFiles', type: :request do
 
       scenario 'user_id did not change' do
         expect { complete_transfer }.not_to change(cloud_file, :user_id)
+      end
+    end
+  end
+
+  describe 'POST /update_metadata' do
+    subject(:update_metadata) { post "/api/v1/cloud_files/#{md5}/update_metadata/", params: params, headers: headers }
+
+    context 'valid metadata' do
+      let!(:cloud_file) { create :cloud_file, :completed, user: user }
+      let(:headers) { { Authorization: "Token #{user.token}" } }
+      let(:md5) { cloud_file.md5 }
+      let(:params) do
+        {
+          year: rand(1965..Time.current.year),
+          rating: rand(1.0..5.0).round(2),
+          release_pos: rand(1..25),
+          metadata_list: [
+            { vocalist: 'David Bowie' },
+            { source: 'Napster' }
+          ]
+        }
+      end
+
+      scenario 'metadata has been saved properly' do
+        update_metadata
+        aggregate_failures do
+          expect(cloud_file.reload).to have_attributes(params.slice(:year, :rating, :release_pos))
+          expect(cloud_file.reload.metadata).to include(
+            an_object_having_attributes(
+              value: 'David Bowie',
+              peepy: false,
+              nsfw: false,
+              user_id: cloud_file.user_id,
+              metadata_type: an_object_having_attributes(value: 'vocalist')
+            ),
+            an_object_having_attributes(
+              value: 'Napster',
+              user_id: cloud_file.user_id,
+              metadata_type: an_object_having_attributes(value: 'source')
+            )
+          )
+        end
+      end
+
+      scenario 'returns 200 OK' do
+        update_metadata
+        expect(response.status).to eq(200)
+      end
+
+      scenario 'file is in completed state' do
+        update_metadata
+        expect(response.body).to include_json(state: 'completed')
       end
     end
   end
