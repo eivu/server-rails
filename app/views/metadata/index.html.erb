@@ -1,0 +1,5 @@
+<%= turbo_stream_from 'metadata' %>
+
+<%= turbo_frame_tag :metadata do %>
+  <ul><%= render @metadata %></ul>
+<% end %>

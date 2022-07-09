@@ -14,4 +14,9 @@
 class Metadatum < ApplicationRecord
   belongs_to :user
   belongs_to :metadata_type
+
+  scope(:alpha, -> { order('value') })
+  scope(:peepy, -> { where(peepy: true) })
+  scope(:human_readable, -> { where.not(metadata_type_id: [1,2,5,6,14]) })
+  scope(:nsfw, -> { where(nsfw: true) })
 end

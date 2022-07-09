@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   post '/statistics', to: 'graphql#statistics', format: 'json'
 
   devise_for :users
-  resources :cloud_files, :regions, :folders
+  resources :cloud_files, :regions, :folders, :metadata
   resource :overview
 
   get 'settings' => redirect('settings/account#show')

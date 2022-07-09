@@ -48,6 +48,8 @@ class User < ApplicationRecord
   has_many :buckets
   has_many :cloud_files, through: :buckets
   has_many :folders, through: :buckets
+  # has_many :metataggings, dependent: :destroy, autosave: true
+  has_many :metadata#, through: :metataggings, dependent: :destroy, autosave: true
 
   def s3_credentials
     @s3_credentials ||= Aws::Credentials.new(self.access_key_id, self.secret_access_key)

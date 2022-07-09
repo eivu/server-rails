@@ -1,0 +1,22 @@
+<li>
+  <%# Hotwire Implenation %>
+  <%= turbo_frame_tag dom_id(metadatum) do %>
+    <div>
+      <%= form_with model: metadatum do |form| %>
+        <%= form.submit "#{metadatum.expanded? ? '-' : '+'}" %>
+        <%= metadatum.value %>
+        [<%= metadatum.id %>]
+        (<%#= metadatum.cloud_files_count %>)
+      <% end %>
+      <ul>
+        <% if metadatum.expanded? %>
+          <%#= render metadatum.children.alpha %>
+          <% metadatum.cloud_files.alpha.each do |cf| %>
+            <p><%= link_to("#{cf.smart_name} (#{cf.id})", cloud_file_path(cf.md5), data: { turbo: false }) %></p>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+    <br />
+  <% end %>
+</li>
