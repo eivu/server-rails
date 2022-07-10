@@ -4,9 +4,9 @@
     <div>
       <%= form_with model: metadatum do |form| %>
         <%= form.submit "#{metadatum.expanded? ? '-' : '+'}" %>
+        <%= metadatum.type&.value %>: 
         <%= metadatum.value %>
-        [<%= metadatum.id %>]
-        (<%#= metadatum.cloud_files_count %>)
+        (<%= metadatum.cloud_files_count %>)
       <% end %>
       <ul>
         <% if metadatum.expanded? %>

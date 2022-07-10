@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_09_204155) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_10_030527) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -107,6 +107,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_09_204155) do
     t.boolean "peepy", default: false
     t.boolean "nsfw", default: false
     t.boolean "expanded", default: false
+    t.integer "cloud_files_count", default: 0, null: false
   end
 
   create_table "metadata_types", id: :serial, force: :cascade do |t|

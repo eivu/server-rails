@@ -12,7 +12,7 @@
 #
 class Metatagging < ApplicationRecord
   belongs_to :cloud_file
-  belongs_to :metadatum
+  belongs_to :metadatum, counter_cache: :cloud_files_count
 
   def value=(string)
     user = self.cloud_file.user
