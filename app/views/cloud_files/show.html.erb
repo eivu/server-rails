@@ -17,8 +17,14 @@
 <dl class="dl-horizontal">
   <dt>Name</dt>
   <dd><%= @cloud_file.smart_name %></dd>
+  <dt>Uploaded</dt>
+  <dd><%= time_ago_in_words(@cloud_file.created_at) %> ago</dd>
+  <dt>MD5</dt>
+  <dd><%= @cloud_file.md5 %></dd>
   <dt>Source</dt>
   <dd><%= link_to(@cloud_file.url, @cloud_file.url) %></dd>
+  <dt>Id</dt>
+  <dd><%= @cloud_file.id %></dd>  
   <dt>Filesize</dt>
   <dd><%= number_to_human_size(@cloud_file.filesize) %></dd>
   <% @cloud_file.metadata.human_readable.with_types.each do |datum| %>

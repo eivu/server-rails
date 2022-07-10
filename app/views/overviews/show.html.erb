@@ -1,5 +1,6 @@
-<%= turbo_stream_from 'folders' %>
-
-<%= turbo_frame_tag :folders do %>
-  <ul><%= render @folders %></ul>
-<% end %>
+<div>
+  <%= turbo_stream_from 'folders' %>
+  <%= turbo_frame_tag :folders do %>
+    <ul><%= render @folders %></ul>
+  <% end %>
+</div>
