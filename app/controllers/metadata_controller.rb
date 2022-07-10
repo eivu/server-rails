@@ -14,14 +14,4 @@ class MetadataController < ApplicationController
       format.html #{ redirect_to messages_url }
     end
   end
-
-  private
-
-  def peepy_value
-    ActiveModel::Type::Boolean.new.cast(params[:peepy] || false)
-  end
-
-  def nsfw_value
-    ActiveModel::Type::Boolean.new.cast(params[:nsfw] || false)
-  end
 end

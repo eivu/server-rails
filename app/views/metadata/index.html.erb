@@ -3,3 +3,7 @@
 <%= turbo_frame_tag :metadata do %>
   <ul><%= render @metadata %></ul>
 <% end %>
+
+<% if @metadata.blank? %>
+  <div>No relevant metadata found.</div>
+<% end %>

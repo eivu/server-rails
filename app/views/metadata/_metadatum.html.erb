@@ -6,12 +6,13 @@
         <%= form.submit "#{metadatum.expanded? ? '-' : '+'}" %>
         <%= metadatum.type&.value %>: 
         <%= metadatum.value %>
+        [<%= metadatum.id %>]
         (<%= metadatum.cloud_files_count %>)
       <% end %>
       <ul>
         <% if metadatum.expanded? %>
           <%#= render metadatum.children.alpha %>
-          <% metadatum.cloud_files.alpha.each do |cf| %>
+          <% metadatum.cloud_files.alpha.distinct.each do |cf| %>
             <p><%= link_to("#{cf.smart_name} (#{cf.id})", cloud_file_path(cf.md5), data: { turbo: false }) %></p>
           <% end %>
         <% end %>
