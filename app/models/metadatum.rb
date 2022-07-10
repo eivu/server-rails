@@ -21,6 +21,7 @@ class Metadatum < ApplicationRecord
   has_many :cloud_files, through: :metataggings, dependent: :destroy, autosave: true
 
   scope(:alpha, -> { order('value') })
+  scope(:with_types, -> { includes(:type).order('metadata_types.value, metadata.value') })
   scope(:peepy, -> { where(peepy: true) })
   scope(:human_readable, -> { where.not(metadata_type_id: [1,2,5,6,11]) })
   scope(:nsfw, -> { where(nsfw: true) })

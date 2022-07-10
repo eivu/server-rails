@@ -1,7 +1,10 @@
-<%= will_paginate @cloud_files %>
+<div>
 <ul>
   <% @cloud_files.each do |cf| %>
-    <li><%= link_to("#{cf.smart_name} (#{cf.id})", cloud_file_path(cf.md5), data: { turbo: false }) %></li>
+    <li><%= link_to("#{cf.smart_name} [#{number_to_human_size(cf.filesize)}] (#{cf.id})", cloud_file_path(cf.md5), data: { turbo: false }) %></li>
   <% end %>
 </li>
-<%= will_paginate @cloud_files %>
+</ul>
+</div>
+<%= will_paginate @cloud_files, renderer: BootstrapPagination::Rails %>
+

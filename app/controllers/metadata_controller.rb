@@ -1,7 +1,7 @@
 class MetadataController < ApplicationController
 
   def index
-    @metadata = current_user.metadata.human_readable.includes(:type).where(peepy: peepy_value).alpha
+    @metadata = current_user.metadata.human_readable.includes(:type).where(peepy: peepy_value).with_types
   end
 
   def update

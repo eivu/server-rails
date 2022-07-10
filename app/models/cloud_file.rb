@@ -93,7 +93,7 @@ class CloudFile < ApplicationRecord
   end
 
   def smart_name
-    name || asset
+    name || asset.gsub('_', ' ')
   end
 
   def url
@@ -142,13 +142,14 @@ class CloudFile < ApplicationRecord
     list.each.each do |hash|
       hash.each do |key, value|
         type = MetadataType.find_or_create_by!(value: key)
-        temp_metadata << Metadatum.find_or_create_by!(value: value, user_id: user_id, metadata_type_id: type.id).tap do |obj|
+        datum = Metadatum.find_or_create_by!(value: value, user_id: user_id, metadata_type_id: type.id).tap do |obj|
           obj.peepy = peepy
           obj.nsfw  = nsfw
         end
+        metataggings.find_or_create_by!(metadatum: datum)
       end
     end
-    metadata << temp_metadata.uniq
+    metadata
   end
 
   def matched_recording=(recording)

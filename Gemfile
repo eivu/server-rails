@@ -38,7 +38,7 @@ gem 'bootstrap-sass', '~> 3.4.1' # twitter bootstrap stylings
 gem 'jquery-rails' # Use jquery as the JavaScript library
 gem 'sass-rails', '~> 6.0' # Use SCSS for stylesheets and useful for Sass-powered version of Bootstrap
 # gem 'uglifier', '~> 4.2' # has to be outside of assets, to be present at boot. Use Uglifier as compressor for JavaScript assets
-gem 'will_paginate', '~> 3.3', '>= 3.3.1' # pagination library
+gem 'will_paginate-bootstrap', '~> 1.0', '>= 1.0.2' # pagination library with built in bootstrap support
 
 # API
 gem 'graphql', '~> 1.9', '>= 1.9.16'
