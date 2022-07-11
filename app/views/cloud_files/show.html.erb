@@ -30,5 +30,7 @@
   <% @cloud_file.metadata.human_readable.with_types.each do |datum| %>
     <dt><%= datum.type&.value %></dt>
     <dd><%= datum.value %>
-  <% end %>  
+  <% end %>
+  <dt></dt>
+  <dd><%= link_to '[Edit]', edit_cloud_file_path(@cloud_file) %>
 </dl>

@@ -151,6 +151,8 @@ GEM
     faker (2.21.0)
       i18n (>= 1.8.11, < 2)
     ffi (1.15.5)
+    formtastic (4.0.0)
+      actionpack (>= 5.2.0)
     globalid (1.0.0)
       activesupport (>= 5.0)
     graphql (1.13.14)
@@ -382,6 +384,7 @@ DEPENDENCIES
   devise (~> 4.8)
   factory_bot_rails (~> 6.2)
   faker (~> 2.18)
+  formtastic (~> 4.0)
   graphql (~> 1.9, >= 1.9.16)
   graphql-client
   hotwire-rails (~> 0.1.3)

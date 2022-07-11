@@ -15,6 +15,7 @@ gem 'devise', '~> 4.8' # user authentication
 # gem 'eivu-fingerprinter-acoustid', path: '/Users/jinx/projects/eivu/eivu_acoustid'
 # gem 'image_processing', '~> 1.2' # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # unused? gem 'has_secure_token' # generate the 24-character unique token
+gem 'formtastic', '~> 4.0' # Rails form builder
 gem 'hotwire-rails', '~> 0.1.3' # html over the wire
 gem 'importmap-rails', '~> 1.0', '>= 1.0.1' # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem 'oj' # faster json parsing
