@@ -15,7 +15,7 @@ gem 'devise', '~> 4.8' # user authentication
 # gem 'eivu-fingerprinter-acoustid', path: '/Users/jinx/projects/eivu/eivu_acoustid'
 # gem 'image_processing', '~> 1.2' # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # unused? gem 'has_secure_token' # generate the 24-character unique token
-gem 'formtastic', '~> 4.0' # Rails form builder
+
 gem 'hotwire-rails', '~> 0.1.3' # html over the wire
 gem 'importmap-rails', '~> 1.0', '>= 1.0.1' # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem 'oj' # faster json parsing
@@ -34,6 +34,8 @@ gem 'activejob-traffic_control', '~> 0.1.3' # Traffic control for ActiveJob: Con
 gem 'sidekiq', '~> 5.2' # Simple, efficient background processing for Ruby.
 
 # presentation
+gem 'formtastic', '~> 4.0.0.rc1'
+gem 'formtastic-bootstrap', '~> 3.1', '>= 3.1.1'
 gem 'bootstrap-sass', '~> 3.4.1' # twitter bootstrap stylings
 # gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails' # Use jquery as the JavaScript library

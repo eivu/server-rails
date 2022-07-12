@@ -1,7 +1,9 @@
+<%# <<<<<<< Updated upstream %>
 
-  <%= semantic_form_for @cloud_file do |f| %>
+  <%#= semantic_form_for @cloud_file do |f| %>
      <%#= f.inputs :name => "Basic" do %>
-      <%= f.input :name %>
+      <%#= f.input :name %>
+     <%# end %>
       <%#= f.input :body %>
       <%#= f.input :section %>
       <%#= f.input :publication_state, :as => :radio %>
@@ -30,8 +32,12 @@
       <%#= author_form.input :last_name %>
     <%# end %>
 
-    <%= f.actions do %>
-      <%= f.action :submit, :as => :button %>
-      <%= f.action :cancel, :as => :link %>
-    <% end %>
- <% end %>
+    <%#= f.actions do %>
+      <%#= f.action :submit, :as => :button %>
+      <%#= f.action :cancel, :as => :link %>
+    <%# end %>
+ <%# end %>
+
+<%= semantic_form_for @cloud_file do |f| %>
+  <%= f.input :name %>
+<% end %>
