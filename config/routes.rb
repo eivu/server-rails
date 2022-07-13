@@ -11,6 +11,11 @@ Rails.application.routes.draw do
   post '/statistics', to: 'graphql#statistics', format: 'json'
 
   devise_for :users
+  devise_scope :user do
+    get '/users/sign_out', to: 'devise/sessions#destroy'
+  end
+
+
   resources :cloud_files, :regions, :folders, :metadata
   resource :overview
 
