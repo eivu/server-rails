@@ -1,43 +1,23 @@
-<%# <<<<<<< Updated upstream %>
-
-  <%#= semantic_form_for @cloud_file do |f| %>
-     <%#= f.inputs :name => "Basic" do %>
-      <%#= f.input :name %>
-     <%# end %>
-      <%#= f.input :body %>
-      <%#= f.input :section %>
-      <%#= f.input :publication_state, :as => :radio %>
-      <%#= f.input :category %>
-      <%#= f.input :allow_comments, :label => "Allow commenting on this article" %>
-    <%# end %>
-
-    <%#= f.inputs :name => "Basic" do %>
-      <%#= f.input :title %>
-      <%#= f.input :body %>
-      <%#= f.input :section %>
-      <%#= f.input :publication_state, :as => :radio %>
-      <%#= f.input :category %>
-      <%#= f.input :allow_comments, :label => "Allow commenting on this article" %>
-    <%# end %>
-
-    <%#= f.inputs :name => "Advanced" do %>
-      <%#= f.input :keywords, :required => false, :hint => "Example: ruby, rails, forms" %>
-      <%#= f.input :extract, :required => false %>
-      <%#= f.input :description, :required => false %>
-      <%#= f.input :url_title, :required => false %>
-    <%# end %>
-
-    <%#= f.inputs :name => "Author", :for => :author do |author_form| %>
-      <%#= author_form.input :first_name %>
-      <%#= author_form.input :last_name %>
-    <%# end %>
-
-    <%#= f.actions do %>
-      <%#= f.action :submit, :as => :button %>
-      <%#= f.action :cancel, :as => :link %>
-    <%# end %>
- <%# end %>
-
-<%= semantic_form_for @cloud_file do |f| %>
-  <%= f.input :name %>
+<%= bootstrap_form_for(@cloud_file) do |f| %>
+  <%= f.text_field :name %>
+  <%= f.text_field :rating %>
+  <%= f.text_area :description %>
+  <%= f.text_field :rating     %>
+  <%= f.check_box :nsfw     %>
+  <%= f.check_box :peepy    %>
+  <%= f.text_field :info_url %>  
+  <%= f.text_field :duration %>     
+  <%= f.text_field :settings %>
+  <%= f.text_field :year %>
+  <%= f.text_field :release_pos  %>
+  <%= f.text_field :num_plays %>  
+  <%#= f.check_box :remember_me %>
+  <hr>
+  <%= f.fields_for :metataggings do |mt| %>
+    <%= mt.collection_select(:metadatum_id, Metadatum.human_readable, :id, :value) %>
+    <%#= render 'metatagging_field', f: f %>
+    <%#= mt.collection_select(:metadata_id, Metadata.where(peepy: @cloud_file.peepy), :id, :value) %>
+  <% end %>
+    <%= link_to_add_association 'add metadatum', f, :metataggings %>
+  <%= f.submit  %>
 <% end %>

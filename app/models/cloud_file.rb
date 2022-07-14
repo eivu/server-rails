@@ -47,7 +47,7 @@ class CloudFile < ApplicationRecord
   scope(:alpha, -> { order('name') })
   scope(:peepy, -> { where(peepy: true) })
 
-  accepts_nested_attributes_for :metataggings
+  accepts_nested_attributes_for :metataggings, allow_destroy: true
 
   validates_uniqueness_of :md5, scope: :folder_id
   validates_presence_of :bucket_id

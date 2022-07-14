@@ -34,9 +34,9 @@ gem 'activejob-traffic_control', '~> 0.1.3' # Traffic control for ActiveJob: Con
 gem 'sidekiq', '~> 5.2' # Simple, efficient background processing for Ruby.
 
 # presentation
-gem 'formtastic', '~> 4.0.0.rc1'
-gem 'formtastic-bootstrap', '~> 3.1', '>= 3.1.1'
+gem 'bootstrap_form', '~> 5.1'
 gem 'bootstrap-sass', '~> 3.4.1' # twitter bootstrap stylings
+gem 'cocoon', '~> 1.2', '>= 1.2.15'
 # gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails' # Use jquery as the JavaScript library
 gem 'sass-rails', '~> 6.0' # Use SCSS for stylesheets and useful for Sass-powered version of Bootstrap
