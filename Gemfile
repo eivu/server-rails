@@ -5,6 +5,9 @@ git_source(:github) { |repo| 'https://github.com/#{repo}.git' }
 
 ruby '3.0.2'
 
+
+
+
 gem 'aasm', '~> 5.2' # AASM is a continuation of the acts-as-state-machine
 gem 'ancestry' # used to nest project_products by providing a parent_id and many convenience methods
 gem 'aws-sdk-s3', '~> 1.111', '>= 1.111.1'
@@ -16,6 +19,7 @@ gem 'devise', '~> 4.8' # user authentication
 # gem 'image_processing', '~> 1.2' # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # unused? gem 'has_secure_token' # generate the 24-character unique token
 
+gem 'honeycomb-beeline'
 gem 'hotwire-rails', '~> 0.1.3' # html over the wire
 gem 'importmap-rails', '~> 1.0', '>= 1.0.1' # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem 'oj' # faster json parsing
